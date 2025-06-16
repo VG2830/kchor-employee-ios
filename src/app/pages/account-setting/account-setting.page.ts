@@ -3,9 +3,10 @@ import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-setting',
+  standalone:false,
   templateUrl: './account-setting.page.html',
   styleUrls: ['./account-setting.page.scss'],
-  imports:[IonicModule]
+ 
 })
 export class AccountSettingPage implements OnInit {
 

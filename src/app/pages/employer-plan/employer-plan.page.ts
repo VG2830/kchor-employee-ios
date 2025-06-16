@@ -12,11 +12,11 @@ import { PlanCardComponent } from 'src/app/components/plan-card/plan-card.compon
   
   templateUrl: './employer-plan.page.html',
   styleUrls: ['./employer-plan.page.scss'],
-  standalone: true,
-  imports: [
+  standalone: false,
+  // imports: [
 
-    IonicModule,PlanCardComponent,CommonModule
-  ],
+  //   IonicModule,PlanCardComponent,CommonModule
+  // ],
 })
 export class EmployerPlanPage implements OnInit {
  

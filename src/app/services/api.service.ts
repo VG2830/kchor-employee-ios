@@ -8,7 +8,7 @@
 //   constructor() { }
 // }
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -72,10 +72,17 @@ export class ApiService {
 getEmployerProfile(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/getEmployerProfile/${userId}`);
 }
-updateEmployerEmail(userId: number): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail/${userId}`);
+// updateEmployerEmail(userId: number): Observable<any> {
+//   return this.http.get<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail/${userId}`);
+// }
+
+updateEmployerEmail(userId: number, email: string): Observable<any> {
+  const url = `${this.apiUrl}/Employer_Api/updateEmployerEmail`;
+  const params = new HttpParams()
+    .set('user_id', userId.toString())
+    .set('email', email);
+
+  return this.http.put<any>(url, {}, { params }); // Note: empty body
 }
-
-
 
 }

@@ -13,8 +13,8 @@ import { AccountSettingPage } from './account-setting.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountSettingPageRoutingModule,AccountSettingPage
+    AccountSettingPageRoutingModule
   ],
-  declarations: []
+  declarations: [AccountSettingPage]
 })
 export class AccountSettingPageModule {}

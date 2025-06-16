@@ -1,58 +1,74 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-title class="ion-text-center">Inactive Jobs</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
+<ion-content >
+  <ion-title class="ion-text-center">Inacive Jobs</ion-title>
+<ion-card>
+   <ion-card-content>
   <!-- Top Controls -->
-  <div class="top-controls">
-    <ion-select placeholder="Entries per page" [(ngModel)]="entriesPerPage">
-      <ion-select-option value="10">10</ion-select-option>
-      <ion-select-option value="25">25</ion-select-option>
-      <ion-select-option value="50">50</ion-select-option>
-    </ion-select>
+   <ion-row class="ion-align-items-center ion-justify-content-between table-controls">
+        <ion-col size="6" class="ion-text-left" >
+  Show
+    <select placeholder="Entries per page" [(ngModel)]="entriesPerPage">
+      <option value="10">10</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+    </select>
+entries
+</ion-col>
+ <ion-col size="6" class="ion-text-center">
+  <ion-input placeholder="Search..." [(ngModel)]="searchQuery" debounce="300" ></ion-input>
+  
+  <!-- <ion-searchbar placeholder="Search..." [(ngModel)]="searchQuery" debounce="300" ></ion-searchbar> -->
+  </ion-col>
+ 
+</ion-row>
+  <!-- Mobile-First Card View -->
+  <ion-list>
+    <ion-item *ngFor="let job of filteredJobs(); let i = index" lines="full">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="12" class="ion-text-left">
+            <strong>{{ i + 1 }}</strong>
+          </ion-col>
+        </ion-row>
 
-    <ion-searchbar placeholder="Search..." [(ngModel)]="searchQuery" debounce="300"></ion-searchbar>
-  </div>
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <img [src]="job.logo" alt="Logo" class="logo-img" />
+          </ion-col>
+        </ion-row>
 
-  <!-- Jobs Table -->
-  <ion-grid class="jobs-table">
-    <ion-row class="table-header">
-      <ion-col size="1">#</ion-col>
-      <ion-col size="2">Logo</ion-col>
-      <ion-col size="3">Job Title</ion-col>
-      <ion-col size="3">Company Details</ion-col>
-      <ion-col size="1">Applicants</ion-col>
-      <ion-col size="2">Posted On</ion-col>
-      <ion-col size="1">Action</ion-col>
-    </ion-row>
+        <ion-row class="info-row">
+          <ion-col size="12">
+            <strong>Job Title:</strong> {{ job.title }} <br />
+            <span class="job-type">{{ job.type }}</span>
+          </ion-col>
 
-    <ion-row *ngFor="let job of filteredJobs(); let i = index" class="table-row">
-      <ion-col size="1">{{ i + 1 }}</ion-col>
-      <ion-col size="2">
-        <img [src]="job.logo" alt="logo" class="logo-img" />
-      </ion-col>
-      <ion-col size="3">
-        {{ job.title }}<br />
-        <span class="job-type">{{ job.type }}</span>
-      </ion-col>
-      <ion-col size="3">
-        <strong>{{ job.company }}</strong><br />
-        {{ job.location }}
-      </ion-col>
-      <ion-col size="1">{{ job.applicants }}</ion-col>
-      <ion-col size="2">{{ job.posted }}</ion-col>
-      <ion-col size="1">
-        <ion-button fill="clear" size="small">
-          <ion-icon name="ellipsis-vertical"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <ion-col size="12">
+            <strong>Company:</strong> {{ job.company }} <br />
+            <strong>Location:</strong> {{ job.location }}
+          </ion-col>
+
+          <ion-col size="12">
+            <strong>Applicants:</strong> {{ job.applicants }}
+          </ion-col>
+
+          <ion-col size="12">
+            <strong>Posted On:</strong> {{ job.posted }}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-justify-content-end">
+          <ion-button fill="clear" size="small" (click)="presentActionSheet(job)">
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 
   <!-- Pagination Info -->
-  <!-- <ion-text class="entry-info">
+  <ion-text class="entry-info ion-text-center">
     Showing {{ startEntry }} to {{ endEntry }} of {{ totalEntries }} entries
-  </ion-text> -->
+  </ion-text>
+  </ion-card-content>
+  </ion-card>
 </ion-content>

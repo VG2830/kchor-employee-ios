@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inactive-jobs',
@@ -6,93 +7,89 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './inactive-jobs.page.html',
   styleUrls: ['./inactive-jobs.page.scss'],
 })
-export class InactiveJobsPage implements OnInit {
- jobs: any[] = [];
-  searchQuery: string = '';
-  entriesPerPage: number = 10;
+export class InactiveJobsPage {
+  constructor(private actionSheetCtrl: ActionSheetController) {}
 
-  constructor() { }
+  entriesPerPage = 10;
+  currentPage = 1;
+  searchQuery = '';
 
-  ngOnInit() {
-    // Replace with actual API call
-    this.jobs = [
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'development',
-        type: 'fullTime Accounts',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:36:55',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'Accusamus minim quia',
-        type: 'fullTime Human Resource Manager',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:41:09',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'human resources',
-        type: 'fullTime Human Resource Manager',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:58:16',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'testing',
-        type: 'partTime Automation Testing',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 05:07:24',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'testing',
-        type: 'fullTime Automation Testing',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-19 10:19:53',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'artificial intelligent',
-        type: 'fullTime Security Guard',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-19 04:29:29',
-      },
-    ];
-  }
- get totalEntries(): number {
+  jobs = [
+    {
+      title: 'Frontend Developer',
+      type: 'Full-Time',
+      company: 'Tech Corp',
+      location: 'Bangalore',
+      applicants: 24,
+      posted: '2025-06-10',
+      logo: 'assets/icons/kaam-chor-logo-removebg.png',
+    },
+    {
+      title: 'UI/UX Designer',
+      type: 'Part-Time',
+      company: 'DesignHub',
+      location: 'Mumbai',
+      applicants: 12,
+      posted: '2025-06-05',
+      logo: 'assets/icons/kaam-chor-logo-removebg.png',
+    },
+  ];
+
+  get totalEntries() {
     return this.filteredJobs().length;
   }
 
-  get startEntry(): number {
-    return this.totalEntries > 0 ? 1 : 0;
+  get startEntry() {
+    return (this.currentPage - 1) * this.entriesPerPage + 1;
   }
 
-  get endEntry(): number {
-    return Math.min(this.entriesPerPage, this.totalEntries);
+  get endEntry() {
+    return Math.min(this.startEntry + this.entriesPerPage - 1, this.totalEntries);
   }
 
-  filteredJobs(): any[] {
-    if (!this.searchQuery) return this.jobs.slice(0, this.entriesPerPage);
-    const query = this.searchQuery.toLowerCase();
-    return this.jobs
-      .filter(job =>
-        Object.values(job).some((value:any) =>
-          value.toString().toLowerCase().includes(query)
-        )
-      )
-      .slice(0, this.entriesPerPage);
+  filteredJobs() {
+    return this.jobs.filter(job =>
+      job.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
+
+  async presentActionSheet(job: any) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: job.title,
+      buttons: [
+        {
+          text: 'View',
+          icon: 'eye-outline',
+          handler: () => this.viewJob(job),
+        },
+        
+        {
+          text: 'Edit',
+          icon: 'create-outline',
+          handler: () => this.editJob(job),
+        },
+        
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  viewJob(job: any) {
+    console.log('View:', job);
+    // navigate to job details
+  }
+
+  
+  editJob(job: any) {
+    console.log('Edit:', job);
+    // navigate to edit job page
+  }
+
+  
 }

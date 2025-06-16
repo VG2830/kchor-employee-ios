@@ -1,20 +1,5 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-my-jobs',
-//   standalone:false,
-//   templateUrl: './my-jobs.page.html',
-//   styleUrls: ['./my-jobs.page.scss'],
-// })
-// export class MyJobsPage implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-jobs',
@@ -22,92 +7,105 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './my-jobs.page.html',
   styleUrls: ['./my-jobs.page.scss'],
 })
-export class MyJobsPage implements OnInit {
-  jobs: any[] = [];
-  searchQuery: string = '';
-  entriesPerPage: number = 10;
+export class MyJobsPage {
+  constructor(private actionSheetCtrl: ActionSheetController) {}
 
-  ngOnInit() {
-    // Replace with actual API call
-    this.jobs = [
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'development',
-        type: 'fullTime Accounts',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:36:55',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'Accusamus minim quia',
-        type: 'fullTime Human Resource Manager',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:41:09',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'human resources',
-        type: 'fullTime Human Resource Manager',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 04:58:16',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'testing',
-        type: 'partTime Automation Testing',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-16 05:07:24',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'testing',
-        type: 'fullTime Automation Testing',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-19 10:19:53',
-      },
-      {
-        logo: 'assets/imgs/logo1.png',
-        title: 'artificial intelligent',
-        type: 'fullTime Security Guard',
-        company: 'Stephens Molina Trading',
-        location: 'Chhattisgarh, Raipur',
-        applicants: 0,
-        posted: '2025-05-19 04:29:29',
-      },
-    ];
-  }
+  entriesPerPage = 10;
+  currentPage = 1;
+  searchQuery = '';
 
-  get totalEntries(): number {
+  jobs = [
+    {
+      title: 'Frontend Developer',
+      type: 'Full-Time',
+      company: 'Tech Corp',
+      location: 'Bangalore',
+      applicants: 24,
+      posted: '2025-06-10',
+      logo: 'assets/icons/kaam-chor-logo-removebg.png',
+    },
+    {
+      title: 'UI/UX Designer',
+      type: 'Part-Time',
+      company: 'DesignHub',
+      location: 'Mumbai',
+      applicants: 12,
+      posted: '2025-06-05',
+      logo: 'assets/icons/kaam-chor-logo-removebg.png',
+    },
+  ];
+
+  get totalEntries() {
     return this.filteredJobs().length;
   }
 
-  get startEntry(): number {
-    return this.totalEntries > 0 ? 1 : 0;
+  get startEntry() {
+    return (this.currentPage - 1) * this.entriesPerPage + 1;
   }
 
-  get endEntry(): number {
-    return Math.min(this.entriesPerPage, this.totalEntries);
+  get endEntry() {
+    return Math.min(this.startEntry + this.entriesPerPage - 1, this.totalEntries);
   }
 
-  filteredJobs(): any[] {
-    if (!this.searchQuery) return this.jobs.slice(0, this.entriesPerPage);
-    const query = this.searchQuery.toLowerCase();
-    return this.jobs
-      .filter(job =>
-        Object.values(job).some((value:any) =>
-          value.toString().toLowerCase().includes(query)
-        )
-      )
-      .slice(0, this.entriesPerPage);
+  filteredJobs() {
+    return this.jobs.filter(job =>
+      job.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
+  async presentActionSheet(job: any) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: job.title,
+      buttons: [
+        {
+          text: 'View',
+          icon: 'eye-outline',
+          handler: () => this.viewJob(job),
+        },
+        {
+          text: 'Delete (Inactive)',
+          icon: 'trash-outline',
+          role: 'destructive',
+          handler: () => this.deleteJob(job),
+        },
+        {
+          text: 'Edit',
+          icon: 'create-outline',
+          handler: () => this.editJob(job),
+        },
+        {
+          text: 'Applied Candidates',
+          icon: 'people-outline',
+          handler: () => this.viewApplicants(job),
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  viewJob(job: any) {
+    console.log('View:', job);
+    // navigate to job details
+  }
+
+  deleteJob(job: any) {
+    console.log('Deleted:', job);
+    // mark as inactive or remove
+  }
+
+  editJob(job: any) {
+    console.log('Edit:', job);
+    // navigate to edit job page
+  }
+
+  viewApplicants(job: any) {
+    console.log('Applied candidates:', job);
+    // open applicants list
   }
 }
