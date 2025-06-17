@@ -13,10 +13,7 @@ import { PlanCardComponent } from 'src/app/components/plan-card/plan-card.compon
   templateUrl: './employer-plan.page.html',
   styleUrls: ['./employer-plan.page.scss'],
   standalone: false,
-  // imports: [
 
-  //   IonicModule,PlanCardComponent,CommonModule
-  // ],
 })
 export class EmployerPlanPage implements OnInit {
  
@@ -31,53 +28,7 @@ export class EmployerPlanPage implements OnInit {
 //       jobs: 15,
 //       boosts: 2,
 //     },
-//     {
-//       title: '3 months PLAN',
-//       price: 4999,
-//        des:"Unlimited Candidate Responses",
-//       duration: '3 months',
-//       unlocks: 600,
-//       jobs: 50,
-//       boosts: 6,
-//     },
-
-//     {
-//       title: '6 months PLAN',
-//       price: 8999,
-//        des:"Unlimited Candidate Responses",
-//       duration: '6 months',
-//       unlocks: 1000,
-//       jobs: 100,
-//       boosts: 10,
-//     },
-//     {
-//      title: '1 year PLAN',
-//       price: 14999,
-//       des:"Unlimited Candidate Responses",
-//       duration: '1 year',
-//       unlocks: 2000,
-//       jobs: 200,
-//       boosts: 20,
-//     },
-//     {
-//        title: '3 Years PLAN',
-//       price: 18999,
-//        des:"Unlimited Candidate Responses",
-//       duration: '3 years',
-//       unlocks: 3000,
-//       jobs: 300,
-//       boosts: 50,
-//     },
-//     {
-//       title: '5 Years PLAN',
-//       price: 18999,
-//        des:"Unlimited Candidate Responses",
-//       duration: '5 years',
-//       unlocks: 3000,
-//       jobs: 300,
-//       boosts: 50,
-
-//     },
+//     
 //     {
 //       title: '7 Years PLAN',
 //       price: 18999,

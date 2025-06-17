@@ -18,24 +18,34 @@
 }
 
 .menu-button {
-  --background: transparent;
-  --color: black;
+   width: 200px;
+  //  border:1px solid purple;
+   margin:4px;
+   padding: 10px;
+   text-decoration: none;
+  text-align: left;
+  background-color: #f6f9ff;
+  color: #511168;
+  
   transition: background-color 0.3s, color 0.3s;
-  text-align: left ;
-  justify-content: flex-start!important;
-   --padding-start: 16px; /* Optional spacing */
-  --padding-end: 16px;
-  
-  
 }
 
 .menu-button:hover {
-  --background: #511168; // Light gray on hover
-  --color: #fff;
+  background-color: #511168; // Light gray on hover
+  color: #fff;
 }
 
 .active-link .menu-button {
   background-color: #511168 ; // Light blue when active
-  --color: #fff;
+  color: #fff;
   font-weight: bold;
+}
+.sideButton{
+ 
+  display: flex;
+  text-align: left;
+  // justify-content: flex-start!important;
+   --padding-start: 16px; /* Optional spacing */
+  --padding-end: 16px;
+  
 }

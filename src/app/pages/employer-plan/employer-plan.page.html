@@ -7,52 +7,52 @@
   </ion-header>
   <ion-content class="ion-padding">
   <div class="sidebarBtn">
-    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
-    <ion-button   routerLink="/employer-plan" expand="block" class="menu-button">
+    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a   routerLink="/employer-plan" expand="block" class="menu-button">
       Dashboard
-    </ion-button></div>
-<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
-    <ion-button   routerLink="/my-profile" expand="block" class="menu-button">
+    </a></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a   routerLink="/my-profile" expand="block" class="menu-button">
       <ion-icon  slot="start" name="person" ></ion-icon> My Profile
-    </ion-button></div>
-<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
-    <ion-button  routerLink="/candidate" expand="block" class="menu-button">
+    </a></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a  routerLink="/candidate-list" expand="block" class="menu-button">
       Candidate
-    </ion-button></div>
+    </a></div>
 
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
-  <ion-button  [routerLink]="'/my-jobs'" expand="block" class="menu-button">
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+  <a  [routerLink]="'/my-jobs'" expand="block" class="menu-button">
     My Jobs
-  </ion-button>
+  </a>
 </div>
 
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <ion-button   routerLink="/inactive-jobs" expand="block" class="menu-button">
+    <a   routerLink="/inactive-jobs" expand="block" class="menu-button">
       Inactive Jobs
-    </ion-button></div>
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    </a></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <ion-button   routerLink="/basic-details-page" expand="block" class="menu-button">
+    <a   routerLink="/basic-details-page" expand="block" class="menu-button">
       Post Job
-    </ion-button></div>
+    </a></div>
 
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <ion-button  routerLink="/saved-candidates" expand="block" class="menu-button">
+    <a  routerLink="/saved-candidates" expand="block" class="menu-button">
       <ion-icon name="bookmark"  slot="start"></ion-icon> Saved Candidate
-    </ion-button></div>
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    </a></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <ion-button  routerLink="/account-settings" expand="block" class="menu-button">
-      <ion-icon name="settings"  slot="start"></ion-icon> Account Setting
-    </ion-button></div>
+     <a  routerLink="/account-setting" expand="block" class="menu-button"><ion-icon name="settings"  slot="start"></ion-icon>
+       Account Setting
+    </a></div>
 
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <ion-button   routerLink="/splash-screen" expand="block" class="menu-button ">
+    <a   routerLink="/splash-screen" expand="block" class="menu-button ">
       <ion-icon name="exit"  slot="start"></ion-icon> Logout
-    </ion-button></div>
+    </a></div>
   </div>
 </ion-content>
 

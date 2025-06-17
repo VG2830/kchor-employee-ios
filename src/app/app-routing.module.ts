@@ -64,6 +64,10 @@ const routes: Routes = [
     path: 'inactive-jobs',
     loadChildren: () => import('./pages/inactive-jobs/inactive-jobs.module').then( m => m.InactiveJobsPageModule),canActivate: [AuthGuard]
   },
+  {
+    path: 'candidate-list',
+    loadChildren: () => import('./pages/candidate-list/candidate-list.module').then( m => m.CandidateListPageModule)
+  },
   
 ];
 
