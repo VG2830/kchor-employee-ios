@@ -13,22 +13,22 @@
     </a></div>
 <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
     <a   routerLink="/my-profile" expand="block" class="menu-button">
-      <ion-icon  slot="start" name="person" ></ion-icon> My Profile
+      <ion-icon  slot="start" name="person-outline" ></ion-icon> My Profile
     </a></div>
 <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
-    <a  routerLink="/candidate-list" expand="block" class="menu-button">
-      Candidate
+    <a  routerLink="/candidate-list" expand="block" class="menu-button"><img  src="assets/icons/icons8-gallery-24.png" alt="">
+      Candidate List
     </a></div>
 
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
-  <a  [routerLink]="'/my-jobs'" expand="block" class="menu-button">
+  <a  [routerLink]="'/my-jobs'" expand="block" class="menu-button"><ion-icon name="list-outline"></ion-icon>
     My Jobs
   </a>
 </div>
 
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-    <a   routerLink="/inactive-jobs" expand="block" class="menu-button">
+    <a   routerLink="/inactive-jobs" expand="block" class="menu-button"><ion-icon name="list-outline"></ion-icon>
       Inactive Jobs
     </a></div>
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
@@ -40,18 +40,18 @@
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
     <a  routerLink="/saved-candidates" expand="block" class="menu-button">
-      <ion-icon name="bookmark"  slot="start"></ion-icon> Saved Candidate
+      <ion-icon name="bookmark-outline"  slot="start"></ion-icon> Saved Candidate
     </a></div>
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
-     <a  routerLink="/account-setting" expand="block" class="menu-button"><ion-icon name="settings"  slot="start"></ion-icon>
+     <a  routerLink="/account-setting" expand="block" class="menu-button"><ion-icon name="settings-outline"></ion-icon>
        Account Setting
     </a></div>
 
    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
 
     <a   routerLink="/splash-screen" expand="block" class="menu-button ">
-      <ion-icon name="exit"  slot="start"></ion-icon> Logout
+      <ion-icon name="log-out-outline"></ion-icon> Logout
     </a></div>
   </div>
 </ion-content>

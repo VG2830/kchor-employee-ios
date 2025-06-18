@@ -423,7 +423,7 @@
               >Field is required</small
             >
           </ion-text>
-<div style="margin-bottom: 20px;">
+          <!-- <div style="margin-bottom: 20px;"> -->
           <p>Mention Skills required <span style="color: red">*</span></p>
           <ng-select
             [items]="selectedSkills"
@@ -437,6 +437,7 @@
             class="custom-ng-select"
             [addTag]="false"
             [clearable]="true"
+
           >
             <!-- Display chips for selected items -->
             <ng-template ng-multi-label-tmp let-items="items">
@@ -456,10 +457,11 @@
               >Skills field is required</small
             >
           </ion-text>
-</div>
+         <!-- </div> -->
+          
           <p>
             Is there any security deposit charged to the candidate (Eg. Uniform,
-            Kit, Bike)? <span style="color: red">*</span>
+            Kit, Bike)? <span style="color: red;  ">*</span>
           </p>
           <div class="security-toggle">
             <ion-button
@@ -485,6 +487,7 @@
               formControlName="issecuritygiven"
             ></ion-input>
           </div>
+          
           <ion-text
             color="danger"
             *ngIf="
@@ -496,6 +499,7 @@
               >Choose any one option</small
             >
           </ion-text>
+         
           <p>Languages Known <span style="color: red">*</span></p>
 
 <div formArrayName="languages">

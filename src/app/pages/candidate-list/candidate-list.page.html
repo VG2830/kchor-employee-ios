@@ -6,44 +6,41 @@
       <ion-card-title>Filter Candidates</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Last Active</ion-label>
-        <ion-select [(ngModel)]="filters.lastActive" (ionChange)="applyFilters()">
-          <ion-select-option value="7">Last 7 days</ion-select-option>
-          <ion-select-option value="30">Last 30 days</ion-select-option>
-        </ion-select>
-      </ion-item>
+     
+        <p>Last Active</p>
+        <select [(ngModel)]="filters.lastActive" (ionChange)="applyFilters()">
+          <option value="7">Last 7 days</option>
+          <option value="30">Last 30 days</option>
+        </select>
+      
+     
+        <p>Location</p>
+        <input [(ngModel)]="filters.location" (ngModelChange)="applyFilters()">
+    
+     
+        <p>Qualification</p>
+        <input [(ngModel)]="filters.qualification" (ngModelChange)="applyFilters()">
+      
 
-      <ion-item>
-        <ion-label position="floating">Location</ion-label>
-        <ion-input [(ngModel)]="filters.location" (ngModelChange)="applyFilters()"></ion-input>
-      </ion-item>
+      
+        <p>English Requirement</p>
+        <input [(ngModel)]="filters.english" (ngModelChange)="applyFilters()">
+      
+      
+        <p>Candidate Skills</p>
+        <input [(ngModel)]="filters.skills" (ngModelChange)="applyFilters()">
+      
 
-      <ion-item>
-        <ion-label position="floating">Qualification</ion-label>
-        <ion-input [(ngModel)]="filters.qualification" (ngModelChange)="applyFilters()"></ion-input>
-      </ion-item>
+     
+        <p>Experience (Min)</p>
+        <select [(ngModel)]="filters.experience" (ionChange)="applyFilters()">
+          <option value="0">Fresher</option>
+          <option value="1">1+ Year</option>
+          <option value="3">3+ Years</option>
+        </select>
+     
 
-      <ion-item>
-        <ion-label position="floating">English Requirement</ion-label>
-        <ion-input [(ngModel)]="filters.english" (ngModelChange)="applyFilters()"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Candidate Skills</ion-label>
-        <ion-input [(ngModel)]="filters.skills" (ngModelChange)="applyFilters()"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Experience (Min)</ion-label>
-        <ion-select [(ngModel)]="filters.experience" (ionChange)="applyFilters()">
-          <ion-select-option value="0">Fresher</ion-select-option>
-          <ion-select-option value="1">1+ Year</ion-select-option>
-          <ion-select-option value="3">3+ Years</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-button expand="block" color="medium" (click)="resetFilters()">Reset Filters</ion-button>
+      <ion-button expand="block"  (click)="resetFilters()">Reset Filters</ion-button>
     </ion-card-content>
   </ion-card>
 

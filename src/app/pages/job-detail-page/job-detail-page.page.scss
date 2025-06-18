@@ -83,33 +83,6 @@ ion-header {
   }
 }
 
-/* Segment Styling */
-// ion-segment {
-//   --background: var(--background-secondary);
-//   border-radius: 12px;
-//   margin: 8px 16px;
-//   padding: 4px;
-  
-//   ion-segment-button {
-//     --background: transparent;
-//     --background-checked: var(--primary-color);
-//     --color: var(--text-tertiary);
-//     --color-checked: #fff;
-//     --border-radius: 8px;
-//     font-size: 0.85rem;
-//     min-height: 40px;
-    
-//     ion-label {
-//       font-weight: 500;
-//       text-align: center;
-//     }
-    
-//     &[style*="background-color: purple"] {
-//       --background: var(--primary-color);
-//       --color: #fff;
-//     }
-//   }
-// }
 
 /* Content Styling */
 ion-content {
@@ -245,7 +218,8 @@ ng-select {
 
 /* Container styling */
 ::ng-deep ng-select .ng-select-container {
-  min-height: 40px;
+  min-height: auto;
+ 
   border-radius: 6px;
   padding: 10px;
   border: 1px solid #ccc;

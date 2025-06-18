@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">kaamChorEmp</string>
+    <string name="title_activity_main">kaamChorEmp</string>
+    <string name="package_name">com.ekarigar.kaamchor_emp</string>
+    <string name="custom_url_scheme">com.ekarigar.kaamchor_emp</string>
+</resources>

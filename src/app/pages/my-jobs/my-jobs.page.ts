@@ -37,7 +37,7 @@ ngOnInit() {
 
   this.apiService.employer_jobs({}, this.user_id, this.page, this.limit).subscribe((res: any) => {
     if (res.status === true) {
-      this.jobs = res.data ||res.pagination;
+      this.jobs = res.data ;
 
       console.log('Jobs:', this.jobs);
     }

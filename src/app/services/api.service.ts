@@ -89,6 +89,18 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
       limit,
     });
   }
-
-
+savedCandidates(data: any,userId: number,page:number,limit:number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/savedCandidates`, {data,
+      employer_id:userId,
+      page,
+      limit,
+    });
+  }
+candidateDetail(data: any,userId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/candidateDetail`, {data,
+      candidate_id:userId,
+      
+    });
+  }
+// https://ek-reps.com/kaam-chor/Employer_Api/candidateDetail
 }
