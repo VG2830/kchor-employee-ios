@@ -16,18 +16,18 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://ek-reps.com/kaam-chor/Employer_Api'; // Replace with your backend URL
+  // private baseUrl = 'https://ek-reps.com/kaam-chor/Employer_Api'; // Replace with your backend URL
   private apiUrl = `${environment.baseUrl}`;
   constructor(private http: HttpClient) {}
 
   submitJob(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/jobData`, data);
+    return this.http.post(`${this.apiUrl}/Employer_Api/jobData`, data);
   }
   submitCompany(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/compData`, data);
+    return this.http.post(`${this.apiUrl}/Employer_Api/compData`, data);
   }
   submitBasic(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/regData`, data);
+    return this.http.post(`${this.apiUrl}/Employer_Api/regData`, data);
   }
    getJobCategory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
@@ -83,24 +83,40 @@ updateEmployerEmail(userId: number, email: string) {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/emailbyuserid/${userId}`);
 }
 employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/employer_jobs`, {data,
+    return this.http.post(`${this.apiUrl}/Employer_Api/employer_jobs`, {data,
       user_id:userId,
       page,
       limit,
     });
   }
 savedCandidates(data: any,userId: number,page:number,limit:number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/savedCandidates`, {data,
+    return this.http.post(`${this.apiUrl}/Employer_Api/savedCandidates`, {data,
       employer_id:userId,
       page,
       limit,
     });
   }
 candidateDetail(data: any,userId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/candidateDetail`, {data,
+    return this.http.post(`${this.apiUrl}/Employer_Api/candidateDetail`, {data,
       candidate_id:userId,
       
     });
   }
-// https://ek-reps.com/kaam-chor/Employer_Api/candidateDetail
+  candidates(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/candidates`, {data
+    });
+  }
+  employer_inactive_jobs(data: any,userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/employer_inactive_jobs`, {data,
+      user_id:userId,
+      
+    });
+  }
+  employer_inactive_job_detail(data: any,userId: number,job_id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/employer_inactive_job_detail`, {data,
+      user_id:userId,
+      job_id
+    });
+  }
+
 }

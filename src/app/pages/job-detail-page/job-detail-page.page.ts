@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './job-detail-page.page.html',
   styleUrls: ['./job-detail-page.page.scss'],
 })
+ 
 export class JobDetailPage implements OnInit {
   languageControl = new FormControl();
   // selectedLanguage: any;
@@ -28,7 +29,9 @@ export class JobDetailPage implements OnInit {
   form = {
     description: '',
   };
-
+  city:string | undefined;
+  company_id: string | undefined;
+  state:string | undefined;
   dropdownOptions: any[] = [];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
@@ -53,7 +56,7 @@ export class JobDetailPage implements OnInit {
     'Anywhere in India',
   ];
 
-  company_id: string | undefined;
+ 
 
   constructor(
     private fb: FormBuilder,
@@ -78,6 +81,8 @@ export class JobDetailPage implements OnInit {
       salary: ['', Validators.required],
       skills: ['', Validators.required],
       company_id: [''],
+      state:[''],
+      city:[''],
       issecuritygiven: ['', Validators.required],
       languages: this.fb.array([this.createLanguageGroup()]),
       jobStartTime: ['', Validators.required],
@@ -130,8 +135,17 @@ export class JobDetailPage implements OnInit {
     };
     this.apiService.get_user_compID(data).subscribe(
       (response: any) => {
+        this.jobForm.patchValue({
+      company_id: response.company_id,
+      state: response.state,
+      city: response.city,
+    });
+         console.log('response:',response);
         this.company_id = response.company_id;
-        console.log('Company ID Data:', this.company_id);
+        this.state=response.state;
+        this.city=response.city;
+       
+       
       },
       (error) => {
         console.error('Error fetching data:', error);

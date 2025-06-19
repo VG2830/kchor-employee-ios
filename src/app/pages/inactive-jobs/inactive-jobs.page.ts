@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
+import { InactiveJobDetailModalComponent } from 'src/app/inactive-job-detail-modal/inactive-job-detail-modal.component';
+import { ApiService } from 'src/app/services/api.service';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inactive-jobs',
@@ -8,8 +11,8 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./inactive-jobs.page.scss'],
 })
 export class InactiveJobsPage {
-  constructor(private actionSheetCtrl: ActionSheetController) {}
-
+  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController) {}
+user_id!:number;
   entriesPerPage = 10;
   currentPage = 1;
   searchQuery = '';
@@ -34,7 +37,17 @@ export class InactiveJobsPage {
       logo: 'assets/icons/kaam-chor-logo-removebg.png',
     },
   ];
+// jobs:any[]=[];
+ngOnInit(){
+// this.user_id=310;
+//    this.apiService.employer_inactive_jobs({}, this.user_id).subscribe((res: any) => {
+//     if (res.status === true) {
+//       this.jobs = res.data ;
 
+//       console.log('Jobs:', this.jobs);
+//     }
+//   });
+}
   get totalEntries() {
     return this.filteredJobs().length;
   }
@@ -80,11 +93,19 @@ export class InactiveJobsPage {
     await actionSheet.present();
   }
 
-  viewJob(job: any) {
-    console.log('View:', job);
-    // navigate to job details
-  }
+  // viewJob(job: any) {
+  //   console.log('View:', job);
+  //   // navigate to job details
+  // }
+async viewJob(job: any) {
+  const modal = await this.modalCtrl.create({
+    component: InactiveJobDetailModalComponent,
+    // componentProps: { userId: user.user_id },
+    componentProps: { userId:310 ,jobId:42},
 
+  });
+  await modal.present();
+}
   
   editJob(job: any) {
     console.log('Edit:', job);
