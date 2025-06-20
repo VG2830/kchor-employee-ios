@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 
-import { IonicModule } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CheckoutModalPage } from 'src/app/checkout-modal/checkout-modal.page';
 import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 
-import { PlanCardComponent } from 'src/app/components/plan-card/plan-card.component';
 @Component({
   selector: 'app-employer-plan',
   
@@ -41,7 +39,7 @@ export class EmployerPlanPage implements OnInit {
 //    ];
          plans:any[]=[];
 
-  constructor(private modalCtrl: ModalController,private apiService: ApiService) { }
+  constructor(private modalCtrl: ModalController,private apiService: ApiService, private router: Router) { }
 
   async openCheckoutModal(plan: any) {
     const modal = await this.modalCtrl.create({
@@ -59,6 +57,16 @@ export class EmployerPlanPage implements OnInit {
     }
       });
   }
+logout() {
+  // Step 1: Clear the user_id from localStorage
+  localStorage.removeItem('user_id');
+
+  // OR reset completely
+  localStorage.clear(); // if you want to clear everything
+
+  // Step 2: Navigate to the login page
+  this.router.navigate(['/login']);
+}
 
 
 }

@@ -2,7 +2,7 @@
 <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <!-- <ion-title>Menu Content</ion-title> -->
+      <!-- <ion-title>Menu Content</ion-title> --> 
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
@@ -48,9 +48,9 @@
        Account Setting
     </a></div>
 
-   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+   <div class="sideButton">
 
-    <a   routerLink="/splash-screen" expand="block" class="menu-button ">
+    <a   expand="block" class="menu-button " (click)="logout()">
       <ion-icon name="log-out-outline"></ion-icon> Logout
     </a></div>
   </div>

@@ -1,69 +1,56 @@
 <ion-content class="ion-padding">
-
-  <!-- Filter Section -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Filter Candidates</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-     
+      <form [formGroup]="filterForm">
         <p>Last Active</p>
-<select [(ngModel)]="filters.lastActive" (ionChange)="applyFilters()">
-  <option value="this week">This Week</option>
-  <option value="this month">This Month</option>
-</select>
-      
-     
-        <p>Location</p>
-        <input [(ngModel)]="filters.location" >
-    
-     
-        <p>Qualification</p>
-        <input [(ngModel)]="filters.qualification" >
-      
-
-      
-        <p>English Requirement</p>
-        <input [(ngModel)]="filters.english" >
-      
-      
-        <p>Candidate Skills</p>
-        <input [(ngModel)]="filters.skills" >
-      
-
-     
-        <p>Experience (Min)</p>
-       <select [(ngModel)]="filters.experience" >
-         <option [value]="null">Any</option>
-         <option [value]="0">Fresher</option>
-         <option [value]="1">1+ Year</option>
-         <option [value]="3">3+ Years</option>
+        <select formControlName="lastActive">
+          <option value="">Any</option>
+          <option value="this week">This Week</option>
+          <option value="this month">This Month</option>
         </select>
-     
 
-      <ion-button expand="block"  (click)="resetFilters()">Reset Filters</ion-button>
-      <ion-button expand="block" color="primary" (click)="applyFilters()">Search</ion-button>
+        <p>Location</p>
+        <input type="text" formControlName="location" />
 
+        <p>Qualification</p>
+        <input type="text" formControlName="qualification" />
+
+        <p>English Requirement</p>
+        <input type="text" formControlName="english" />
+
+        <p>Candidate Skills</p>
+        <input type="text" formControlName="skills" />
+
+        <p>Experience (Min)</p>
+        <select formControlName="experience">
+          <option value="">Any</option>
+          <option value="0">Fresher</option>
+          <option value="1">1+ Year</option>
+          <option value="3">3+ Years</option>
+        </select>
+
+        <ion-button expand="block" (click)="resetFilters()">Reset Filters</ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
 
-  <!-- Candidate Cards -->
+  <!-- Display Candidates -->
   <ion-card *ngFor="let candidate of displayedCandidates">
     <ion-card-header>
       <ion-card-title>{{ candidate.name }}</ion-card-title>
-      <ion-label><ion-icon name="person"></ion-icon> Age: {{ candidate.age }}</ion-label>
     </ion-card-header>
     <ion-card-content>
-      <p><strong>Gender:</strong> {{ candidate.gender }}</p>
-     <p><strong>Education:</strong> {{ candidate.title_of_education }}</p>
-      <p><strong>Experience:</strong> {{ candidate.have_experience === 'Yes' ? candidate.year_of_experience + ' years' : 'Fresher' }}</p>
+      <p><strong>Qualification:</strong> {{ candidate.title_of_education }}</p>
+      <p><strong>Experience:</strong> 
+        {{ candidate.have_experience === 'Yes' ? candidate.year_of_experience + ' years' : 'Fresher' }}
+      </p>
       <p><strong>Skills:</strong> {{ candidate.skills?.join(', ') }}</p>
-       <p><strong>Address:</strong> {{ candidate.state }}, {{ candidate.city }}</p>
-         <p><strong>English:</strong> {{ candidate.english_proficiency }}</p>
-
-      <p><strong>Joined:</strong> {{ candidate.joined }} days ago</p>
-      <ion-button expand="block" size="small" color="primary">Notify Candidate</ion-button>
-      <ion-button expand="block" size="small" fill="clear">View</ion-button>
+      <p><strong>Location:</strong> {{ candidate.city }}</p>
+      <p><strong>English:</strong> {{ candidate.english_proficiency }}</p>
+      <p><strong>Joined:</strong> {{ candidate.joined | date:'mediumDate' }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -73,5 +60,4 @@
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
     <ion-button size="small" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</ion-button>
   </div>
-
 </ion-content>

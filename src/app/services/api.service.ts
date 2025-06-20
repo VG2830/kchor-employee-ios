@@ -119,4 +119,14 @@ candidateDetail(data: any,userId: number): Observable<any> {
     });
   }
 
+   upload_company_logo(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, {data
+    });
+  }
+   upload_office_images(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/upload_office_images`, {data
+    });
+  }
+ 
+
 }
