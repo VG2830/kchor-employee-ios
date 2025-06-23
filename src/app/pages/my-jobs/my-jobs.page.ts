@@ -82,11 +82,11 @@ ngOnInit() {
           role: 'destructive',
           handler: () => this.deleteJob(job),
         },
-        {
-          text: 'Edit',
-          icon: 'create-outline',
-          handler: () => this.editJob(job),
-        },
+        // {
+        //   text: 'Edit',
+        //   icon: 'create-outline',
+        //   handler: () => this.editJob(job),
+        // },
         {
           text: 'Applied Candidates',
           icon: 'people-outline',
@@ -102,11 +102,15 @@ ngOnInit() {
     await actionSheet.present();
   }
 
-  viewJob(job: any) {
-    console.log('View:', job);
-    // navigate to job details
-  }
+  // viewJob(job: any) {
+  //   console.log('View:', job);
+  //   // navigate to job details
+  // }
 
+  async viewJob(job:any)
+{
+
+}
   deleteJob(job: any) {
     console.log('Deleted:', job);
     // mark as inactive or remove

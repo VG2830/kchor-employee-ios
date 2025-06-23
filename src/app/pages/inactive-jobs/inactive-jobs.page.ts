@@ -101,7 +101,7 @@ async viewJob(job: any) {
   const modal = await this.modalCtrl.create({
     component: InactiveJobDetailModalComponent,
     // componentProps: { userId: user.user_id },
-    componentProps: { userId:310 ,jobId:42},
+    componentProps: { userId:96 ,jobId:1},
 
   });
   await modal.present();

@@ -13,13 +13,13 @@ import { ApiService } from '../services/api.service';
 export class InactiveJobDetailModalComponent  implements OnInit {
    @Input() userId!: number;
    @Input() jobId!:number;
-jobData:any;
+    jobData:any;
   loading = true;
 
     constructor(private modalCtrl: ModalController, private apiService: ApiService) {}
   
   ngOnInit() {
-     this.apiService.employer_inactive_job_detail({},this.userId,this.jobId).subscribe({
+     this.apiService.employer_inactive_job_detail(this.jobId).subscribe({
       next: (res) => {
         this.jobData = res.data;
         this.loading = false;

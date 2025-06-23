@@ -92,8 +92,8 @@ candidates:any[]=[];
 async viewCandidate(user: any) {
   const modal = await this.modalCtrl.create({
     component: CandidateDetailModalComponent,
-    // componentProps: { userId: user.user_id },
-    componentProps: { userId:5 },
+    componentProps: { userId: user.user_id },
+    // componentProps: { userId:5 },
 
   });
   await modal.present();

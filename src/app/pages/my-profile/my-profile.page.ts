@@ -15,7 +15,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   // imports:[IonicModule,]
 })
 export class MyProfilePage implements OnInit {
+
   @Input() formData: any;
+  
   profilePage:FormGroup;
   user_id!: number;
   empProfileOptions:any[]=[];

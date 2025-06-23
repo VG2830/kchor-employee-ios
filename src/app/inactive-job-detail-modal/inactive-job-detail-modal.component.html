@@ -19,19 +19,19 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-title class="ion-text-center">
-        <ion-text color="primary" style="font-size: 15px;">INACTIVE JOB DETAIL</ion-text>
+        <!-- <ion-text color="primary" style="font-size: 15px;">INACTIVE JOB DETAIL</ion-text> -->
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div class="job-title">
-    <h5>Graphic Designer</h5>
-    <p>Kfc India Limited</p>
+    <h5>{{ jobData.job_title }}</h5>
+    <p>{{ jobData.company_name }}</p>
     <ion-row class="flex-row" style="font-size: 12px; justify-content:center;">
       <ion-col size="auto">
         <ion-icon name="location" color="primary"></ion-icon>
         <ion-text color="dark" class="styled-text">
-          Kaithal, Chandigarh
+          {{jobData.job_city_name}}, {{jobData.job_state_name}}
         </ion-text>
       </ion-col>
       <ion-col size="auto">
@@ -54,7 +54,7 @@
         <ion-icon name="document" color="dark" size="large"></ion-icon>
         <!-- <p>Applicants</p> --><br>
         <small>Applicants</small>
-        <h6>160</h6>
+        <h6>{{jobData.job_applicants_count}}</h6>
       </ion-col>
       <ion-col size="4" class="ion-text-center">
         <ion-icon name="briefcase" color="dark" size="large"></ion-icon>
@@ -67,7 +67,7 @@
         <!-- <p>Salary</p> -->
         <br>
         <small>Salary</small>
-        <h6>10K - 20K</h6>
+        <h6>{{jobData.salary_per_annum}}</h6>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -93,7 +93,7 @@
     <ion-text color="primary">
       About this Job
     </ion-text>
-    <p>As a Graphic Designer, you will be a key contributor to the growth, implementation and overall improvement of
+    <p>As a {{jobData.job_title}}, you will be a key contributor to the growth, implementation and overall improvement of
       Scott's Design rights. You will be collaborating with a lean team to...</p>
 
     <ion-card class="job-highlights-card">
@@ -109,7 +109,7 @@
             <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
             <ion-label>
               <h2>Skills Required</h2>
-              <p>Photoshop, CorelDraw</p>
+              <p>{{jobData.skills_required}}</p>
             </ion-label>
           </ion-item>
           <ion-item lines="none">
@@ -130,7 +130,7 @@
             <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
             <ion-label>
               <h2>Role</h2>
-              <p>Graphic Designer</p>
+              <p>{{jobData.job_title}}</p>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -142,10 +142,10 @@
       Company Details
     </ion-text>
     <p>
-      <strong>Company Name:</strong> Scott's Design<br>
+      <strong>Company Name:</strong> {{jobData.company_name}}<br>
       <strong>Age:</strong> 5 years<br>
       <strong>Organization Size:</strong> 500<br>
-      <strong>Industry type:</strong>Information Technology<br>
+      <strong>Industry type:</strong>{{jobData.industry_type_name}}<br>
 
     </p>
 
@@ -163,9 +163,9 @@
       Candidate Requirements
     </ion-text>
     <p class="candidate-requirements">
-      <strong>Education:</strong> Bachelor's Degree in Graphic Design or related field<br>
-      <strong>Skills Required:</strong> Proficiency in Adobe Creative Suite (Photoshop, Illustrator, InDesign), CorelDraw, and strong typography skills.<br>
-      <strong>Languages Required:</strong> Hindi, English<br>
+      <strong>Education:</strong> {{jobData.min_qual}}<br>
+      <strong>Skills Required:</strong> {{jobData.skills_required}}<br>
+      <strong>Languages Required:</strong> {{jobData.job_languages.language}}<br>
       <strong>Job Timings:</strong> 9:30 AM - 6:30 PM<br>
       <strong>Role:</strong> Graphic Designer
     </p>

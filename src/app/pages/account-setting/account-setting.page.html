@@ -1,5 +1,20 @@
 
- <ion-content class="ion-padding">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menuId="main-menu"></ion-menu-button>
+    </ion-buttons>
+     <img
+        src="../../../assets/icons/kaam-chor-logo-removebg.png"
+        style="opacity: 0.7"
+        alt="logo"
+      />
+    <!-- <ion-title>Page Title</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding"  *ngIf="!isLoading">
   <ion-card class="account-card">
     <ion-card-header>
       <ion-card-title class="title">Account Settings</ion-card-title>
@@ -38,4 +53,25 @@
       </ng-template>
     </ion-card-content>
   </ion-card>
+   <!-- Upload Only If Not Uploaded -->
+  <div *ngIf="!logoUploaded; else showLogo">
+    <ion-item>
+      <ion-label position="stacked">Upload Company Logo</ion-label>
+      <input type="file" accept="image/*" (change)="onLogoSelected($event)" />
+    </ion-item>
+    <ion-button expand="block" (click)="uploadLogo()">Upload Logo</ion-button>
+  </div>
+
+  <!-- Show Uploaded Logo -->
+  <ng-template #showLogo>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Uploaded Logo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <img [src]="logoUrl" alt="Company Logo" width="150" />
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
 </ion-content>

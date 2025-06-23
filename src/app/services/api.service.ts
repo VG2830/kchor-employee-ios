@@ -112,15 +112,20 @@ candidateDetail(data: any,userId: number): Observable<any> {
       
     });
   }
-  employer_inactive_job_detail(data: any,userId: number,job_id:number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/employer_inactive_job_detail`, {data,
-      user_id:userId,
-      job_id
-    });
+  // employer_inactive_job_detail(data: any,userId: number,job_id:number): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/Employer_Api/employer_inactive_job_detail`, {data,
+  //     user_id:userId,
+  //     job_id
+  //   });
+  // }
+ employer_inactive_job_detail(job_id:number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/FormApi/job_details/${job_id}`);
   }
 
-   upload_company_logo(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, {data
+   upload_company_logo(data: any,userId:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, {data,
+      user_id:userId,
+      
     });
   }
    upload_office_images(data: any): Observable<any> {

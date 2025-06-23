@@ -1,328 +1,330 @@
-// // import { Component, OnInit } from '@angular/core';
-
-// // @Component({
-// //   selector: 'app-candidate-list',
-// //   standalone:false,
-// //   templateUrl: './candidate-list.page.html',
-// //   styleUrls: ['./candidate-list.page.scss'],
-// // })
-// // export class CandidateListPage implements OnInit {
-
-// //   constructor() { }
-
-// //   ngOnInit() {
-// //   }
-
-// // }
-// import { Component } from '@angular/core';
-// import { ApiService } from 'src/app/services/api.service';
-
-// @Component({
-//   selector: 'app-candidate-list',
-//   standalone:false,
-//   templateUrl: './candidate-list.page.html',
-//   styleUrls: ['./candidate-list.page.scss'],
-// })
-// export class CandidateListPage {
-//     constructor(private apiService: ApiService) {}
-  
-//   filters = {
-//     lastActive: null,
-//     location: '',
-//     qualification: '',
-//     english: '',
-//     skills: '',
-//     experience: null,
-//   };
-
-//   // candidates:any[] = [
-//   //   {
-//   //     name: 'Aarushi Thakur',
-//   //     age: 23,
-//   //     gender: 'Female',
-//   //     education: 'Post Graduate (M.Sc.)',
-//   //     experience: 'Fresher',
-//   //     skills: 'Business development',
-//   //     address: 'Himachal Pradesh, Hamirpur',
-//   //     english: 'Fluent',
-//   //     joined: 113,
-//   //   },
-//   //   {
-//   //     name: 'Aashi Pathak',
-//   //     age: 21,
-//   //     gender: 'Female',
-//   //     education: 'Post Graduate (M.A.)',
-//   //     experience: 'Fresher',
-//   //     skills: 'Tele Calling',
-//   //     address: 'Haryana, Ambala',
-//   //     english: 'Fluent',
-//   //     joined: 113,
-//   //   },
-//   //   {
-//   //     name: 'Abhishek Mishra',
-//   //     age: 26,
-//   //     gender: 'Male',
-//   //     education: 'Diploma (Computer Science)',
-//   //     experience: '8 years',
-//   //     skills: 'Business development, Marketing, Field sales',
-//   //     address: 'Delhi, New Delhi',
-//   //     english: 'Fluent',
-//   //     joined: 112,
-//   //   }
-//   // ];
-// candidates:any[]=[];
-// filteredCandidates :any []=[];
-//   displayedCandidates :any[]=[];
-
-//   // Pagination
-//   currentPage = 1;
-//   pageSize = 5;
-//   totalPages = 1;
-
-//   ngOnInit() {
-
-
-//   //    this.apiService.savedCandidates({}, this.employer_id, this.page, this.limit).subscribe((res: any) => {
-//   //   if (res.status==="success") {
-//   //     this.candidates = res.data ;
-
-//   //     console.log('Jobs:', this.candidates);
-//   //   }
-//   // });
-//     this.applyFilters();
-//   }
-
-//   applyFilters() {
-//     const payload: any = {
-//     page: this.currentPage,
-//     limit: this.pageSize,
-//     city_id: this.filters.location || null,
-//     skills: this.filters.skills || null,
-//     last_active: this.filters.lastActive ? 'this week' : null,
-//     qualification_id: this.filters.qualification || null,
-//     experience_min: this.filters.experience || null,
-//     english_proficiency: this.filters.english || null,
-//   };
-//     this.filteredCandidates = this.candidates.filter(candidate => {
-//       return (
-//         (!this.filters.location || candidate.address.toLowerCase().includes(this.filters.location.toLowerCase())) &&
-//         (!this.filters.qualification || candidate.education.toLowerCase().includes(this.filters.qualification.toLowerCase())) &&
-//         (!this.filters.skills || candidate.skills.toLowerCase().includes(this.filters.skills.toLowerCase())) &&
-//         (!this.filters.english || candidate.english.toLowerCase().includes(this.filters.english.toLowerCase()))
-//       );
-//     });
-// // this.apiService.candidates(payload).subscribe((res: any) => {
-// //     if (res.status === true) {
-// //       this.candidates = res.data;
-// //       this.totalPages = res.pagination?.total_pages || 1;
-// //       this.currentPage = res.pagination?.current_page || 1;
-// //       this.displayedCandidates = this.candidates;
-// //     }
-// //   });
-//     this.totalPages = Math.ceil(this.filteredCandidates.length / this.pageSize);
-//     this.currentPage = 1;
-//     this.paginate();
-//   }
-
-//   // paginate() {
-//   //   const start = (this.currentPage - 1) * this.pageSize;
-//   //   const end = start + this.pageSize;
-//   //   this.displayedCandidates = this.filteredCandidates.slice(start, end);
-//   // }
-// paginate() {
-//   this.applyFilters(); // re-fetch server-side paginated results
-// }
-//   nextPage() {
-//     if (this.currentPage < this.totalPages) {
-//       this.currentPage++;
-//       this.paginate();
-//     }
-//   }
-
-//   prevPage() {
-//     if (this.currentPage > 1) {
-//       this.currentPage--;
-//       this.paginate();
-//     }
-//   }
-
-//   resetFilters() {
-//     this.filters = {
-//       lastActive: null,
-//       location: '',
-//       qualification: '',
-//       english: '',
-//       skills: '',
-//       experience: null,
-//     };
-//     this.applyFilters();
-//   }
-// }
-// import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup } from '@angular/forms';
-// import { debounceTime } from 'rxjs/operators';
-// import { ApiService } from 'src/app/services/api.service';
-
-// @Component({
-//   selector: 'app-candidate-list',
-//   standalone:false,
-//   templateUrl: './candidate-list.page.html',
-//   styleUrls: ['./candidate-list.page.scss'],
-  
-// })
-// export class CandidateListPage implements OnInit {
-//   filterForm!: FormGroup ;
-//   candidates: any[] = [];
-//   displayedCandidates: any[] = [];
-//   currentPage = 1;
-//   pageSize = 10;
-//   totalPages = 1;
-
-//   constructor(private fb: FormBuilder, private apiService: ApiService) {}
-
-//   ngOnInit() {
-//     this.filterForm = this.fb.group({
-//       lastActive: [''],
-//       location: [''],
-//       qualification: [''],
-//       english: [''],
-//       skills: [''],
-//       experience: ['']
-//     });
-
-//     // Call API on any field change (with debounce)
-//     this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-//       this.currentPage = 1;
-//       this.applyFilters();
-//     });
-
-//     // Initial load
-//     this.applyFilters();
-//   }
-
-//   applyFilters() {
-//     const formValues = this.filterForm.value;
-
-//     const payload = {
-//       page: this.currentPage,
-//       limit: this.pageSize,
-//       city_id: formValues.location || null,
-//       skills: formValues.skills || null,
-//       last_active: formValues.lastActive || null,
-//       qualification_id: formValues.qualification || null,
-//       experience_min: formValues.experience || null,
-//       english_proficiency: formValues.english || null,
-//     };
-
-//     this.apiService.candidates(payload).subscribe((res: any) => {
-//       if (res.status) {
-//         this.candidates = res.data || [];
-//         this.totalPages = res.pagination?.total_pages || 1;
-//         this.displayedCandidates = this.candidates;
-//       }
-//     });
-//   }
-
-//   nextPage() {
-//     if (this.currentPage < this.totalPages) {
-//       this.currentPage++;
-//       this.applyFilters();
-//     }
-//   }
-
-//   prevPage() {
-//     if (this.currentPage > 1) {
-//       this.currentPage--;
-//       this.applyFilters();
-//     }
-//   }
-
-//   resetFilters() {
-//     this.filterForm.reset();
-//     this.currentPage = 1;
-//     this.applyFilters();
-//   }
-// }
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+
+import { ModalController } from '@ionic/angular';
+import { CandidateDetailModalComponent } from 'src/app/candidate-detail-modal/candidate-detail-modal.component';
+
+interface State {
+  id: number | string;
+  name: string;
+}
+
+interface City {
+  id: number | string;
+  name: string;
+}
+
+interface Qualification {
+  id: number | string;
+  value: string;
+}
+
+interface Language {
+  id: number | string;
+  language: string;
+}
+
+interface Candidate {
+  name: string;
+  dob: string | null;
+  gender: string | null;
+  state_name: string | null;
+  city_name: string | null;
+  highest_qualification: string | null;
+  title_of_education: string | null;
+  have_experience: string; // "Yes" | "No"
+  year_of_experience: string;
+  industry_type: string | null;
+  skills: string[]; // always expect array
+  joined: string | null;
+  last_active: string | null;
+}
+
+interface CandidateApiResponse {
+  status: boolean;
+  message: string;
+  data: Candidate[];
+  pagination: {
+    total_count: number;
+    current_page: number;
+    total_pages: number;
+    limit: number;
+  };
+}
+
 
 @Component({
   selector: 'app-candidate-list',
-  standalone:false,
+  standalone: false,
   templateUrl: './candidate-list.page.html',
   styleUrls: ['./candidate-list.page.scss'],
 })
-export class CandidateListPage implements OnInit {
-  filterForm!: FormGroup;
-  candidates: any[] = [];
-  displayedCandidates: any[] = [];
+export class CandidateListPage implements OnInit, OnDestroy {
+  // filterForm: FormGroup;
+  // candidates: any[] = [];
+  // currentPage = 1;
+  // pageSize = 10;
+  // totalPages = 1;
+
+  // states: any[] = [];
+  // cities: any[] = [];
+  // qualifications: any[] = [];
+  // skillsList: string[] = [];
+  // languages: any[] = [];
+  filterForm: FormGroup;
+  candidates: Candidate[] = [];
   currentPage = 1;
-  pageSize = 10;
+  pageSize = 5;
   totalPages = 1;
+user_id!:number;
+  states: State[] = [];
+  cities: City[] = [];
+  qualifications: Qualification[] = [];
+  skillsList: any[] = [];
+  languages: Language[] = [];
+  experienceYears: number[] = [];
+  // experienceYears: number[] = [];
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {}
+  englishProficiencyOptions = [
+    { label: 'Expert', value: 'Expert' },
+    { label: 'Fluent', value: 'Fluent' },
+    { label: 'Not so fluent', value: 'Not so fluent' }
+  ];
 
-  ngOnInit() {
+
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private fb: FormBuilder, private api: ApiService,private modalCtrl:ModalController) {
     this.filterForm = this.fb.group({
-      lastActive: [''],
-      location: [''],
-      qualification: [''],
-      english: [''],
-      skills: [''],
-      experience: ['']
+      state: [''],
+      city_id: [''],
+      qualification_id: [''],
+      english_proficiency: [''],
+      skills: [[]],
+      experience_min: [''],
+      last_active: [''],
     });
-
-    // Trigger filter every time user changes any value
-    this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      this.currentPage = 1;
-      this.applyFilters();
-    });
-
-    this.applyFilters(); // Initial load
   }
 
-  applyFilters() {
-    const formValues = this.filterForm.value;
+  ngOnInit() {
+    this.experienceYears = Array.from({ length: 30 }, (_, i) => i + 1);
+    // Load dropdown values
+    this.loadStates();
+    this.loadQualifications();
+    this.loadLanguages();
+    this.loadSkills();
 
-    const payload = {
-      page: this.currentPage,
-      limit: this.pageSize,
-      city_id: formValues.location || null,
-      skills: formValues.skills || null,
-      last_active: formValues.lastActive || null,
-      qualification_id: formValues.qualification || null,
-      experience_min: formValues.experience || null,
-      english_proficiency: formValues.english || null,
-    };
+    // React to form value changes with debounce
+    this.filterForm.valueChanges
+      .pipe(debounceTime(300), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.currentPage = 1;
+        this.fetchCandidates();
+      });
 
-    this.apiService.candidates(payload).subscribe((res: any) => {
-      if (res.status) {
-        this.candidates = res.data || [];
-        this.totalPages = res.pagination?.total_pages || 1;
-        this.displayedCandidates = this.candidates;
+    this.fetchCandidates();
+  }
+ 
+  async viewOpen(candidate:any){
+    
+   const modal = await this.modalCtrl.create({
+       component: CandidateDetailModalComponent,
+       componentProps: { userId:candidate.user_id },
+      //  componentProps: { userId:151 },
+   
+     });
+     await modal.present(); 
+   }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // ✅ Load States
+  loadStates() {
+    this.api.getStates().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res: any) => {
+        this.states = res?.data || [];
+        console.log('States loaded:', this.states);
+      },
+      error: (err) => {
+        console.error('Failed to load states:', err);
       }
     });
   }
 
+  // ✅ Load Cities based on selected State
+  onStateChange(event: any) {
+    const stateId = event.detail.value;
+    this.cities = []; // Reset cities before loading new ones
+    if (stateId) {
+      this.api.getCitiesByState(stateId).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (res: any) => {
+          this.cities = res?.data || [];
+          console.log('Cities loaded:', this.cities);
+        },
+        error: (err) => {
+          console.error('Failed to load cities:', err);
+        }
+      });
+    }
+  }
+
+  // ✅ Load Qualifications
+  loadQualifications() {
+    this.api.getEduQual().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res: any) => {
+        this.qualifications = res?.data || [];
+        console.log('Qualifications loaded:', this.qualifications);
+      },
+      error: (err) => {
+        console.error('Failed to load qualifications:', err);
+      }
+    });
+  }
+
+  // ✅ Load Languages
+  loadLanguages() {
+    this.api.getLanguages().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res: any) => {
+        this.languages = res?.data || [];
+        console.log('Languages loaded:', this.languages);
+      },
+      error: (err) => {
+        console.error('Failed to load languages:', err);
+      }
+    });
+  }
+
+  // ✅ Load Skills
+  loadSkills() {
+    this.api.getSkills().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res: any) => {
+        this.skillsList = res?.data || [];
+        console.log('Skills loaded:', this.skillsList);
+      },
+      error: (err) => {
+        console.error('Failed to load skills:', err);
+      }
+    });
+  }
+
+  onCityChange() {
+    this.currentPage = 1;
+    this.fetchCandidates();
+  }
+
+
+  generateFilterPayload() {
+    const form = this.filterForm.value;
+
+    return {
+      page: this.currentPage,
+      limit: this.pageSize,
+      city_id: form.city_id || null,
+      skills: Array.isArray(form.skills) && form.skills.length ? form.skills.join(',') : null,
+      last_active: form.last_active || null,
+      qualification_id: form.qualification_id || null,
+      experience_min: form.experience_min || null,
+      english_proficiency: form.english_proficiency || null
+    };
+  }
+  fetchCandidates() {
+    const payload = this.generateFilterPayload();
+
+    this.api.candidates(payload).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res) => {
+        if (res.status && Array.isArray(res.data)) {
+          this.candidates = res.data.map((candidate: { skills: any; }) => ({
+            ...candidate,
+            skills: Array.isArray(candidate.skills) ? candidate.skills : []
+          }));
+          this.totalPages = res.pagination?.total_pages || 1;
+          this.currentPage = res.pagination?.current_page || 1;
+        } else {
+          this.candidates = [];
+          this.totalPages = 1;
+          this.currentPage = 1;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching candidates:', err);
+        this.candidates = [];
+        this.totalPages = 1;
+        this.currentPage = 1;
+      }
+    });
+  }
+
+
+
+  //   fetchCandidates() {
+  //   const form = this.filterForm.value;
+
+  //   const selectedSkills = Array.isArray(form.skills) ? form.skills : [];
+
+  //   const payload = {
+  //     page: this.currentPage,
+  //     limit: this.pageSize,
+  //     city_id: form.city_id || null,
+  //     skills: selectedSkills.length ? selectedSkills.join(',') : null,
+  //     last_active: form.last_active || null,
+  //     qualification_id: form.qualification_id || null,
+  //     experience_min: form.experience_min || null,
+  //     english_proficiency: form.english_proficiency || null,
+  //   };
+
+  //   this.api.candidates(payload).pipe(takeUntil(this.destroy$)).subscribe({
+  //     next: (res: CandidateApiResponse) => {
+  //       if (res.status && Array.isArray(res.data)) {
+  //         this.candidates = res.data.map((candidate: Candidate) => ({
+  //           ...candidate,
+  //           skills: Array.isArray(candidate.skills) ? candidate.skills : []
+  //         }));
+  //         this.totalPages = res.pagination?.total_pages || 1;
+  //         this.currentPage = res.pagination?.current_page || 1;
+  //       } else {
+  //         this.candidates = [];
+  //         this.totalPages = 1;
+  //         this.currentPage = 1;
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching candidates:', err);
+  //       this.candidates = [];
+  //       this.totalPages = 1;
+  //       this.currentPage = 1;
+  //     }
+  //   });
+  // }
+
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.applyFilters();
+      this.fetchCandidates();
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.applyFilters();
+      this.fetchCandidates();
     }
   }
 
   resetFilters() {
     this.filterForm.reset();
+    this.cities = [];
     this.currentPage = 1;
-    this.applyFilters();
+    this.fetchCandidates();
+  }
+
+  isArray(input: any): boolean {
+    return Array.isArray(input);
   }
 }
