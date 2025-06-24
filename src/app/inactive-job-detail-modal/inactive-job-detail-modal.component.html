@@ -60,7 +60,7 @@
         <ion-icon name="briefcase" color="dark" size="large"></ion-icon>
         <!-- <p>Job Type</p> --><br>
         <small>Job Type</small>
-        <h6>Full Time</h6>
+        <h6>{{jobData.job_type}}</h6>
       </ion-col>
       <ion-col size="4" class="ion-text-center">
         <ion-icon name="cash" color="dark" size="large"></ion-icon>
@@ -123,7 +123,7 @@
             <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
             <ion-label>
               <h2>Job Timings</h2>
-              <p>9:30 AM - 6:30 PM</p>
+              <p> {{jobData.job_start_time}} - {{jobData.job_end_time}}</p>
             </ion-label>
           </ion-item>
           <ion-item lines="none">
@@ -143,9 +143,9 @@
     </ion-text>
     <p>
       <strong>Company Name:</strong> {{jobData.company_name}}<br>
-      <strong>Age:</strong> 5 years<br>
-      <strong>Organization Size:</strong> 500<br>
-      <strong>Industry type:</strong>{{jobData.industry_type_name}}<br>
+      <strong>Estb year:</strong> {{jobData.year_of_establishment}}<br>
+      <strong>Organization Size:</strong> {{jobData.comp_size}}<br>
+      <strong>Industry type:</strong>{{jobData.industry_type}}<br>
 
     </p>
 
@@ -166,8 +166,8 @@
       <strong>Education:</strong> {{jobData.min_qual}}<br>
       <strong>Skills Required:</strong> {{jobData.skills_required}}<br>
       <strong>Languages Required:</strong> {{jobData.job_languages.language}}<br>
-      <strong>Job Timings:</strong> 9:30 AM - 6:30 PM<br>
-      <strong>Role:</strong> Graphic Designer
+      <strong>Job Timings:</strong> {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
+      <strong>Role:</strong> {{jobData.job_title}}
     </p>
   </div>
   <div *ngIf="activeButton === 'additionalInfo'" class="job_cutom_div">
@@ -175,11 +175,11 @@
       Additional Requirements
     </ion-text>
     <p class="additional-requirements">
-      <strong>Job Timings:</strong> 9:30 AM - 6:30 PM<br>
-      <strong>Job Type:</strong> Full-Time<br>
+      <strong>Job Timings:</strong>  {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
+      <strong>Job Type:</strong> {{jobData.job_type}}<br>
       <strong>Department:</strong> Design<br>
-      <strong>Role:</strong> Graphic Designer<br>
-      <strong>Job Address:</strong> 123 Design Avenue, Creative City, CA 90210
+      <strong>Role:</strong> {{jobData.job_title}}<br>
+      <strong>Job Address:</strong>{{jobData.full_address}}
     </p>
   </div>
 

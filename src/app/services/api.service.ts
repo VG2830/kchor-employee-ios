@@ -132,6 +132,23 @@ candidateDetail(data: any,userId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/upload_office_images`, {data
     });
   }
- 
+ inactive_jobstatus(job_id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/inactive_jobstatus`, {job_id
+    });
+  }
+deleteSavedCandidate(userId: number,candidate_id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/deleteSavedCandidate`, {employer_id:userId ,candidate_id
+    });
+  }
+appliedCandidates(data: any,userId: number,page:number,limit:number,job_id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/appliedCandidates`, {data,
+      employer_id:userId,
+      page,
+      limit,
+      job_id
+    });
+  }
+
+  // https://ek-reps.com/kaam-chor/Employer_Api/appliedCandidates
 
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { AppliedCandidateComponent } from 'src/app/applied-candidate/applied-candidate.component';
+import { InactiveJobDetailModalComponent } from 'src/app/inactive-job-detail-modal/inactive-job-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -9,8 +11,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./my-jobs.page.scss'],
 })
 export class MyJobsPage {
-  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService) {}
+  constructor(private actionSheetCtrl: ActionSheetController,
+    private apiService: ApiService,
+  private modalCtrl:ModalController) {}
 user_id!:number;
+job_id!:number;
 limit!:number;
 page!:number;
   entriesPerPage = 10;
@@ -109,11 +114,52 @@ ngOnInit() {
 
   async viewJob(job:any)
 {
+const modal = await this.modalCtrl.create({
+    component: InactiveJobDetailModalComponent,
+    // componentProps: { userId: user.user_id },
+    componentProps: {jobId:job.job_id},
 
+  });
+  await modal.present();
 }
-  deleteJob(job: any) {
+ deleteJob(job: any) {
     console.log('Deleted:', job);
-    // mark as inactive or remove
+    
+    // Open confirmation popup before deleting
+    this.openDeleteConfirmationPopup(job);
+}
+
+openDeleteConfirmationPopup(job: any) {
+    // Confirmation popup implementation
+    const confirmDelete = confirm('Are you sure you want to delete this job?');
+    
+    if (confirmDelete) {
+        this.confirmDeleteJob(job);
+    }
+}
+
+confirmDeleteJob(job: any) {
+    // Mark job as inactive via API call
+    this.apiService.inactive_jobstatus(job.job_id).subscribe({
+      next: (res: any) => {
+        console.log('Job marked as inactive successfully:', res);
+        // Show success message to user
+        this.showSuccessMessage('Job deleted successfully!');
+        // Optional: Refresh the job list or update UI
+        // this.loadJobs(); // Uncomment if you have a method to refresh the list
+      },
+      error: (error: any) => {
+        console.error('Error marking job as inactive:', error);
+        // Show error message to user
+        this.showErrorMessage('Failed to delete job. Please try again.');
+      }
+    });
+}
+  showErrorMessage(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
+  showSuccessMessage(arg0: string) {
+    throw new Error('Method not implemented.');
   }
 
   editJob(job: any) {
@@ -121,8 +167,15 @@ ngOnInit() {
     // navigate to edit job page
   }
 
-  viewApplicants(job: any) {
-    console.log('Applied candidates:', job);
+   async viewApplicants(job: any) {
+    // console.log('Applied candidates:', job);
     // open applicants list
+    const modal = await this.modalCtrl.create({
+    component: AppliedCandidateComponent,
+    componentProps: { jobId: 1 },
+    // componentProps: {jobId:job.job_id},
+
+  });
+  await modal.present();
   }
 }

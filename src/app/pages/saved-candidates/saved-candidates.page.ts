@@ -13,7 +13,7 @@ export class SavedCandidatesPage {
  
   constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController) {}
   employer_id!:number;
- 
+ user_id!:number;
 limit!:number;
 page!:number;
 ngOnInit() {
@@ -100,7 +100,13 @@ async viewCandidate(user: any) {
 }
 
   removeCandidate(user: any) {
-    this.candidates = this.candidates.filter(c => c !== user);
+    // this.candidates = this.candidates.filter(c => c !== user);
+    this.apiService.deleteSavedCandidate(this.employer_id,user.user_id).subscribe({
+       
+next(res:any) {
+   console.log("deleted successfully");
+},
+    });
   }
 
   // get filteredCandidates() {

@@ -47,19 +47,19 @@ entries
 
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <img [src]="job.logo" alt="Logo" class="logo-img" />
+            <img [src]='job.company_logo' alt="Logo" class="logo-img" />
           </ion-col>
         </ion-row>
 
         <ion-row class="info-row">
           <ion-col size="12">
-            <strong>Job Title:</strong> {{ job.title }} <br />
-            <span class="job-type">{{ job.type }}</span>
+            <strong>Job Title:</strong> {{ job.job_title }} <br />
+            <span class="job-type">{{ job.job_type }}</span>
           </ion-col>
 
           <ion-col size="12">
-            <strong>Company:</strong> {{ job.company }} <br />
-            <strong>Location:</strong> {{ job.location }}
+            <strong>Company:</strong> {{ job.company_name }} <br />
+            <strong>Location:</strong> {{ job.company_city_name }},{{job.company_state_name}}
           </ion-col>
 
           <ion-col size="12">
@@ -67,7 +67,7 @@ entries
           </ion-col>
 
           <ion-col size="12">
-            <strong>Posted On:</strong> {{ job.posted }}
+            <strong>Posted On:</strong> {{ job.created_on }}
           </ion-col>
         </ion-row>
 

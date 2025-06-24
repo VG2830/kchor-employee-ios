@@ -14,7 +14,7 @@
 </ion-header>
 
 
-<ion-content class="ion-padding"  *ngIf="!isLoading">
+<ion-content class="ion-padding"  >
   <ion-card class="account-card">
     <ion-card-header>
       <ion-card-title class="title">Account Settings</ion-card-title>
@@ -53,25 +53,6 @@
       </ng-template>
     </ion-card-content>
   </ion-card>
-   <!-- Upload Only If Not Uploaded -->
-  <div *ngIf="!logoUploaded; else showLogo">
-    <ion-item>
-      <ion-label position="stacked">Upload Company Logo</ion-label>
-      <input type="file" accept="image/*" (change)="onLogoSelected($event)" />
-    </ion-item>
-    <ion-button expand="block" (click)="uploadLogo()">Upload Logo</ion-button>
-  </div>
-
-  <!-- Show Uploaded Logo -->
-  <ng-template #showLogo>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Uploaded Logo</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <img [src]="logoUrl" alt="Company Logo" width="150" />
-      </ion-card-content>
-    </ion-card>
-  </ng-template>
+  
 
 </ion-content>

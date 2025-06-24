@@ -10,6 +10,7 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-job-detail-page',
@@ -62,7 +63,8 @@ export class JobDetailPage implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
@@ -171,6 +173,54 @@ export class JobDetailPage implements OnInit {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
       }
+    });
+    const jobId = this.route.snapshot.queryParams['jobId'];
+    // or using observable
+    this.route.queryParams.subscribe(params => {
+        const jobId = params['jobId'];
+        // fetch data using jobId
+        console.log("job id",jobId);
+    });
+        console.log("jobdg id",jobId);
+    //     this.jobForm = this.fb.group({
+    //   job_title: ['', Validators.required],
+      
+    // });
+    this.apiService.employer_inactive_job_detail(jobId).subscribe({
+      next: (res) => {
+        console.log(res.data);
+         const data = res.data;
+        // this.jobForm.patchValue( res.data);
+        this.jobForm.patchValue({
+    jobTitle: data.job_title,
+    jobCategory:[data.job_category],
+    jobType: data.job_type,
+    positionsOpen: data.no_of_positions,
+    jobDescription: data.job_description,
+    candidatetype: data.exp_checkbox,
+    minexp: data.min_exp,
+    maxexp: data.max_exp,
+    isgender: data.gender_req,
+    locations: data.cand_loc_req,
+    WorkFromHome: data.is_wfh,
+     qualification: data.min_qual ? data.min_qual.split(',').map((q: any) => q.trim()) : [],
+// assuming single qualification
+    salary: data.salary_per_annum,
+    skills: data.skills_required ? data.skills_required.split(',').map((s: string) => s.trim()) : [],
+   
+    issecuritygiven: data.security_amount,
+    jobStartTime: data.job_start_time,
+    jobEndTime: data.job_end_time,
+    interviewTime: data.interview_timmings,
+    interviewDay: data.interview_days,
+    acceptTerms: !!data["Terms&conditions"], // convert to boolean
+  });
+      },
+      error: () => {
+        
+        alert('Failed to load data');
+        
+      },
     });
   }
 

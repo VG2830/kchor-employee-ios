@@ -3,6 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { InactiveJobDetailModalComponent } from 'src/app/inactive-job-detail-modal/inactive-job-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inactive-jobs',
@@ -11,42 +12,42 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./inactive-jobs.page.scss'],
 })
 export class InactiveJobsPage {
-  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController) {}
+  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController,private router:Router) {}
 user_id!:number;
   entriesPerPage = 10;
   currentPage = 1;
   searchQuery = '';
 
-  jobs = [
-    {
-      title: 'Frontend Developer',
-      type: 'Full-Time',
-      company: 'Tech Corp',
-      location: 'Bangalore',
-      applicants: 24,
-      posted: '2025-06-10',
-      logo: 'assets/icons/kaam-chor-logo-removebg.png',
-    },
-    {
-      title: 'UI/UX Designer',
-      type: 'Part-Time',
-      company: 'DesignHub',
-      location: 'Mumbai',
-      applicants: 12,
-      posted: '2025-06-05',
-      logo: 'assets/icons/kaam-chor-logo-removebg.png',
-    },
-  ];
-// jobs:any[]=[];
+  // jobs = [
+  //   {
+  //     title: 'Frontend Developer',
+  //     type: 'Full-Time',
+  //     company: 'Tech Corp',
+  //     location: 'Bangalore',
+  //     applicants: 24,
+  //     posted: '2025-06-10',
+  //     logo: 'assets/icons/kaam-chor-logo-removebg.png',
+  //   },
+  //   {
+  //     title: 'UI/UX Designer',
+  //     type: 'Part-Time',
+  //     company: 'DesignHub',
+  //     location: 'Mumbai',
+  //     applicants: 12,
+  //     posted: '2025-06-05',
+  //     logo: 'assets/icons/kaam-chor-logo-removebg.png',
+  //   },
+  // ];
+jobs:any[]=[];
 ngOnInit(){
-// this.user_id=310;
-//    this.apiService.employer_inactive_jobs({}, this.user_id).subscribe((res: any) => {
-//     if (res.status === true) {
-//       this.jobs = res.data ;
+this.user_id=310;
+   this.apiService.employer_inactive_jobs({}, this.user_id).subscribe((res: any) => {
+    if (res.status === true) {
+      this.jobs = res.data ;
 
-//       console.log('Jobs:', this.jobs);
-//     }
-//   });
+      console.log('Jobs:', this.jobs);
+    }
+  });
 }
   get totalEntries() {
     return this.filteredJobs().length;
@@ -59,13 +60,15 @@ ngOnInit(){
   get endEntry() {
     return Math.min(this.startEntry + this.entriesPerPage - 1, this.totalEntries);
   }
-
-  filteredJobs() {
-    return this.jobs.filter(job =>
-      job.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      job.company.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
-  }
+filteredJobs(){
+  return this.jobs;
+}
+  // filteredJobs() {
+  //   return this.jobs.filter(job =>
+  //     job.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+  //     job.company.toLowerCase().includes(this.searchQuery.toLowerCase())
+  //   );
+  // }
 
   async presentActionSheet(job: any) {
     const actionSheet = await this.actionSheetCtrl.create({
@@ -101,16 +104,25 @@ async viewJob(job: any) {
   const modal = await this.modalCtrl.create({
     component: InactiveJobDetailModalComponent,
     // componentProps: { userId: user.user_id },
-    componentProps: { userId:96 ,jobId:1},
+    componentProps: { jobId:job.job_id},
 
   });
   await modal.present();
 }
   
+  // editJob(job: any) {
+  //   // console.log('Edit:', job);
+  //   // navigate to edit job page
+  //   this.router.navigate(['/job-detail-page'],job.job_id);
+
+  // }
   editJob(job: any) {
-    console.log('Edit:', job);
-    // navigate to edit job page
-  }
+    // console.log('Edit:', job);
+    console.log(job.job_id);
+    this.router.navigate(['/job-detail-page'], { 
+        queryParams: { jobId: job.job_id } 
+    });
+}
 
   
 }
