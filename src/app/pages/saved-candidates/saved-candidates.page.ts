@@ -19,7 +19,7 @@ page!:number;
 ngOnInit() {
   // const storedUser=localStorage.getItem('userId');
   // this.employer_id=Number(storedUser);
-  this.employer_id = 96// Set actual value
+  this.employer_id = 310// Set actual value
   this.page = 1;
   this.limit = 10;
 
@@ -109,16 +109,16 @@ next(res:any) {
     });
   }
 
-  // get filteredCandidates() {
-  //   return this.candidates.filter(c =>
-  //     c.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-  //     c.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-  //     c.mobile.includes(this.searchTerm)
-  //   );
-  // }
-get filteredCandidates(){
-  return this.candidates;
-}
+  get filteredCandidates() {
+    return this.candidates.filter(c =>
+      c.candidate_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      c.email_id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      c.mobile_number.includes(this.searchTerm)
+    );
+  }
+// get filteredCandidates(){
+//   return this.candidates;
+// }
   paginatedData() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredCandidates.slice(start, start + this.itemsPerPage);

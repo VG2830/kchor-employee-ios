@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 // import { LoadingInterceptor } from './interceptors/loading.service';
+// import { IonicSelectableModule   } from 'ionic-selectable';
 
 @NgModule({
   declarations: [AppComponent],

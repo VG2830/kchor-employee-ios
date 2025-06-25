@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="margin-top: 20px;">
   <ion-toolbar color="primary">
     <ion-title> Applied Candidates Details</ion-title>
     <ion-buttons slot="end">
@@ -65,7 +65,12 @@
                 
               </ion-col> -->
             </ion-row>
+<ion-row class="ion-justify-content-end">
+             <ion-button fill="clear" size="small" (click)="presentActionSheet(user)">
+           <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
 
+            </ion-row>
            
           </ion-grid>
         </ion-item>

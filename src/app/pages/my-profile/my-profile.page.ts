@@ -15,16 +15,39 @@ import { ActivatedRoute, Router } from '@angular/router';
   // imports:[IonicModule,]
 })
 export class MyProfilePage implements OnInit {
-
   @Input() formData: any;
-  
+  proData:any;
   profilePage:FormGroup;
   user_id!: number;
   empProfileOptions:any[]=[];
   industryTypeOptions: any[] = [];
   stateOptions: any[] = [];
   cityOptions: any[] = [];
+
   city: string = '';
+  // isProfileIncomplete = true; // Later you can fetch real value from backend
+  // showLogoUpload = false;
+  // showOfficeUpload = false;
+
+  showLogoUploadSection: boolean = false;
+showOfficeUploadSection: boolean = false;
+
+logoUploaded: boolean = false;
+officeImagesUploaded: boolean = false;
+
+get isProfileIncomplete(): boolean {
+  return !this.logoUploaded || !this.officeImagesUploaded;
+}
+
+
+
+selectedLogo!: File;
+
+officeImagesPreview: string[]=[] ;
+
+  logoPreview: string | ArrayBuffer | null = null;
+  officeImages: File[] = [];
+
 
   constructor(private fb: FormBuilder,private apiService: ApiService,private router: Router,private route: ActivatedRoute,private sanitizer: DomSanitizer) {
      {this.profilePage = this.fb.group({
@@ -72,7 +95,16 @@ export class MyProfilePage implements OnInit {
      this.apiService.getEmployerProfile(this.user_id).subscribe((res) => {
          if (res.status && res.data) {
            console.log(res);
-      
+      if (res.data.company_details.company_images.comp_logo) {
+        this.logoUploaded = true;
+        this.logoPreview = res.data.company_details.company_images.comp_logo;
+        this.showLogoUploadSection = false;
+      }
+ if (res.data.company_details.company_images.office_img) {
+        this.officeImagesUploaded = true;
+        this.officeImagesPreview = res.data.company_details.company_images.office_img;
+        this.showOfficeUploadSection = false;
+      }
           
         // Sanitize the HTML to make it safe for rendering     this.googleMapLoc = this.sanitizer.bypassSecurityTrustHtml(apiGoogleMapLoc);
  
@@ -136,5 +168,92 @@ export class MyProfilePage implements OnInit {
       this.profilePage.get('companycity')?.setValue('');
     }
   }
+  
+ showSection(type: 'logo' | 'office') {
+  if (type === 'logo') {
+    this.showLogoUploadSection = true;
+  } else if (type === 'office') {
+    this.showOfficeUploadSection = true;
+  }
+}
+
+
+onLogoSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedLogo = file;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.logoPreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+
+uploadLogo() {
+  if (!this.selectedLogo) {
+    alert('Please select a logo first');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('user_id', this.user_id.toString());
+  formData.append('comp_logo', this.selectedLogo);
+
+  this.apiService.upload_company_logo(formData).subscribe({
+    next: (res) => {
+      alert('Logo uploaded successfully!');
+      this.logoUploaded = true;
+      this.showLogoUploadSection = false;
+    },
+    error: (err) => {
+      alert('Failed to upload logo.');
+      console.error(err);
+    }
+  });
+}
+
+
+
+onOfficeImagesSelected(event: any) {
+  const files: File[] = Array.from(event.target.files as FileList);
+  this.officeImages = files;
+  this.officeImagesPreview = [];
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.officeImagesPreview.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+
+
+uploadOfficeImages() {
+  if (this.officeImages.length === 0) {
+    alert('Please select office images first');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('user_id', this.user_id.toString());
+  this.officeImages.forEach(file => formData.append('office_images[]', file));
+
+  this.apiService.upload_office_images(formData).subscribe({
+    next: (res) => {
+      alert('Office images uploaded successfully!');
+      this.officeImagesUploaded = true;
+      this.showOfficeUploadSection = false;
+    },
+    error: (err) => {
+      alert('Failed to upload office images.');
+      console.error(err);
+    }
+  });
+}
+
 
 }

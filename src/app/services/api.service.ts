@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ApiService {
-  // private baseUrl = 'https://ek-reps.com/kaam-chor/Employer_Api'; // Replace with your backend URL
+  
   private apiUrl = `${environment.baseUrl}`;
   constructor(private http: HttpClient) {}
 
@@ -122,15 +122,15 @@ candidateDetail(data: any,userId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/FormApi/job_details/${job_id}`);
   }
 
-   upload_company_logo(data: any,userId:number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, {data,
-      user_id:userId,
+   upload_company_logo(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, formData
       
-    });
+      
+    );
   }
-   upload_office_images(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/upload_office_images`, {data
-    });
+   upload_office_images(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/upload_office_images`, formData
+    );
   }
  inactive_jobstatus(job_id: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/inactive_jobstatus`, {job_id

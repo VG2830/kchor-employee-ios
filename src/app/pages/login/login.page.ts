@@ -20,17 +20,16 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Network } from '@capacitor/network';
-import { AlertController, IonicModule, NavController } from '@ionic/angular';
+import { AlertController,NavController } from '@ionic/angular';
 import { StatusBar,Style as StatusBarStyle } from '@capacitor/status-bar';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
   standalone:false,
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  // imports: [CommonModule, IonicModule,ReactiveFormsModule,FormsModule] 
+ 
 })
 export class LoginPage implements OnInit {
 

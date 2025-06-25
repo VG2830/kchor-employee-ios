@@ -62,15 +62,15 @@ ngOnInit() {
     return Math.min(this.startEntry + this.entriesPerPage - 1, this.totalEntries);
   }
 
-  // filteredJobs() {
-  //   return this.jobs.filter(job =>
-  //     job.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-  //     job.company.toLowerCase().includes(this.searchQuery.toLowerCase())
-  //   );
-  // }
   filteredJobs() {
-  return this.jobs; // no client-side filtering here
-}
+    return this.jobs.filter(job =>
+      job.job_title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      job.company.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+//   filteredJobs() {
+//   return this.jobs; // no client-side filtering here
+// }
 
   async presentActionSheet(job: any) {
     const actionSheet = await this.actionSheetCtrl.create({

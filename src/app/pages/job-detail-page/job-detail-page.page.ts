@@ -47,6 +47,7 @@ export class JobDetailPage implements OnInit {
   WorkFromHome: string = '';
   isgender: string = '';
   jobtype: string = '';
+  job_type:string='';
   selectedLocation: string = '';
   issecuritygiven: string = '';
   candidatetype: string = '';
@@ -186,10 +187,18 @@ export class JobDetailPage implements OnInit {
     //   job_title: ['', Validators.required],
       
     // });
-    this.apiService.employer_inactive_job_detail(jobId).subscribe({
+    if(jobId){
+      this.apiService.employer_inactive_job_detail(jobId).subscribe({
       next: (res) => {
         console.log(res.data);
          const data = res.data;
+         const skillNames = data.skills_required
+      ? data.skills_required.split(',').map((s: string) => s.trim())
+      : [];
+
+    const matchedSkills = this.selectedSkills.filter((opt) =>
+      skillNames.includes(opt.name)
+    );
         // this.jobForm.patchValue( res.data);
         this.jobForm.patchValue({
     jobTitle: data.job_title,
@@ -203,11 +212,9 @@ export class JobDetailPage implements OnInit {
     isgender: data.gender_req,
     locations: data.cand_loc_req,
     WorkFromHome: data.is_wfh,
-     qualification: data.min_qual ? data.min_qual.split(',').map((q: any) => q.trim()) : [],
-// assuming single qualification
+    qualification: data.min_qual ? data.min_qual.split(',').map((q: any) => q.trim()) : [],
     salary: data.salary_per_annum,
-    skills: data.skills_required ? data.skills_required.split(',').map((s: string) => s.trim()) : [],
-   
+    skills: data.skills_required.value,
     issecuritygiven: data.security_amount,
     jobStartTime: data.job_start_time,
     jobEndTime: data.job_end_time,
@@ -222,7 +229,11 @@ export class JobDetailPage implements OnInit {
         
       },
     });
+    }
   }
+//    compareSkills = (o1: any, o2: any): boolean => {
+//   return o1 && o2 ? o1.id === o2.id : o1 === o2;
+// };
 
   markFormTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
@@ -305,6 +316,7 @@ export class JobDetailPage implements OnInit {
     this.apiService.submitJob(formData).subscribe(
       (response: any) => {
         console.log('Success:', response);
+        this.router.navigate(['/employer-plan']);
       },
       (error: any) => {
         console.error('API Error:', error);

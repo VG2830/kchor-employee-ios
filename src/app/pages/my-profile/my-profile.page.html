@@ -5,7 +5,7 @@
 <!-- <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu Content</ion-title>
+     
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
@@ -59,9 +59,9 @@
   </div>
 </ion-content>
 
-</ion-menu>  -->
+</ion-menu> -->
 
-<!-- <div class="ion-page" id="main-content">
+<div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -72,28 +72,91 @@
         style="opacity: 0.7"
         alt="logo"
       />
-     
+      <!-- <ion-title>Menu</ion-title> -->
     </ion-toolbar>
-  </ion-header> -->
-  <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button menuId="main-menu"></ion-menu-button>
-    </ion-buttons>
-     <img
-        src="../../../assets/icons/kaam-chor-logo-removebg.png"
-        style="opacity: 0.7"
-        alt="logo"
-      />
-    <!-- <ion-title>Page Title</ion-title> -->
-  </ion-toolbar>
-</ion-header>
+  </ion-header>
   <ion-content >
+
+<ion-card *ngIf="showLogoUploadSection">
+  <ion-card-header>
+    <ion-card-title style="color: purple">Upload Company Logo</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <input type="file" (change)="onLogoSelected($event)">
+    <ion-button expand="block" color="primary" (click)="uploadLogo()">Upload Logo</ion-button>
+  </ion-card-content>
+</ion-card>
+
+<!-- Preview after upload -->
+<ion-card *ngIf="logoUploaded">
+  <!-- <ion-card-header>
+    <ion-card-title style="color: purple">Uploaded Company Logo</ion-card-title>
+  </ion-card-header> -->
+  <ion-card-content >
+    <img [src]="logoPreview" style="width: 100px; height: 100px;" alt="Company Logo">
+   
+  </ion-card-content>
+</ion-card>
+
+
+<ion-card *ngIf="showOfficeUploadSection ">
+  <ion-card-header>
+    <ion-card-title style="color: purple">Upload Office Images</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <input type="file" multiple (change)="onOfficeImagesSelected($event)">
+    <ion-button expand="block" color="primary" (click)="uploadOfficeImages()">Upload Office Images</ion-button>
+  </ion-card-content>
+</ion-card>
+
+<!-- Preview after upload -->
+<ion-card *ngIf="officeImagesUploaded">
+  <!-- <ion-card-header>
+    <ion-card-title style="color: purple">Uploaded Office Images</ion-card-title>
+  </ion-card-header> -->
+  <ion-card-content>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <img  [src]="officeImagesPreview"
+        style="width: 100px; height: 100px; border-radius: 8px;" />
+    </div>
+
+  </ion-card-content>
+</ion-card>
+
+        <!-- <img src="proData.company_details.company_images.comp_logo" alt=""> -->
+
+
   <!-- Personal Details -->
     <form [formGroup]="profilePage" >
 
+       
+<ion-card *ngIf="isProfileIncomplete" style="background-color: #f8d7da;">
+  <ion-card-content>
+    <p style="color: #58151c; font-weight: bold;">Incomplete Profile!</p>
+  </ion-card-content>
+</ion-card>
 
 
+<!-- Warning buttons -->
+<ion-card *ngIf="isProfileIncomplete">
+  <ion-card-content>
+  <ion-button expand="block" fill="solid" (click)="showSection('logo')"
+  style="--background: #ffe69c; --color: #664d03;">
+  <ion-icon name="alert-circle" slot="start"></ion-icon>
+  Company Logo Pending
+</ion-button>
+
+    
+<ion-button expand="block" fill="solid" (click)="showSection('office')"
+  style="--background: #ffe69c; --color: #664d03;">
+  <ion-icon name="alert-circle" slot="start"></ion-icon>
+  Office Images Pending
+</ion-button>
+  </ion-card-content>
+</ion-card>
+
+
+ 
   <ion-card>
 
     <ion-card-header>
@@ -224,5 +287,5 @@
   </ion-card>
   </form>
 </ion-content>
-<!-- </div> -->
+</div>
 

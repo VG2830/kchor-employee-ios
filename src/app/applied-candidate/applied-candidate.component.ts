@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ActionSheetController, IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 
 @Component({
   selector: 'app-applied-candidate',
@@ -16,7 +17,7 @@ export class AppliedCandidateComponent  implements OnInit {
   itemsPerPage = 10;
   currentPage = 1;
   // searchTerm = '';
-  constructor(private modalCtrl: ModalController, private apiService: ApiService) { }
+  constructor(private modalCtrl: ModalController, private apiService: ApiService,private actionSheetCtrl: ActionSheetController) { }
 
   employer_id!:number;
  user_id!:number;
@@ -42,6 +43,38 @@ ngOnInit() {
 }
  dismiss() {
     this.modalCtrl.dismiss();
+  }
+    async presentActionSheet(user: any) {
+      const actionSheet = await this.actionSheetCtrl.create({
+        header: `${user.candidate_name}`,
+        buttons: [
+          {
+            text: 'View',
+            icon: 'eye-outline',
+            handler: () => {
+              this.viewCandidate(user);
+            },
+          },
+          
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+  
+   
+  async viewCandidate(user: any) {
+    const modal = await this.modalCtrl.create({
+      component: CandidateDetailModalComponent,
+      componentProps: { userId: user.user_id },
+     
+  
+    });
+    await modal.present();
   }
   get filteredCandidates(){
   return this.canData;
