@@ -112,7 +112,7 @@
             </ion-col>
 
             <ion-col size="12">
-              <ion-button expand="block" color="medium" (click)="resetFilters()">Reset Filters</ion-button>
+              <ion-button expand="block"  (click)="resetFilters()" class="submitbtn">Reset Filters</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -150,7 +150,7 @@
         <p><strong>Last Active:</strong> {{ candidate.last_active ? (candidate.last_active | date:'medium') : 'N/A' }}
         </p>
         <p><strong>Joined On:</strong> {{ candidate.joined ? (candidate.joined | date:'medium') : 'N/A' }}</p>
-        <ion-button   (click)="viewOpen(candidate)">View</ion-button>
+        <ion-button   (click)="viewOpen(candidate)" class="submitbtn">View</ion-button>
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -162,8 +162,8 @@
   </ng-template>
 
   <div class="pagination-buttons ion-text-center" *ngIf="totalPages > 1">
-    <ion-button size="small" (click)="prevPage()" [disabled]="currentPage === 1">Previous</ion-button>
+    <ion-button size="small" (click)="prevPage()" [disabled]="currentPage === 1" class="submitbtn">Previous</ion-button>
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <ion-button size="small" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</ion-button>
+    <ion-button size="small" (click)="nextPage()" [disabled]="currentPage === totalPages" class="submitbtn">Next</ion-button>
   </div>
 </ion-content>

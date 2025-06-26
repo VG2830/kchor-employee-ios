@@ -1,8 +1,8 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar class="modalheader">
     <ion-title>Candidate Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Close</ion-button>
+      <ion-button (click)="dismiss()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,13 +15,13 @@
       </ion-card-header>
       <ion-card-content>
         
-        <p><strong>Name:</strong> {{ userData.about_me.name }}</p>
-        <p><strong>Gender:</strong> {{ userData.about_me.gender }}</p>
-        <p><strong>Date of Birth:</strong> {{ userData.about_me.dob }}</p>
+        <p><ion-icon name="person-outline"></ion-icon><strong>Name:</strong> {{ userData.about_me.name }}</p>
+        <p><ion-icon name="male-female-outline"></ion-icon><strong>Gender:</strong> {{ userData.about_me.gender }}</p>
+        <p><ion-icon name="calendar-number-outline"></ion-icon><strong>Date of Birth:</strong> {{ userData.about_me.dob }}</p>
         <!-- <p><strong>State:</strong> {{ userData.about_me.state }}</p> -->
         <!-- <p><strong>Skills:</strong> {{ userData.skills }}</p> -->
-        <p><strong>Email:</strong> {{ userData.about_me.email }}</p>
-        <p><strong>Phone:</strong> {{ userData.about_me.mobile_number }}</p>
+        <p><ion-icon name="mail-outline"></ion-icon><strong>Email:</strong> {{ userData.about_me.email }}</p>
+        <p><ion-icon name="call-outline"></ion-icon><strong>Phone:</strong> {{ userData.about_me.mobile_number }}</p>
         <!-- <ion-button expand="block" (click)="downloadPdf()">Download PDF</ion-button> -->
       </ion-card-content>
     </ion-card>
@@ -30,8 +30,8 @@
         <ion-card-title>Location</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong>State:</strong>{{userData.about_me.state}}</p>
-         <p><strong>City:</strong>{{userData.about_me.city}}</p>
+         <p><ion-icon name="location-outline"></ion-icon><strong>State:</strong>{{userData.about_me.state}}</p>
+         <p><ion-icon name="pin-outline"></ion-icon><strong>City:</strong>{{userData.about_me.city}}</p>
       </ion-card-content>
     </ion-card>
 
@@ -80,18 +80,38 @@
          
       </ion-card-content>
     </ion-card>
-    <ion-card *ngFor="let lang of userData.languages">
-      <ion-card-header>
-        <ion-card-title>Languages Known</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-         <p><strong>{{lang.language_name}}</strong>{{lang.rws}}</p>
-         <p><strong></strong>{{lang.proficiency}}</p>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
-      </ion-card-content>
-    </ion-card>
+   <ion-card *ngIf="userData.languages && userData.languages.length">
+  <ion-card-header>
+    <ion-card-title>Languages Known</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div *ngFor="let lang of userData.languages" class="language-entry">
+      <div class="wrapper">
+        <p class="language-name">{{ lang.language_name }}</p>
+
+      <div class="skills">
+        <div class="skill" *ngIf="lang.rws.includes('Read')">
+          <span class="dot"></span> Read
+        </div>
+        <div class="skill" *ngIf="lang.rws.includes('Write')">
+          <span class="dot"></span> Write
+        </div>
+        <div class="skill" *ngIf="lang.rws.includes('Speak')">
+          <span class="dot"></span> Speak
+        </div>
+      </div>
+
+      </div>
+      <p class="proficiency">{{ lang.proficiency }}</p>
+    </div>
+  </ion-card-content>
+</ion-card>
+<div class="modalbtn">
+  <ion-button class="submitbtn">Save Candidate</ion-button> 
+<ion-button (click)="close()" class="submitbtn">Close</ion-button>
+</div>
+   
   </ng-container>
 
   <ion-spinner *ngIf="loading" class="ion-margin"></ion-spinner>

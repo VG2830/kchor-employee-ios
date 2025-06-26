@@ -35,6 +35,9 @@ export class InactiveJobDetailModalComponent  implements OnInit {
 dismiss() {
     this.modalCtrl.dismiss();
   }
+  goBack(){
+    this.modalCtrl.dismiss();
+  }
   activeButton: string = 'description';  // Default active button
 
   setActiveButton(button: string) {

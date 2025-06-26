@@ -46,11 +46,12 @@ export class JobDetailPage implements OnInit {
   // Radio/select controls holders
   WorkFromHome: string = '';
   isgender: string = '';
-  jobtype: string = '';
-  job_type:string='';
-  selectedLocation: string = '';
+  jobType: string = '';
+ 
+  
   issecuritygiven: string = '';
   candidatetype: string = '';
+  selectedLocation: string = '';
 
   locations: string[] = [
     'Within 10 KM of my city',
@@ -176,33 +177,31 @@ export class JobDetailPage implements OnInit {
       }
     });
     const jobId = this.route.snapshot.queryParams['jobId'];
-    // or using observable
+   
     this.route.queryParams.subscribe(params => {
         const jobId = params['jobId'];
         // fetch data using jobId
         console.log("job id",jobId);
     });
         console.log("jobdg id",jobId);
-    //     this.jobForm = this.fb.group({
-    //   job_title: ['', Validators.required],
-      
-    // });
+   
     if(jobId){
       this.apiService.employer_inactive_job_detail(jobId).subscribe({
       next: (res) => {
         console.log(res.data);
          const data = res.data;
-         const skillNames = data.skills_required
-      ? data.skills_required.split(',').map((s: string) => s.trim())
-      : [];
-
-    const matchedSkills = this.selectedSkills.filter((opt) =>
-      skillNames.includes(opt.name)
-    );
-        // this.jobForm.patchValue( res.data);
+          this.jobType = data.job_type;
+          this.candidatetype=data.exp_checkbox;
+          this.isgender=data.gender_req;
+           this.selectedLocation=data.cand_loc_req;
+          this.WorkFromHome=data.is_wfh;
+         this.issecuritygiven=data.security_amount===1?"yes":"no";
+const selectedSkillIds = data.skills_required.map((skill: { value: string; }) => skill.value);
+const lang=data.job_languages.map((lg:{value:string;})=>lg.value);
+console.log(selectedSkillIds);
         this.jobForm.patchValue({
     jobTitle: data.job_title,
-    jobCategory:[data.job_category],
+    jobCategory:data.job_category_id,
     jobType: data.job_type,
     positionsOpen: data.no_of_positions,
     jobDescription: data.job_description,
@@ -212,15 +211,16 @@ export class JobDetailPage implements OnInit {
     isgender: data.gender_req,
     locations: data.cand_loc_req,
     WorkFromHome: data.is_wfh,
-    qualification: data.min_qual ? data.min_qual.split(',').map((q: any) => q.trim()) : [],
+    qualification: data.min_qual_id ,
     salary: data.salary_per_annum,
-    skills: data.skills_required.value,
+    skills:selectedSkillIds,
     issecuritygiven: data.security_amount,
     jobStartTime: data.job_start_time,
     jobEndTime: data.job_end_time,
     interviewTime: data.interview_timmings,
     interviewDay: data.interview_days,
-    acceptTerms: !!data["Terms&conditions"], // convert to boolean
+    languages:lang,
+    //acceptTerms: !!data["Terms&conditions"], // convert to boolean
   });
       },
       error: () => {
@@ -342,10 +342,10 @@ export class JobDetailPage implements OnInit {
     console.log('Gender:', gender);
   }
 
-  selectjobType(time: string) {
-    this.jobtype = time;
-    this.jobForm.get('jobType')?.setValue(time);
-    console.log('Job type:', time);
+  selectjobType(type: string) {
+    this.jobType = type;
+    this.jobForm.get('jobType')?.setValue(type);
+    console.log('Job type:', type);
   }
 
   selectLocation(location: string) {

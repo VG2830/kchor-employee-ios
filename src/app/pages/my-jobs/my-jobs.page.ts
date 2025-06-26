@@ -172,8 +172,8 @@ confirmDeleteJob(job: any) {
     // open applicants list
     const modal = await this.modalCtrl.create({
     component: AppliedCandidateComponent,
-    componentProps: { jobId: 1 },
-    // componentProps: {jobId:job.job_id},
+    // componentProps: { jobId: 1 },
+    componentProps: {jobId:job.job_id},
 
   });
   await modal.present();

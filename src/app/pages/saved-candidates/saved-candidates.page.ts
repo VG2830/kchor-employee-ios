@@ -13,17 +13,17 @@ export class SavedCandidatesPage {
  
   constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController) {}
   employer_id!:number;
- user_id!:number;
-limit!:number;
+   user_id!:number;
+  limit!:number;
 page!:number;
 ngOnInit() {
-  // const storedUser=localStorage.getItem('userId');
-  // this.employer_id=Number(storedUser);
-  this.employer_id = 310// Set actual value
+  const storedUser=localStorage.getItem('userId');
+  this.employer_id=Number(storedUser);
+  // this.employer_id = 310// Set actual value
   this.page = 1;
   this.limit = 10;
 
-  this.apiService.savedCandidates({}, this.employer_id, this.page, this.limit).subscribe((res: any) => {
+  this.apiService.savedCandidates( this.employer_id, this.page, this.limit).subscribe((res: any) => {
     if (res.status==="success") {
       this.candidates = res.data ;
 

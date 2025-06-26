@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
   standalone:true,
   imports:[IonicModule,CommonModule],
   templateUrl: './candidate-detail-modal.component.html',
+   styleUrls: ['./candidate-detail-modal.component.scss'],
 })
 export class CandidateDetailModalComponent implements OnInit {
   @Input() userId!: number;
@@ -49,6 +50,9 @@ export class CandidateDetailModalComponent implements OnInit {
 
   dismiss() {
     this.modalCtrl.dismiss();
+  }
+  close(){
+     this.modalCtrl.dismiss();
   }
 
   downloadPdf() {

@@ -89,8 +89,8 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
       limit,
     });
   }
-savedCandidates(data: any,userId: number,page:number,limit:number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/savedCandidates`, {data,
+savedCandidates(userId: number,page:number,limit:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/savedCandidates`, {
       employer_id:userId,
       page,
       limit,
@@ -119,7 +119,7 @@ candidateDetail(data: any,userId: number): Observable<any> {
   //   });
   // }
  employer_inactive_job_detail(job_id:number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/FormApi/job_details/${job_id}`);
+    return this.http.get(`${this.apiUrl}/Employer_Api/job_details/${job_id}`);
   }
 
    upload_company_logo(formData: FormData): Observable<any> {
@@ -149,6 +149,6 @@ appliedCandidates(data: any,userId: number,page:number,limit:number,job_id:numbe
     });
   }
 
-  // https://ek-reps.com/kaam-chor/Employer_Api/appliedCandidates
+  
 
 }

@@ -24,9 +24,9 @@ export class AppliedCandidateComponent  implements OnInit {
 limit!:number;
 page!:number;
 ngOnInit() {
-  // const storedUser=localStorage.getItem('userId');
-  // this.employer_id=Number(storedUser);
-  this.employer_id = 96// Set actual value
+  const storedUser=localStorage.getItem('userId');
+  this.employer_id=Number(storedUser);
+  // this.employer_id = 96// Set actual value
   this.page = 1;
   this.limit = 10;
 

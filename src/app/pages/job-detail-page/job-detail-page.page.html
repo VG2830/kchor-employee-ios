@@ -92,8 +92,8 @@
           <div class="job-type-toggle">
             <ion-button
               shape="round"
-              [fill]="jobtype === 'fulltime' ? 'solid' : 'outline'"
-              [ngClass]="jobtype === 'fulltime' ? 'purple-button' : 'medium'"
+              [fill]="jobType === 'fulltime' ? 'solid' : 'outline'"
+              [ngClass]="jobType === 'fulltime' ? 'purple-button' : 'medium'"
               (click)="selectjobType('fulltime')"
               type="button"
             >
@@ -101,8 +101,8 @@
             </ion-button>
             <ion-button
               shape="round"
-              [fill]="jobtype === 'parttime' ? 'solid' : 'outline'"
-              [ngClass]="jobtype === 'parttime' ? 'purple-button' : 'medium'"
+              [fill]="jobType === 'parttime' ? 'solid' : 'outline'"
+              [ngClass]="jobType === 'parttime' ? 'purple-button' : 'medium'"
               (click)="selectjobType('parttime')"
               type="button"
             >
@@ -256,7 +256,7 @@
             </div>
           </div>
 
-          <p>Select Gender <span style="color: red">*</span></p>
+          <p> Gender of the staff <span style="color: red">*</span></p>
           <div class="gender-type-toggle">
             <ion-button
               shape="round"
@@ -278,12 +278,12 @@
             </ion-button>
             <ion-button
               shape="round"
-              [fill]="isgender === 'other' ? 'solid' : 'outline'"
-              [ngClass]="isgender === 'other' ? 'purple-button' : 'medium'"
-              (click)="selectgenderType('other')"
+              [fill]="isgender === 'both' ? 'solid' : 'outline'"
+              [ngClass]="isgender === 'both' ? 'purple-button' : 'medium'"
+              (click)="selectgenderType('both')"
               type="button"
             >
-              Others
+              Both
             </ion-button>
             <ion-input type="hidden" formControlName="isgender"></ion-input>
           </div>
