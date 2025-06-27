@@ -54,7 +54,9 @@ export class CandidateDetailModalComponent implements OnInit {
   close(){
      this.modalCtrl.dismiss();
   }
+ saveCandi(){
 
+  }
   downloadPdf() {
     const doc = new jsPDF();
 

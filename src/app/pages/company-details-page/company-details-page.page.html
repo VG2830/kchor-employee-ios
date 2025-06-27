@@ -75,8 +75,8 @@
     <a (click)="openTutorial()" style="cursor:pointer; color:blue;">link</a>
   </p>
 
-  <ion-input *ngif="isNewUser" type="text" formControlName="google_map_loc" placeholder="Paste iframe code here" ></ion-input>
-        <div *ngIf="!isNewUser" [innerHTML]="company.get('google_map_loc')?.value"></div>
+  <ion-input *ngIf="isNewUser" type="text"   placeholder="Paste iframe code here" ></ion-input>
+   <div *ngIf="!isNewUser" [innerHTML]="company.get('google_map_loc')?.value"></div>
 
 <ion-modal [isOpen]="showTutorial" (didDismiss)="closeTutorial()">
   <ng-template>

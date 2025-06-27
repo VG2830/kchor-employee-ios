@@ -36,7 +36,9 @@ page!:number;
   // ];
   jobs:any[]=[];
 ngOnInit() {
-  this.user_id = 310// Set actual value
+   const storeid=localStorage.getItem('userId');
+this.user_id=Number(storeid);
+  // this.user_id = 310// Set actual value
   this.page = 1;
   this.limit = 10;
 

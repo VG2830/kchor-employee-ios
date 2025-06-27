@@ -28,19 +28,12 @@ user_id!:number;
   //     posted: '2025-06-10',
   //     logo: 'assets/icons/kaam-chor-logo-removebg.png',
   //   },
-  //   {
-  //     title: 'UI/UX Designer',
-  //     type: 'Part-Time',
-  //     company: 'DesignHub',
-  //     location: 'Mumbai',
-  //     applicants: 12,
-  //     posted: '2025-06-05',
-  //     logo: 'assets/icons/kaam-chor-logo-removebg.png',
-  //   },
+  
   // ];
 jobs:any[]=[];
 ngOnInit(){
-this.user_id=310;
+  const storeid=localStorage.getItem('userId');
+this.user_id=Number(storeid);
    this.apiService.employer_inactive_jobs({}, this.user_id).subscribe((res: any) => {
     if (res.status === true) {
       this.jobs = res.data ;

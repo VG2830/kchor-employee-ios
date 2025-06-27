@@ -661,8 +661,19 @@
               (click)="submitForm()"
               type="submit"
               [disabled]="jobForm.invalid"
+              *ngIf="!isRecreate"
             >
               Submit
+            </ion-button>
+            <ion-button
+              expand="block"
+              class="submitbtn"
+              (click)="submitForm()"
+              type="submit"
+              [disabled]="jobForm.invalid"
+              *ngIf="isRecreate"
+            >
+              Recreate Job
             </ion-button>
           </div>
         </div>

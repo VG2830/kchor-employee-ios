@@ -26,16 +26,7 @@ export class EmployerPlanPage implements OnInit {
 //       jobs: 15,
 //       boosts: 2,
 //     },
-//     
-//     {
-//       title: '7 Years PLAN',
-//       price: 18999,
-//        des:"Unlimited Candidate Responses",
-//       duration: '7 years',
-//       unlocks: 9000,
-//       jobs: 600,
-//       boosts: 90,
-//     }
+
 //    ];
          plans:any[]=[];
 

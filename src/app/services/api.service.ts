@@ -148,7 +148,13 @@ appliedCandidates(data: any,userId: number,page:number,limit:number,job_id:numbe
       job_id
     });
   }
-
+save_candidate(userId: number,candidate_id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/save_candidate`, {
+      employer_id:userId,
+      candidate_id,
+     
+    });
+  }
   
-
+// https://staging.ekarigar.com/kaam-chor/Employer_Api/save_candidate
 }

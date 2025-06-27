@@ -18,7 +18,6 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './job-detail-page.page.html',
   styleUrls: ['./job-detail-page.page.scss'],
 })
- 
 export class JobDetailPage implements OnInit {
   languageControl = new FormControl();
   // selectedLanguage: any;
@@ -30,16 +29,16 @@ export class JobDetailPage implements OnInit {
   form = {
     description: '',
   };
-  city:string | undefined;
+  city: string | undefined;
   company_id: string | undefined;
-  state:string | undefined;
+  state: string | undefined;
   dropdownOptions: any[] = [];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
 
   qualification: any[] = [];
   jobForm: FormGroup;
-
+  isRecreate: boolean = false;
   years: number[] = [];
   selectedQualifications: string = '';
 
@@ -47,8 +46,7 @@ export class JobDetailPage implements OnInit {
   WorkFromHome: string = '';
   isgender: string = '';
   jobType: string = '';
- 
-  
+
   issecuritygiven: string = '';
   candidatetype: string = '';
   selectedLocation: string = '';
@@ -58,8 +56,6 @@ export class JobDetailPage implements OnInit {
     'Within my city',
     'Anywhere in India',
   ];
-
- 
 
   constructor(
     private fb: FormBuilder,
@@ -85,8 +81,8 @@ export class JobDetailPage implements OnInit {
       salary: ['', Validators.required],
       skills: ['', Validators.required],
       company_id: [''],
-      state:[''],
-      city:[''],
+      state: [''],
+      city: [''],
       issecuritygiven: ['', Validators.required],
       languages: this.fb.array([this.createLanguageGroup()]),
       jobStartTime: ['', Validators.required],
@@ -140,16 +136,14 @@ export class JobDetailPage implements OnInit {
     this.apiService.get_user_compID(data).subscribe(
       (response: any) => {
         this.jobForm.patchValue({
-      company_id: response.company_id,
-      state: response.state,
-      city: response.city,
-    });
-         console.log('response:',response);
+          company_id: response.company_id,
+          state: response.state,
+          city: response.city,
+        });
+        console.log('response:', response);
         this.company_id = response.company_id;
-        this.state=response.state;
-        this.city=response.city;
-       
-       
+        this.state = response.state;
+        this.city = response.city;
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -177,63 +171,69 @@ export class JobDetailPage implements OnInit {
       }
     });
     const jobId = this.route.snapshot.queryParams['jobId'];
-   
-    this.route.queryParams.subscribe(params => {
-        const jobId = params['jobId'];
-        // fetch data using jobId
-        console.log("job id",jobId);
+
+    this.route.queryParams.subscribe((params) => {
+      const jobId = params['jobId'];
+      // fetch data using jobId
+      console.log('job id', jobId);
     });
-        console.log("jobdg id",jobId);
-   
-    if(jobId){
+    console.log('jobdg id', jobId);
+
+    if (jobId) {
       this.apiService.employer_inactive_job_detail(jobId).subscribe({
-      next: (res) => {
-        console.log(res.data);
-         const data = res.data;
+        next: (res) => {
+          console.log(res.data);
+          const data = res.data;
           this.jobType = data.job_type;
-          this.candidatetype=data.exp_checkbox;
-          this.isgender=data.gender_req;
-           this.selectedLocation=data.cand_loc_req;
-          this.WorkFromHome=data.is_wfh;
-         this.issecuritygiven=data.security_amount===1?"yes":"no";
-const selectedSkillIds = data.skills_required.map((skill: { value: string; }) => skill.value);
-const lang=data.job_languages.map((lg:{value:string;})=>lg.value);
-console.log(selectedSkillIds);
-        this.jobForm.patchValue({
-    jobTitle: data.job_title,
-    jobCategory:data.job_category_id,
-    jobType: data.job_type,
-    positionsOpen: data.no_of_positions,
-    jobDescription: data.job_description,
-    candidatetype: data.exp_checkbox,
-    minexp: data.min_exp,
-    maxexp: data.max_exp,
-    isgender: data.gender_req,
-    locations: data.cand_loc_req,
-    WorkFromHome: data.is_wfh,
-    qualification: data.min_qual_id ,
-    salary: data.salary_per_annum,
-    skills:selectedSkillIds,
-    issecuritygiven: data.security_amount,
-    jobStartTime: data.job_start_time,
-    jobEndTime: data.job_end_time,
-    interviewTime: data.interview_timmings,
-    interviewDay: data.interview_days,
-    languages:lang,
-    //acceptTerms: !!data["Terms&conditions"], // convert to boolean
-  });
-      },
-      error: () => {
-        
-        alert('Failed to load data');
-        
-      },
-    });
+          this.candidatetype = data.exp_checkbox;
+          this.isgender = data.gender_req;
+          this.selectedLocation = data.cand_loc_req;
+          this.WorkFromHome = data.is_wfh;
+          this.issecuritygiven = data.security_amount === 1 ? 'yes' : 'no';
+          const selectedSkillIds = data.skills_required.map(
+            (skill: { value: string }) => skill.value
+          );
+          const lang = data.job_languages.map(
+            (lg: { language_id: number }) => lg.language_id
+          );
+          console.log(lang);
+          this.jobForm.patchValue({
+            jobTitle: data.job_title,
+            jobCategory: data.job_category_id,
+            jobType: data.job_type,
+            positionsOpen: data.no_of_positions,
+            jobDescription: data.job_description,
+            candidatetype: data.exp_checkbox,
+            minexp: data.min_exp,
+            maxexp: data.max_exp,
+            isgender: data.gender_req,
+            locations: data.cand_loc_req,
+            WorkFromHome: data.is_wfh,
+            qualification: data.min_qual_id,
+            salary: data.salary_per_annum,
+            skills: selectedSkillIds,
+            issecuritygiven: data.security_amount,
+            jobStartTime: data.job_start_time,
+            jobEndTime: data.job_end_time,
+            interviewTime: data.interview_timmings,
+            interviewDay: data.interview_days,
+            languages: lang,
+            //acceptTerms: !!data["Terms&conditions"], // convert to boolean
+          });
+          this.isRecreate=true;
+        },
+        error: () => {
+          alert('Failed to load data');
+        },
+      });
+    }
+    else{
+      this.isRecreate=false;
     }
   }
-//    compareSkills = (o1: any, o2: any): boolean => {
-//   return o1 && o2 ? o1.id === o2.id : o1 === o2;
-// };
+  //    compareSkills = (o1: any, o2: any): boolean => {
+  //   return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  // };
 
   markFormTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
