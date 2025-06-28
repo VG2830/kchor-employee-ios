@@ -35,7 +35,7 @@ export class JobDetailPage implements OnInit {
   dropdownOptions: any[] = [];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
-
+  
   qualification: any[] = [];
   jobForm: FormGroup;
   isRecreate: boolean = false;
@@ -79,7 +79,7 @@ export class JobDetailPage implements OnInit {
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
       salary: ['', Validators.required],
-      skills: ['', Validators.required],
+      skills: [[], Validators.required],
       company_id: [''],
       state: [''],
       city: [''],
@@ -313,17 +313,21 @@ export class JobDetailPage implements OnInit {
 
     console.log('Submitting form:', formData);
 
-    this.apiService.submitJob(formData).subscribe(
-      (response: any) => {
-        console.log('Success:', response);
-        this.router.navigate(['/employer-plan']);
-      },
-      (error: any) => {
-        console.error('API Error:', error);
-      }
-    );
+    // this.apiService.submitJob(formData).subscribe(
+    //   (response: any) => {
+    //     console.log('Success:', response);
+    //     this.router.navigate(['/employer-plan']);
+    //   },
+    //   (error: any) => {
+    //     console.error('API Error:', error);
+    //   }
+    // );
   }
-
+//  selectSkills(skil:string){
+//   this.selectSkills=skil;
+//   this.jobForm.get('skills')?.setValue(skil);
+//     console.log('Selected qualification:', skil);
+//  }
   selectQualifications(level: string) {
     this.selectedQualifications = level;
     this.jobForm.get('qualification')?.setValue(level);

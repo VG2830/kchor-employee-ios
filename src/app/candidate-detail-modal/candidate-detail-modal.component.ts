@@ -31,7 +31,9 @@ export class CandidateDetailModalComponent implements OnInit {
   @Input() userId!: number;
   userData: any;
   loading = true;
-
+candidate_id!:number;
+employer_Id!:number;
+pdf:string="";
   constructor(private modalCtrl: ModalController, private apiService: ApiService) {}
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class CandidateDetailModalComponent implements OnInit {
         this.dismiss();
       },
     });
+   
   }
 
   dismiss() {
@@ -55,30 +58,32 @@ export class CandidateDetailModalComponent implements OnInit {
      this.modalCtrl.dismiss();
   }
  saveCandi(){
-
+  const storeId=localStorage.getItem('userId');
+this.employer_Id=Number(storeId);
+ this.apiService.save_candidate(this.employer_Id,this.userId).subscribe({
+    next: (res) => {
+        console.log("saved successfully");
+      },
+      error: () => {
+        console.log("Not saved");
+        
+      },
+    });
   }
   downloadPdf() {
-    const doc = new jsPDF();
-
-    doc.text('Candidate Details', 14, 20);
-
-    const rows = [
-      ['Name', this.userData.about_me.name ],
-      // ['Age', this.userData.age],
-      ['Gender', this.userData.about_me.gender],
-      // ['Education', this.userData.education],
-      // ['Experience', this.userData.experience],
-      // ['Skills', this.userData.skills],
-      ['Email', this.userData.about_me.email],
-      ['Phone', this.userData.about_me.phone],
-    ];
-
-    (doc as any).autoTable({
-      head: [['Field', 'Value']],
-      body: rows,
-      startY: 30,
+    this.apiService.downloadResume(this.userId).subscribe(res=>{
+      if (res.status) {
+        this.pdf=res.file_path;
+        
+         console.log(this.pdf);
+        console.log("Download Successfully");
+      }
     });
-
-    doc.save(`${ this.userData.about_me.name}_Details.pdf`);
+    
+  }
+  viewpdf(){
+    if (this.pdf) {
+    window.open(this.pdf, '_blank');
+  }
   }
 }

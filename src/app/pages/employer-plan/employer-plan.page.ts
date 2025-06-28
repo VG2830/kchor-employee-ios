@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CheckoutModalPage } from 'src/app/checkout-modal/checkout-modal.page';
@@ -7,30 +6,21 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employer-plan',
-  
+
   templateUrl: './employer-plan.page.html',
   styleUrls: ['./employer-plan.page.scss'],
   standalone: false,
-
 })
 export class EmployerPlanPage implements OnInit {
- 
-// plans = [
-//     {
-//       title: '1 month PLAN',
-      
-//       price: 1999,
-//       des:"Unlimited Candidate Responses",
-//       duration: '1 month',
-//       unlocks: 200,
-//       jobs: 15,
-//       boosts: 2,
-//     },
+  userType: string = '';
 
-//    ];
-         plans:any[]=[];
+  plans: any[] = [];
 
-  constructor(private modalCtrl: ModalController,private apiService: ApiService, private router: Router) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   async openCheckoutModal(plan: any) {
     const modal = await this.modalCtrl.create({
@@ -41,23 +31,41 @@ export class EmployerPlanPage implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getEmployerPlans().subscribe((res: any) => {
-      if (res.status === true) {
-        this.plans = res.data;
-     
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.userType = navigation.extras.state['userType'];
     }
+    console.log(this.userType);
+    if (this.userType === 'existing') {
+      this.apiService.getEmployerPlans().subscribe((res: any) => {
+        if (res.status === true) {
+          this.plans = res.data;
+        }
       });
+    }
   }
-logout() {
-  // Step 1: Clear the user_id from localStorage
-  localStorage.removeItem('user_id');
+  logout() {
+    // Step 1: Clear the user_id from localStorage
+    localStorage.removeItem('user_id');
 
-  // OR reset completely
-  localStorage.clear(); // if you want to clear everything
+    // OR reset completely
+    localStorage.clear(); // if you want to clear everything
 
-  // Step 2: Navigate to the login page
-  this.router.navigate(['/login']);
+    // Step 2: Navigate to the login page
+    this.router.navigate(['/login']);
+  }
 }
 
+// plans = [
+//     {
+//       title: '1 month PLAN',
 
-}
+//       price: 1999,
+//       des:"Unlimited Candidate Responses",
+//       duration: '1 month',
+//       unlocks: 200,
+//       jobs: 15,
+//       boosts: 2,
+//     },
+
+//    ];

@@ -21,7 +21,7 @@ export class OtpVerfPage implements OnInit {
   isLoading: boolean = false;
   isNewUser: boolean = false;
   // isNewUser: boolean | undefined;
-
+userType:string='';
   constructor(private navCtrl: NavController, private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService) { }
 
   ngOnInit() {
@@ -58,7 +58,9 @@ export class OtpVerfPage implements OnInit {
           //set localstorage is loggedin 
           // Set localStorage indicator for login
           console.log('userid',response.data.user_id);
+          this.userType=response.data.user_type;
           localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('type_Of_User',response.data.user_type);
           localStorage.setItem('userId', response.data.user_id.toString());
 
         //   this.formDataService.getFormData(this.userId).subscribe(data => {
@@ -70,11 +72,19 @@ export class OtpVerfPage implements OnInit {
             state: {
               verified: true,
             //  userId:userId
+            userType:this.userType
             }
           };
 
-          // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
-          if(this.isNewUser){
+          
+          // if(this.isNewUser){
+          // localStorage.setItem('userId', response.data.user_id.toString());
+
+          //   this.router.navigate(['/basic-details-page'], navigationExtras);
+          // }else{
+          //   this.router.navigate(['/employer-plan'], navigationExtras);
+          // }
+          if(this.userType==="new"){
           localStorage.setItem('userId', response.data.user_id.toString());
 
             this.router.navigate(['/basic-details-page'], navigationExtras);
@@ -98,13 +108,13 @@ export class OtpVerfPage implements OnInit {
   }
 
   goBack(){
-    this.navCtrl.back();
+    // this.navCtrl.back();
     //handle hardware back button navigation
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.back();
-    });
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+      this.router.navigate(['/otp-verf']);
+      // this.navCtrl.back();
+    // });
   }
-
 
   otpArray: string[] = ['', '', '', ''];
 // otp: string = '';

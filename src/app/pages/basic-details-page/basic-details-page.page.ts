@@ -114,7 +114,9 @@ export class BasicDetailsPagePage implements OnInit {
   onlyNavigation() {
     this.router.navigate(['/company-details-page']);
   }
-
+onlyDashboard(){
+  this.router.navigate(['/employer-plan']);
+}
   submitForm() {
     if (this.basiclast.invalid) {
       this.basiclast.markAllAsTouched(); // Show validation errors

@@ -138,23 +138,24 @@
 
 
 <!-- Warning buttons -->
-<ion-card *ngIf="isProfileIncomplete">
+<ion-card *ngIf="isLogoAlready">
   <ion-card-content>
   <ion-button expand="block" fill="solid" (click)="showSection('logo')"
   style="--background: #ffe69c; --color: #664d03;">
   <ion-icon name="alert-circle" slot="start"></ion-icon>
   Company Logo Pending
-</ion-button>
-
-    
-<ion-button expand="block" fill="solid" (click)="showSection('office')"
+   </ion-button>
+  </ion-card-content>
+</ion-card>
+<ion-card *ngIf="isOfficeimagesAlready">
+  <ion-card-content>
+    <ion-button expand="block" fill="solid" (click)="showSection('office')"
   style="--background: #ffe69c; --color: #664d03;">
   <ion-icon name="alert-circle" slot="start"></ion-icon>
   Office Images Pending
 </ion-button>
   </ion-card-content>
 </ion-card>
-
 
  
   <ion-card>

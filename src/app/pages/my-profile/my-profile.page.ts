@@ -38,8 +38,12 @@ officeImagesUploaded: boolean = false;
 get isProfileIncomplete(): boolean {
   return !this.logoUploaded || !this.officeImagesUploaded;
 }
-
-
+get isLogoAlready():boolean{
+  return !this.logoUploaded;
+}
+get isOfficeimagesAlready():boolean {
+  return !this.officeImagesUploaded;
+}
 
 selectedLogo!: File;
 

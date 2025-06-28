@@ -44,8 +44,15 @@ export class SplashScreenPage implements OnInit {
   navigateToAppropriateRoute() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (isLoggedIn) {
-      this.router.navigate(['/employer-plan']);  
-      
+      const type_Of_User=localStorage.getItem('type_Of_User');
+      console.log(type_Of_User);
+      if(type_Of_User==="existing") {
+
+       this.router.navigate(['/employer-plan']); 
+      }
+      else{
+        this.router.navigate(['/basic-details-page']);
+      }
     } else {
       this.router.navigate(['/login']);
       // this.router.navigate(['/reg-aboutme']);  

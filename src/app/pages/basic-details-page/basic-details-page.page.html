@@ -128,6 +128,8 @@
                *ngIf="isNewUser"
               >Save & Continue</ion-button
             >
+            <ion-button  expand="block" class="submitbtn"  (click)="onlyDashboard()"
+             *ngIf="!isNewUser">Back to Dashboard</ion-button>
             <ion-button  expand="block" class="submitbtn"  (click)="onlyNavigation()"
              *ngIf="!isNewUser" >
               Next
