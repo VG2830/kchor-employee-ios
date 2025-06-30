@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class EmployerPlanPage implements OnInit {
-  userType: string = '';
+  userType: string | null = null;
 
   plans: any[] = [];
 
@@ -35,7 +35,10 @@ export class EmployerPlanPage implements OnInit {
     if (navigation?.extras.state) {
       this.userType = navigation.extras.state['userType'];
     }
-    console.log(this.userType);
+    this.userType=localStorage.getItem('type_Of_User');
+  
+    console.log("from local storage",this.userType);
+
     if (this.userType === 'existing') {
       this.apiService.getEmployerPlans().subscribe((res: any) => {
         if (res.status === true) {

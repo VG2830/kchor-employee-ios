@@ -63,3 +63,7 @@ ion-card{
     display: flex;
     justify-content: space-between;
 }
+ion-card-header{
+  --background:grey;
+  text-align: start;
+}

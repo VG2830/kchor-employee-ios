@@ -163,14 +163,20 @@
     <ion-text color="primary">
       Candidate Requirements
     </ion-text>
-    <p class="candidate-requirements"  *ngFor="let skill of jobData.skills_required">
-      <strong>Education:</strong> {{jobData.min_qual}}<br>
-      <strong>Skills Required:</strong> {{skill.value}}<br>
-      <strong >Job Timings:</strong> {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
-      <strong>Role:</strong> {{jobData.job_title}}
-    </p>
+    <p class="candidate-requirements"> <strong >Job Timings:</strong> {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
+      <strong>Role:</strong> {{jobData.job_title}}<br><strong>Education:</strong> {{jobData.min_qual}}</p>
+    <!-- <p class="candidate-requirements"  *ngFor="let skill of jobData.skills_required">
       
-    <p class="candidate-requirements"  *ngFor="let lang of jobData.job_languages"><strong>Languages Required:</strong> {{lang.language}}<br></p>
+      <strong>Skills Required:</strong> {{skill.value}}<br>
+      
+    </p> -->
+    <p class="candidate-requirements" *ngIf="jobData.skills_required && jobData.skills_required.length">
+  <strong>Skills Required:</strong> {{ skillList }}
+</p>
+
+
+      
+    <p class="candidate-requirements"  *ngIf="jobData.job_languages && jobData.job_languages.length"><strong>Languages Required:</strong> {{langList}}<br></p>
   </div>
   <div *ngIf="activeButton === 'additionalInfo'" class="job_cutom_div">
     <ion-text color="primary">

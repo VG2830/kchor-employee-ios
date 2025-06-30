@@ -40,7 +40,7 @@
 </ion-grid>
 
   
-  <ion-button expand="block" color="primary" (click)="verifyOtp()" [disabled]="otp.length !== 4 || isLoading">
+  <ion-button expand="block" class="btn" (click)="verifyOtp()" [disabled]="otp.length !== 4 || isLoading">
     <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
     <span *ngIf="!isLoading">Verify</span>
   </ion-button>

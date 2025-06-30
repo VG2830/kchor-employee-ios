@@ -87,7 +87,10 @@
   </ion-toolbar>
 </ion-header>
   <ion-content>
-    <div style="text-align: center; padding: 10px;">
+    <h3 style="text-align: center;">Employer Dashboard</h3> 
+      <div *ngIf="userType==='existing'">
+
+     <div style="text-align: center; padding: 10px;">
       <ion-button class="btn"  >Recommended Pricing Plans for Employers</ion-button>
      </div>
     <ion-grid>
@@ -141,5 +144,19 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+   </div>
+   <div *ngIf="userType==='new'">
+<ion-card color="light" class="ion-text-center">
+  <ion-card-content>
+    <ion-icon name="briefcase-outline" size="large" color="primary"></ion-icon>
+    <h2 style="margin-top: 10px;">Post a Job</h2>
+    <p>Post a job to view your available plans and pricing.</p>
+    <ion-button class="btn" expand="block" routerLink="/basic-details-page">
+      Post Job Now
+    </ion-button>
+  </ion-card-content>
+</ion-card>
+
+   </div>
   </ion-content>
 <!-- </div> -->

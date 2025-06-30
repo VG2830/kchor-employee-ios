@@ -79,7 +79,7 @@ export class JobDetailPage implements OnInit {
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
       salary: ['', Validators.required],
-      skills: [[], Validators.required],
+      skills: ['', Validators.required],
       company_id: [''],
       state: [''],
       city: [''],
@@ -190,11 +190,11 @@ export class JobDetailPage implements OnInit {
           this.selectedLocation = data.cand_loc_req;
           this.WorkFromHome = data.is_wfh;
           this.issecuritygiven = data.security_amount === 1 ? 'yes' : 'no';
-          const selectedSkillIds = data.skills_required.map(
+          const selectedSkill = data.skills_required.map(
             (skill: { value: string }) => skill.value
           );
           const lang = data.job_languages.map(
-            (lg: { language_id: number }) => lg.language_id
+            (lg: { language: string }) => lg.language
           );
           console.log(lang);
           this.jobForm.patchValue({
@@ -211,7 +211,7 @@ export class JobDetailPage implements OnInit {
             WorkFromHome: data.is_wfh,
             qualification: data.min_qual_id,
             salary: data.salary_per_annum,
-            skills: selectedSkillIds,
+            skills: selectedSkill,
             issecuritygiven: data.security_amount,
             jobStartTime: data.job_start_time,
             jobEndTime: data.job_end_time,
@@ -231,10 +231,7 @@ export class JobDetailPage implements OnInit {
       this.isRecreate=false;
     }
   }
-  //    compareSkills = (o1: any, o2: any): boolean => {
-  //   return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  // };
-
+  
   markFormTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
@@ -313,21 +310,17 @@ export class JobDetailPage implements OnInit {
 
     console.log('Submitting form:', formData);
 
-    // this.apiService.submitJob(formData).subscribe(
-    //   (response: any) => {
-    //     console.log('Success:', response);
-    //     this.router.navigate(['/employer-plan']);
-    //   },
-    //   (error: any) => {
-    //     console.error('API Error:', error);
-    //   }
-    // );
+    this.apiService.submitJob(formData).subscribe(
+      (response: any) => {
+        console.log('Success:', response);
+        this.router.navigate(['/employer-plan']);
+      },
+      (error: any) => {
+        console.error('API Error:', error);
+      }
+    );
   }
-//  selectSkills(skil:string){
-//   this.selectSkills=skil;
-//   this.jobForm.get('skills')?.setValue(skil);
-//     console.log('Selected qualification:', skil);
-//  }
+
   selectQualifications(level: string) {
     this.selectedQualifications = level;
     this.jobForm.get('qualification')?.setValue(level);

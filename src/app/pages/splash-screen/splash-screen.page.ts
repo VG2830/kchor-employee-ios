@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 // import lottie from 'lottie-web';
 
@@ -12,7 +12,7 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, IonicModule] 
 })
 export class SplashScreenPage implements OnInit {
-
+userType:string='';
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -27,13 +27,33 @@ export class SplashScreenPage implements OnInit {
   initial_nav(){
      setTimeout(() => {
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      if (isLoggedIn) {
-        this.router.navigate(['/employer-plan']);  //change krna h login its for trail 
+      // if (isLoggedIn) {
+      //   this.router.navigate(['/employer-plan']);  //change krna h login its for trail 
        
-      } else {
-        this.router.navigate(['/login']);
+      // } else {
+      //   this.router.navigate(['/login']);
         
+      // }
+      if (isLoggedIn) {
+      const userType=localStorage.getItem('type_Of_User');
+       const navigationExtras: NavigationExtras = {
+            state: {
+            
+            userType:this.userType
+            }
+          };
+      console.log(userType);
+      if(userType==="existing") {
+
+       this.router.navigate(['/employer-plan'],navigationExtras); 
       }
+      else{
+        this.router.navigate(['/basic-details-page']);
+      }
+    } else {
+      this.router.navigate(['/login']);
+      // this.router.navigate(['/reg-aboutme']);  
+    }
     }, 3000);
     
   }
@@ -44,11 +64,17 @@ export class SplashScreenPage implements OnInit {
   navigateToAppropriateRoute() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (isLoggedIn) {
-      const type_Of_User=localStorage.getItem('type_Of_User');
-      console.log(type_Of_User);
-      if(type_Of_User==="existing") {
+      const userType=localStorage.getItem('type_Of_User');
+       const navigationExtras: NavigationExtras = {
+            state: {
+            
+            userType:this.userType
+            }
+          };
+      console.log(userType);
+      if(userType==="existing") {
 
-       this.router.navigate(['/employer-plan']); 
+       this.router.navigate(['/employer-plan'],navigationExtras); 
       }
       else{
         this.router.navigate(['/basic-details-page']);

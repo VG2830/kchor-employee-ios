@@ -10,11 +10,11 @@
 <ion-content class="ion-padding">
   <ng-container *ngIf="!loading && userData">
     <div class="btn">
-      <ion-button (click)="downloadPdf()" class="submitbtn">Download pdf</ion-button>
-    <ion-button *ngIf="this.pdf"  (click)="viewpdf()"class="submitbtn" >View Downloaded pdf</ion-button>
+      <ion-button (click)="viewpdf()" class="submitbtn">Download pdf</ion-button>
+    <!-- <ion-button *ngIf="this.pdf"  (click)="viewpdf()"class="submitbtn" >View Downloaded pdf</ion-button> -->
     </div>
     <ion-card>
-      <ion-card-header>
+      <ion-card-header >
         <ion-card-title>Basic Details</ion-card-title>
       </ion-card-header>
       <ion-card-content>

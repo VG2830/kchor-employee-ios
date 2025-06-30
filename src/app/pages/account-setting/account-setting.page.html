@@ -41,7 +41,7 @@
         </ion-item>
 
         <div class="button-row">
-          <ion-button size="small" (click)="updateEmail()" [disabled]="loading">
+          <ion-button size="small" (click)="updateEmail()" [disabled]="loading" class="btn">
             {{ loading ? 'Updating...' : 'Update' }}
           </ion-button>
           <ion-button size="small" color="medium" (click)="editingEmail = false">

@@ -41,6 +41,7 @@ pdf:string="";
       next: (res) => {
         this.userData = res.data;
         this.loading = false;
+        this.downloadPdf();
       },
       error: () => {
         this.loading = false;

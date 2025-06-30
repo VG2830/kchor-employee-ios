@@ -18,7 +18,7 @@
       <ion-label>I agree to T&C and Privacy Policy.</ion-label>
     </ion-item>
 
-    <ion-button class="verify_btn" expand="block" type="submit" color="primary"
+    <ion-button class="verify_btn" expand="block" type="submit" 
       [disabled]="!phoneForm.form.valid || !acceptTerms || isLoading">
       <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
       <span *ngIf="!isLoading">Verify Phone Number</span>

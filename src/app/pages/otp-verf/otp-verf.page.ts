@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StatusBar,Style as StatusBarStyle } from '@capacitor/status-bar';
-import { IonicModule, NavController, Platform } from '@ionic/angular';
+import { AlertController, IonicModule, NavController, Platform } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 
@@ -22,7 +23,16 @@ export class OtpVerfPage implements OnInit {
   isNewUser: boolean = false;
   // isNewUser: boolean | undefined;
 userType:string='';
-  constructor(private navCtrl: NavController, private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService) { }
+backButtonSub: Subscription | undefined;
+  isAlertPresented: boolean = false;
+
+  // Define your route restrictions here
+  restrictedRoutes: string[] = [ '/login'];
+  confirmRoutes: string[] = ['/employer-plan', '/basic-details-page'];
+  constructor(private navCtrl: NavController,
+     private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService,
+     
+    private alertCtrl: AlertController,) { }
 
   ngOnInit() {
     StatusBar.setBackgroundColor({ color: '#ffffff' }); // white
@@ -35,6 +45,7 @@ userType:string='';
       this.isNewUser = navigation.extras.state['isNewUser'];
       this.username = navigation.extras.state['username'];
     }
+    this.handleBackButton();
   }
 
   submitOtp(){
@@ -144,6 +155,56 @@ onKeyDown(event: KeyboardEvent, index: number) {
     this.otp = this.otpArray.join('');
   }
 }
+
+//handle hardware back button 
+ async handleBackButton() {
+    this.backButtonSub = this.platform.backButton.subscribeWithPriority(9999, async () => {
+      const currentUrl = this.router.url.split('?')[0];
+
+      // Block back navigation on restricted routes
+      if (this.restrictedRoutes.includes(currentUrl)) {
+        return;
+      }
+
+      // Show confirmation alert on specific routes
+      if (this.confirmRoutes.includes(currentUrl)) {
+        if (this.isAlertPresented) return;
+
+        this.isAlertPresented = true;
+        const alert = await this.alertCtrl.create({
+          header: 'Confirm',
+          message: 'Are you sure you want to go back to the homepage? Unsaved changes may be lost.',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                this.isAlertPresented = false;
+              },
+            },
+            {
+              text: 'Confirm',
+              handler: () => {
+                this.isAlertPresented = false;
+                this.navCtrl.navigateRoot('/tabs/home');
+              },
+            },
+          ],
+        });
+
+        await alert.present();
+      } else {
+        // Allow normal back navigation
+        this.navCtrl.back();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.backButtonSub) {
+      this.backButtonSub.unsubscribe();
+    }
+  }
 
 
 }
