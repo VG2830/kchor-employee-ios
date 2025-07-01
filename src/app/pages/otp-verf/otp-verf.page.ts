@@ -27,7 +27,7 @@ backButtonSub: Subscription | undefined;
   isAlertPresented: boolean = false;
 
   // Define your route restrictions here
-  restrictedRoutes: string[] = [ '/login'];
+  restrictedRoutes: string[] = [ '/otp-verf'];
   confirmRoutes: string[] = ['/employer-plan', '/basic-details-page'];
   constructor(private navCtrl: NavController,
      private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService,

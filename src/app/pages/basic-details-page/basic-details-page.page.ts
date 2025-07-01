@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router, NavigationExtras } from '@angular/router';
+import { ViewDidEnter  } from '@ionic/angular'; 
 @Component({
   selector: 'app-lastpage',
   standalone: false,
@@ -27,6 +28,8 @@ export class BasicDetailsPagePage implements OnInit {
   emplnumber: string = '';
   empProfile: string = '';
   isNewUser: boolean | undefined ;
+  selectedSegment: string = 'basic';
+
   //end
   constructor(
     private fb: FormBuilder,
@@ -44,16 +47,30 @@ export class BasicDetailsPagePage implements OnInit {
       });
     }
   }
-  ngOnInit() {
+       ngOnInit() {
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
       }
     });
+  this.getEmployeedata();
+    
 
-    const storedUserId = localStorage.getItem('userId');
+    }
+    ionViewDidEnter(){
+      this.getEmployeedata();
+    }
+    getEmployeedata(){
+      const storedUserId = localStorage.getItem('userId');
+      const formCompleted = localStorage.getItem('basicFormCompleted') === 'true';
     if (storedUserId) {
       this.user_id = parseInt(storedUserId, 10);
+          if (formCompleted) {
+       
+        this.isNewUser = false;
+        this.basiclast.disable();
+        return;
+      }
       this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
         if (res.status && res.data?.mobile_number) {
           this.mobileNumber = res.data.mobile_number;
@@ -62,7 +79,7 @@ export class BasicDetailsPagePage implements OnInit {
       });
 
      this.apiService.getEmployerData(this.user_id).subscribe(
-  (res) => {
+     (res) => {
     console.log(res);
     if (res.status && res.data) {
       console.log(res);
@@ -95,8 +112,15 @@ export class BasicDetailsPagePage implements OnInit {
     }
   }
 );
-
     }
+  }
+  segmentChanged(event: any) {
+    const value = event.detail.value;
+    this.selectedSegment = value;
+    console.log('Segment changed:', value);
+    
+    // Optional: Navigate or show content based on selected segment
+    // this.router.navigate(['/company-details']);
   }
   validatePhoneNumber(event: any) {
     const input = event.target as HTMLIonInputElement;
@@ -140,6 +164,7 @@ onlyDashboard(){
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        localStorage.setItem('basicFormCompleted', 'true');
         this.router.navigate(['/company-details-page']);
       },
       (error: any) => {
@@ -148,4 +173,5 @@ onlyDashboard(){
       }
     );
   }
+ 
 }

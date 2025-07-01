@@ -63,9 +63,23 @@ isNewUser: boolean = true;
         this.stateOptions = res.data;
       }
     });
-    const storedUserId=LocalStorageUtil.getItem('userId')
+    this.getEmployerdata();
+  }
+  ionViewDidEnter(){
+      this.getEmployerdata();
+    }
+ getEmployerdata(){
+  const storedUserId=LocalStorageUtil.getItem('userId');
+      const formCompleted = localStorage.getItem('company_complete') === 'true';
+
     if(storedUserId){
       this.user_id = parseInt(storedUserId, 10);
+        if (formCompleted) {
+       
+        this.isNewUser = false;
+        this.company.disable();
+        return;
+      }
       this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
          if (res.status && res.data) {
            console.log(res);
@@ -99,8 +113,7 @@ isNewUser: boolean = true;
          }
         });
     }
-  }
- 
+ }
   showTutorial = false;
   openTutorial() {
     this.showTutorial = true;
@@ -181,6 +194,7 @@ basicpg(){
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        localStorage.setItem('company_complete','true');
         this.router.navigate(['/job-detail-page']);
       },
       (error: any) => {

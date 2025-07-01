@@ -1,15 +1,15 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar style="--min-height: 100px">
     <ion-title style="padding-bottom: 15px">1/3</ion-title>
     <ion-title>Post Job </ion-title>
 
-    <!-- <ion-button slot="end" id="supporttitle" 
+    <ion-button slot="end" id="supporttitle" 
       ><ion-icon name="call-outline"></ion-icon>Call customer
       support</ion-button
-    > -->
+    >
   </ion-toolbar>
   <ion-toolbar>
-    <!-- <ion-searchbar></ion-searchbar> -->
+>
 
     <ion-segment value="basic">
      
@@ -132,6 +132,128 @@
              *ngIf="!isNewUser">Back to Dashboard</ion-button>
             <ion-button  expand="block" class="submitbtn"  (click)="onlyNavigation()"
              *ngIf="!isNewUser" >
+              Next
+            </ion-button>
+          </div>
+        </div>
+      </form>
+    </ion-segment-content>
+  </ion-segment-view>
+</ion-content> -->
+<ion-header>
+  <ion-toolbar style="--min-height: 100px">
+    <ion-title style="padding-bottom: 50px">1/3</ion-title>
+    <ion-title>Post Job </ion-title>
+  </ion-toolbar>
+
+<ion-toolbar>
+  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="basic">
+      <ion-label>Basic Details</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="company" [disabled]="true">
+      <ion-label>Company Details</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="job" [disabled]="true">
+      <ion-label>Job Details</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
+  <ion-segment-view value="basic">
+    <ion-segment-content id="basic">
+      <form [formGroup]="basiclast">
+        <div class="box">
+          <h2 class="heading" style="text-align: center;">Basic Details</h2>
+
+          <!-- Employer Name -->
+          <ion-item>
+            <ion-label position="stacked" class="label-class">Employer Name <span style="color: red">*</span></ion-label>
+            <ion-input
+              type="text"
+              formControlName="emplname"
+              placeholder="Enter employer name"
+            ></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="basiclast.get('emplname')?.touched && basiclast.get('emplname')?.invalid">
+            <small *ngIf="basiclast.get('emplname')?.errors?.['required']">Feild is required</small>
+          </ion-text>
+
+          <!-- Email -->
+          <ion-item>
+            <ion-label position="stacked">Email <span style="color: red">*</span></ion-label>
+            <ion-input
+              type="email"
+              formControlName="emplemail"
+              placeholder="Enter your email"
+            ></ion-input>
+          </ion-item>
+          <small style="color: green">--Candidates job application send on this email</small>
+          <div>
+            <ion-text color="danger" *ngIf="basiclast.get('emplemail')?.touched && basiclast.get('emplemail')?.invalid">
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['email']">Enter a valid email address</small>
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['required']">Feild is required</small>
+            </ion-text>
+          </div>
+
+          <!-- Contact Person Profile -->
+
+          <ion-item>
+           <ion-label position="stacked">Contact Person Profile <span style="color: red">*</span></ion-label>
+            <ion-select placeholder="Select One" formControlName="contactperson">
+              <ion-select-option value="">Select One</ion-select-option>
+              <ion-select-option *ngFor="let option of empProfileOptions" [value]="option.id">
+                {{ option.profile }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-text color="danger" *ngIf="basiclast.get('contactperson')?.touched && basiclast.get('contactperson')?.invalid">
+            <small *ngIf="basiclast.get('contactperson')?.errors?.['required']">Field is required</small>
+          </ion-text>
+
+          <!-- Registered Mobile Number -->
+          <ion-item>
+            <ion-label position="stacked">Registered Mobile Number</ion-label>
+            <ion-input
+              type="tel"
+              formControlName="emplnumber"
+              name="mobileNumber"
+              inputmode="numeric"
+              maxlength="10"
+              pattern="^[0-9]{10}$"
+              (ionInput)="validatePhoneNumber($event)"
+              readonly
+              placeholder="Enter 10-digit mobile number"
+            ></ion-input>
+          </ion-item>
+          <small style="color: green">--Candidates call in this number</small>
+          <ion-text color="danger" *ngIf="basiclast.get('emplnumber')?.touched && basiclast.get('emplnumber')?.invalid">
+            <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']">Field is required</small>
+          </ion-text>
+
+          <!-- Buttons -->
+          <div class="btn">
+            <ion-button
+              expand="block"
+              class="submitbtn"
+              (click)="submitForm()"
+              [disabled]="basiclast.invalid"
+              *ngIf="isNewUser"
+            >
+              Save & Continue
+            </ion-button>
+            <ion-button
+              expand="block"
+              class="submitbtn"
+              (click)="onlyNavigation()"
+              *ngIf="!isNewUser"
+            >
               Next
             </ion-button>
           </div>
