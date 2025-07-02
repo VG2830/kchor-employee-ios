@@ -12,16 +12,23 @@
 form {
   margin-bottom: 170px;
 }
+// ion-segment-button[disabled] {
+//   opacity: 0.4;
+//   pointer-events: none;
+// }
+// ion-segment-button.segment-button-checked {
+//   --background: #511168 !important; /* Purple background */
+//   --color: #ffffff !important;      /* White text */
+// }
 
-/* ===================== COMMON STYLES ===================== */
+// ion-segment-button {
+//   --background: #e2e1e2; /* Light grey for unselected */
+//   --color: #000;         /* Black text for unselected */
+//   font-weight: 600;
+// }
 
-.label{
-  margin: 0px;
-  padding:19px 10px 12px 0px;
-  background-color: #e2e1e2;
-  border-color: #e2e1e2;
-}
 
+/* ========== COMMON STYLES (Light + Dark) ========== */
 ion-item {
   --inner-padding-end: 0px;
   --padding-start: 0px;
@@ -30,23 +37,46 @@ ion-item {
   background: transparent;
   // margin-bottom: 10px;
    margin: 0;
+   
+}
+::ng-deep ion-segment-button.segment-button-checked {
+  background-color: #833aa6 !important;
+  color: white !important;
+  // font-weight: 600;
 }
 
+::ng-deep ion-segment-button {
+  --indicator-color: #833aa6;
+  // font-weight: 600;
+  height: 44px;
+}
+ion-segment-button.segment-button-checked {
+  background-color: #833aa6 !important;
+  color: white !important;
+  // font-weight: 600;
+
+}
+
+
 ion-label[position="stacked"] {
-   font-size: 0.9rem;
+  font-size: 0.9rem;
   font-weight: 600;
   // margin-bottom: 4px;
   color: #222;
   margin: 0;
   padding-top: 10px;
-  // padding-bottom: 10px;
+  // padding-bottom:10px;
   padding-left: 2px;
    background-color: #e2e1e2;
 }
 
+.ion-text-wrap {
+  color: #1f1f1f;
+  font-size: 14px;
+}
+
 ion-input,
-ion-select,
-ion-textarea {
+ion-select {
   --padding-start: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -58,26 +88,9 @@ ion-textarea {
   min-height: 30px;
 }
 
-ion-textarea {
-  min-height: 100px;
-  padding-top: 10px;
-}
-
-input::placeholder,
-ion-input::part(native)::-webkit-input-placeholder {
+input::placeholder {
   color: #999;
   font-size: 0.8rem;
-}
-
-ion-select {
-  --placeholder-color: #999;
-  --color: #000;
-  border-radius: 8px;
-}
-
-ion-modal {
-  --background: #fff;
-  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .box {
@@ -105,18 +118,15 @@ ion-text[color="danger"] small {
   margin-top: 2px;
   display: block;
 }
-
-/* ===================== DARK MODE ===================== */
-@media (prefers-color-scheme: dark) {
-   
-  .label{
-  margin: 0px;
-  padding:19px 10px 12px 0px;
-  background-color: #0c0c0c;
-  border-color: #050505;
+.btn{
+  display: flex;
+  justify-content: space-between;
 }
 
-    ion-item {
+/* ========== DARK MODE ========== */
+@media (prefers-color-scheme: dark) {
+  
+  ion-item {
   --inner-padding-end: 0px;
   --padding-start: 0px;
   --highlight-height: 0;
@@ -126,6 +136,7 @@ ion-text[color="danger"] small {
    margin: 0;
    
 }
+
   ion-label[position="stacked"] {
   font-size: 0.9rem;
   font-weight: 600;
@@ -138,10 +149,13 @@ ion-text[color="danger"] small {
    background-color: #111111;
 }
 
+  .ion-text-wrap {
+    color: #ffffff;
+  }
+
   ion-input,
-  ion-select,
-  ion-textarea {
-    --padding-start: 10px;
+  ion-select {
+       --padding-start: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #2b2b2b;
@@ -152,20 +166,34 @@ ion-text[color="danger"] small {
   min-height: 30px;
   }
 
-  ion-select {
-    --placeholder-color: #aaa;
-    --color: #fff;
+  input::placeholder {
+    color: #aaa;
   }
 
   .box {
-   padding: 15px;
+  padding: 15px;
    background-color: #2a2a2a;
-  border-color: #444;
+    border-color: #444;
   border: 1px solid ;
   border-radius: 10px;
   margin-top: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
+}
+
+// ion-segment-button.active-segment {
+//   background: #833aa6;
+//   color: white !important;
+// }
+
+// ion-segment-button {
+//   background: #e2e1e2;
+
+//   &.segment-button-checked {
+//     background: #833aa6 !important;
+//     color: white !important;
+//   }
+// }
+
 
   .submitbtn {
     --background: #833aa6;
@@ -178,15 +206,6 @@ ion-text[color="danger"] small {
 
   small {
     color: #a0ffa0 !important;
-  }
-
-  ion-modal {
-    --background: #1e1e1e;
-  }
-
-  .label {
-    font-size: 0.85rem;
-    color: #dad7d7;
-    padding-bottom: 0px;
+    padding-bottom: 4px;
   }
 }

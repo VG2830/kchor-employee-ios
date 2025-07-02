@@ -5,7 +5,7 @@
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-segment-button value="company" [disabled]="true">
+    <ion-segment-button value="basic" [disabled]="true">
     <ion-label class="ion-text-wrap">Basic Details</ion-label>
   </ion-segment-button>
 
@@ -13,8 +13,8 @@
     <ion-label class="ion-text-wrap">Company Details</ion-label>
   </ion-segment-button>
 
-     <ion-segment [value]="selectedSegment" >
-  <ion-segment-button value="basic" style="background: #833aa6; color: white !important;;">
+     <ion-segment [(ngModel)]="selectedSegment" >
+  <ion-segment-button value="job" style="background: #833aa6; color: white !important;;">
     <ion-label class="ion-text-wrap" >Job Details</ion-label>
   </ion-segment-button>
     </ion-segment>
@@ -25,7 +25,7 @@
 <ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
   <ion-segment-view value="job">
     <ion-segment-content id="job">
-      <form [formGroup]="jobForm" (ngSubmit)="nextStep()" class="scrollable-form">
+      <form [formGroup]="jobForm"  class="scrollable-form">
         <div class="box">
           <h2 class="heading" style="text-align: center;">Job Details</h2>
 
@@ -71,8 +71,8 @@
 <div class="job-type-toggle">
   <ion-button
     shape="round"
-    [fill]="jobtype === 'fulltime' ? 'solid' : 'outline'"
-    [ngClass]="jobtype === 'fulltime' ? 'purple-button' : 'medium'"
+    [fill]="jobType === 'fulltime' ? 'solid' : 'outline'"
+    [ngClass]="jobType === 'fulltime' ? 'purple-button' : 'medium'"
     (click)="selectjobType('fulltime')"
     type="button"
   >
@@ -80,8 +80,8 @@
   </ion-button>
   <ion-button
     shape="round"
-    [fill]="jobtype === 'parttime' ? 'solid' : 'outline'"
-    [ngClass]="jobtype === 'parttime' ? 'purple-button' : 'medium'"
+    [fill]="jobType === 'parttime' ? 'solid' : 'outline'"
+    [ngClass]="jobType === 'parttime' ? 'purple-button' : 'medium'"
     (click)="selectjobType('parttime')"
     type="button"
   >
@@ -350,6 +350,7 @@
 <ng-select
   [items]="selectedSkills"
   bindLabel="value"
+  bindValue="id"
   [multiple]="true"
   [searchable]="true"
   [closeOnSelect]="false"
@@ -435,7 +436,7 @@
       placeholder="Search to select a language"
       formControlName="language"
       [searchable]="true"
-      multiple="true"
+     
     ></ng-select>
 
   <div class="rws" formGroupName="rws">

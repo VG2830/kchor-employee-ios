@@ -18,6 +18,4 @@ import { CompanyDetailsPagePage } from './company-details-page.page';
   ],
   declarations: [CompanyDetailsPagePage]
 })
-export class CompanyDetailsPagePageModule {
-    
-}
+export class CompanyDetailsPagePageModule {}

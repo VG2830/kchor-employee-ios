@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
-import { ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+import { ViewDidEnter  } from '@ionic/angular'; 
 @Component({
   selector: 'app-lastpage',
   standalone: false,
@@ -28,16 +28,15 @@ export class BasicDetailsPagePage implements OnInit {
   emplnumber: string = '';
   empProfile: string = '';
   isNewUser: boolean | undefined ;
-selectedSegment: string = 'basic';
-   
+  selectedSegment: string = 'basic';
+
   //end
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute ,
-    private cdRef: ChangeDetectorRef 
+    private route: ActivatedRoute
   ) {
     {
       this.basiclast = this.fb.group({
@@ -48,26 +47,39 @@ selectedSegment: string = 'basic';
       });
     }
   }
-  ngOnInit() {
-    // this.selectedSegment = 'basic';
+       ngOnInit() {
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
       }
     });
-
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
-      this.user_id = parseInt(storedUserId, 10);
-      this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
+    this.user_id=Number(localStorage.getItem('userId'));
+     this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
         if (res.status && res.data?.mobile_number) {
           this.mobileNumber = res.data.mobile_number;
           this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
         }
       });
+  this.getEmployeedata();
+    
+
+    }
+    ionViewDidEnter(){
+      this.getEmployeedata();
+    }
+    getEmployeedata(){
+      const storedUserId = localStorage.getItem('userId');
+      const user_type = localStorage.getItem('type_Of_User') === 'existing';
+      const formCompleted=localStorage.getItem('basicFormCompleted')==='true';
+    if (storedUserId) {
+      this.user_id = parseInt(storedUserId, 10);
+          if (formCompleted ||user_type ) {
+       
+        this.isNewUser = false;
+         
 
      this.apiService.getEmployerData(this.user_id).subscribe(
-  (res) => {
+     (res) => {
     console.log(res);
     if (res.status && res.data) {
       console.log(res);
@@ -79,12 +91,11 @@ selectedSegment: string = 'basic';
         emplemail: res.data.email,
       });
 
-      this.basiclast.disable();
-      this.cdRef.detectChanges();
-      this.isNewUser = false;
+      // this.basiclast.disable();
+      // this.isNewUser = false;
     } else {
       // If no data, treat as new user
-      this.isNewUser = true;
+      // this.isNewUser = true;
       console.log(this.isNewUser);
     }
   },
@@ -101,19 +112,13 @@ selectedSegment: string = 'basic';
     }
   }
 );
-
+        this.basiclast.disable();
+        return;
+      }
+    this.isNewUser=true;
     }
   }
-
- segmentChanged(event: any) {
-    const value = event.detail.value;
-    this.selectedSegment = value;
-    console.log('Segment changed:', value);
-    
-    // Optional: Navigate or show content based on selected segment
-    // this.router.navigate(['/company-details']);
-  }
-
+  
   validatePhoneNumber(event: any) {
     const input = event.target as HTMLIonInputElement;
     const value = input.value as string;
@@ -130,7 +135,9 @@ selectedSegment: string = 'basic';
   onlyNavigation() {
     this.router.navigate(['/company-details-page']);
   }
-
+onlyDashboard(){
+  this.router.navigate(['/employer-plan']);
+}
   submitForm() {
     if (this.basiclast.invalid) {
       this.basiclast.markAllAsTouched(); // Show validation errors
@@ -154,6 +161,7 @@ selectedSegment: string = 'basic';
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        localStorage.setItem('basicFormCompleted', 'true');
         this.router.navigate(['/company-details-page']);
       },
       (error: any) => {
@@ -162,4 +170,5 @@ selectedSegment: string = 'basic';
       }
     );
   }
+ 
 }
