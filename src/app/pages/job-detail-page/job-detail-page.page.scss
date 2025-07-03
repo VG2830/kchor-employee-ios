@@ -196,12 +196,13 @@ ion-button.medium {
 }
 
 ion-button.submitbtn {
-  flex: 1;
+  // flex: 1;
   --background: #511168;
   color: white;
-  font-size: 15px;
-  font-weight: 500;
-  height: 44px;
+ 
+  // font-size: 15px;
+  // font-weight: 500;
+  // height: 44px;
 }
 
 /*====================== DARK MODE ======================*/
@@ -407,3 +408,64 @@ ng-select ::ng-deep .ng-option:hover {
 .rws ion-label {
   font-size: 13px;
 }
+
+
+/*****header */
+//header
+.toolbar {
+      background-color: #e2e1e2;
+      padding: 10px;
+      min-height: 80px;
+      border-bottom: 1px solid #e2e1e2;
+      // position: relative;
+    }
+
+    .toolbar .title-main {
+      font-size: 15px;
+      font-weight:lighter;
+      margin: 0;
+    }
+
+    .toolbar .title-sub {
+      // position: absolute;
+      bottom: 10px;
+      right: 16px;
+      font-size: 12px;
+      // color: #666;
+    }
+
+    .segment-toolbar {
+      background-color: #e2e1e2;
+      padding: 10px 10px;
+     
+       border-bottom: 1px solid #ccc;
+      // border-bottom-left-radius:20px ;
+      // border-bottom-right-radius:  20px;
+    }
+
+    .segments {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+
+    .segment-button {
+      padding: 10px 16px;
+      border: 1px solid #000;
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .segment-button.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .segment-button.active {
+      background-color: #511168;
+      color: #fff;
+    }

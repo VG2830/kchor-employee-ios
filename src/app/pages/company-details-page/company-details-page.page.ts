@@ -5,8 +5,6 @@ import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ChangeDetectorRef } from '@angular/core';
-
 
 @Component({
   selector: 'app-mainfirst',
@@ -14,7 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './company-details-page.page.html',
   styleUrls: ['./company-details-page.page.scss'],
 })
-export class CompanyDetailsPagePage implements OnInit    {
+export class CompanyDetailsPagePage implements OnInit {
   @Input() formData: any;
   @Output() prev = new EventEmitter<void>();
   @Output() submit = new EventEmitter<void>();
@@ -25,22 +23,18 @@ export class CompanyDetailsPagePage implements OnInit    {
 user_id!: number;
   stateOptions: any[] = [];
   selectedState: string = '';
-  selectedSegment: string = 'company';
-
+ selectedSegment: string = 'company';
 
   cityOptions: any[] = [];
   companycity: string = '';
 isNewUser: boolean = true;
-  mobileNumber: any;
-  basiclast: any;
-
+  //
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
     private apiService: ApiService,
     private router: Router,
-    private sanitizer: DomSanitizer,
-     private cdRef: ChangeDetectorRef 
+    private sanitizer: DomSanitizer
   ) {
     {
       this.company = this.fb.group({
@@ -50,8 +44,8 @@ isNewUser: boolean = true;
         companycity: ['', Validators.required],
         google_map_loc: [''],
         companycountry: ['India', Validators.required],
-        companywebsite: ['', Validators.required],
-        companydesc: ['', Validators.required],
+        companywebsite: [''],
+        companydesc: [''],
         industrytype: ['', Validators.required],
         numemployees: [''],
         companyestb: [''],
@@ -70,13 +64,58 @@ isNewUser: boolean = true;
         this.stateOptions = res.data;
       }
     });
-    const storedUserId=LocalStorageUtil.getItem('userId')
-    if(storedUserId){
-      this.user_id = parseInt(storedUserId, 10);
-      this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
+//      this.user_id=Number(localStorage.getItem('userId'));
+//          this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
+//          if (res.status && res.data) {
+//            console.log(res);
+
+//         this.isNewUser = false;
+          
+//          this.company.patchValue({
+//           companyname:res.data.company_name,
+//           companyaddress:res.data.full_address,
+//          companystate:res.data.state,
+//          companycity:res.data.city,
+//          google_map_loc:this.sanitizer.bypassSecurityTrustHtml(res.data.google_map_loc),
+//          companywebsite:res.data.comp_website,
+//          companydesc:res.data.abt_the_comp,
+//          industrytype:res.data.industry_type,
+//          numemployees:res.data.comp_size,
+//          companyestb:res.data.year_of_establishment,
+//          });
+//          const stateId = res.data.state;
+//          const cityId = res.data.city;
+//          this.initializecity(stateId, cityId);
+// this.company.disable();
+         
+//          }
+//          else {
+//         // If no data, treat as new user
+//         this.isNewUser = false;
+//          }
+//         });
+        this.user_id=Number(localStorage.getItem('userId'));
+
+    this.getEmployerdata();
+  }
+  ionViewDidEnter(){
+      this.getEmployerdata();
+    }
+ getEmployerdata(){
+  // const storedUserId=LocalStorageUtil.getItem('userId');
+      // const formCompleted = localStorage.getItem('company_complete') === 'true';
+      // const user_type = localStorage.getItem('type_Of_User') === 'existing';
+
+    // if(storedUserId){
+      // this.user_id = parseInt(storedUserId, 10);
+        // if (formCompleted||user_type) {
+       
+        // this.user_id=Number(localStorage.getItem('userId'));
+         this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
          if (res.status && res.data) {
            console.log(res);
 
+        this.isNewUser = false;
           
          this.company.patchValue({
           companyname:res.data.company_name,
@@ -90,26 +129,26 @@ isNewUser: boolean = true;
          numemployees:res.data.comp_size,
          companyestb:res.data.year_of_establishment,
          });
-         this.cdRef.detectChanges();
-
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
-
-          //  this.initializecity(6,150);
-
-
-          this.company.disable();
-           this.isNewUser = false;
+this.company.disable();
+         
          }
          else {
         // If no data, treat as new user
         this.isNewUser = true;
+this.company.enable();
+
          }
         });
-    }
-  }
- 
+        // this.company.disable();
+        return;
+      // }
+      this.isNewUser=false;
+     
+    // }
+ }
   showTutorial = false;
   openTutorial() {
     this.showTutorial = true;
@@ -152,15 +191,15 @@ isNewUser: boolean = true;
 basicpg(){
   this.router.navigate(['/basic-details-page']);
 }
-  nextStep2() {
-    if (this.company.valid) {
-      console.log('Form data:', this.company.value);
-      // this.navCtrl.navigateForward('next-page'); // Replace with actual route
-    } else {
-      this.company.markAllAsTouched();
-      console.log('Form is invalid');
-    }
-  }
+  // nextStep2() {
+  //   if (this.company.valid) {
+  //     console.log('Form data:', this.company.value);
+     
+  //   } else {
+  //     this.company.markAllAsTouched();
+  //     console.log('Form is invalid');
+  //   }
+  // }
   //
 
   onlyNavigate() {
@@ -190,6 +229,7 @@ basicpg(){
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        localStorage.setItem('company_complete','true');
         this.router.navigate(['/job-detail-page']);
       },
       (error: any) => {

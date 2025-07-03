@@ -1,99 +1,150 @@
 <ion-header>
-  <ion-toolbar style="--min-height: 100px">
-    <ion-title style="padding-bottom: 50px">2/3</ion-title>
-    <ion-title>Post Job</ion-title>
-  </ion-toolbar>
+  <div class="toolbar">
+    <p class="title-sub">2/3</p>
 
-  <ion-toolbar>
-     <ion-segment-button value="company" [disabled]="true">
-    <ion-label class="ion-text-wrap">Basic Details</ion-label>
-  </ion-segment-button>
+    <h1 class="title-main">Post Job</h1>
+  </div>
 
-      <ion-segment [value]="selectedSegment" >
-  <ion-segment-button value="basic" style="background: #833aa6;
-    color: white !important;">
-    <ion-label class="ion-text-wrap" >Company Details</ion-label>
-  </ion-segment-button>
-
-      <ion-segment-button value="job" [disabled]="true">
-        <ion-label class="ion-text-wrap">Job Details</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div class="segment-toolbar">
+    <div class="segments">
+      <button class="segment-button disabled">Basic Details</button>
+      <button class="segment-button active">Company Details</button>
+      <button class="segment-button disabled">Job Details</button>
+    </div>
+  </div>
 </ion-header>
-
 
 <ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
   <ion-segment-view value="company">
     <ion-segment-content id="company">
-      <form [formGroup]="company" (ngSubmit)="nextStep2()" class="scrollable-form">
+      <form [formGroup]="company" class="scrollable-form">
         <div class="box">
-          <h2 class="heading" style="text-align: center;">Company Details</h2>
+          <h2 class="heading" style="text-align: center">Company Details</h2>
 
           <!-- Company Name -->
-          <ion-item>
-            <ion-label position="stacked">Company Name <span style="color: red">*</span></ion-label>
-            <ion-input formControlName="companyname" placeholder="Enter company name"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="company.get('companyname')?.touched && company.get('companyname')?.invalid">
+          <div>
+            <ion-label position="stacked"
+              >Company Name <span style="color: red">*</span></ion-label
+            >
+            <ion-input
+              formControlName="companyname"
+              placeholder="Enter company name"
+            ></ion-input>
+          </div>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('companyname')?.touched && company.get('companyname')?.invalid"
+          >
             <small>Company name is required</small>
           </ion-text>
 
           <!-- Full Address -->
-          <ion-item>
-            <ion-label position="stacked">Full Address <span style="color: red">*</span></ion-label>
-            <ion-input formControlName="companyaddress" placeholder="Enter full address"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="company.get('companyaddress')?.touched && company.get('companyaddress')?.invalid">
+          <div>
+            <ion-label position="stacked"
+              >Full Address <span style="color: red">*</span></ion-label
+            >
+            <ion-input
+              formControlName="companyaddress"
+              placeholder="Enter full address"
+            ></ion-input>
+          </div>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('companyaddress')?.touched && company.get('companyaddress')?.invalid"
+          >
             <small>Address is required</small>
           </ion-text>
 
           <!-- State -->
-          <ion-item>
-            <ion-label position="stacked">State <span style="color: red">*</span></ion-label>
-            <ion-select formControlName="companystate" placeholder="Select state" (ionChange)="onStateChange($event.detail.value)">
+          <div>
+            <ion-label position="stacked"
+              >State <span style="color: red">*</span></ion-label
+            >
+            <ion-select
+              formControlName="companystate"
+              placeholder="Select state"
+              (ionChange)="onStateChange($event.detail.value)"
+            >
               <ion-select-option value="">Select one</ion-select-option>
-              <ion-select-option *ngFor="let option of stateOptions" [value]="option.id">{{ option.name }}</ion-select-option>
+              <ion-select-option
+                *ngFor="let option of stateOptions"
+                [value]="option.id"
+                >{{ option.name }}</ion-select-option
+              >
             </ion-select>
-          </ion-item>
-          <ion-text color="danger" *ngIf="company.get('companystate')?.touched && company.get('companystate')?.invalid">
+          </div>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('companystate')?.touched && company.get('companystate')?.invalid"
+          >
             <small>Field is required</small>
           </ion-text>
 
           <!-- City -->
-          <ion-item>
-            <ion-label position="stacked">City <span style="color: red">*</span></ion-label>
+          <div>
+            <ion-label position="stacked"
+              >City <span style="color: red">*</span></ion-label
+            >
 
-            <ion-select formControlName="companycity" placeholder="Select city" [disabled]="!company.get('companystate')?.value || cityOptions.length === 0">
+            <ion-select
+              formControlName="companycity"
+              placeholder="Select city"
+              [disabled]="!company.get('companystate')?.value || cityOptions.length === 0"
+            >
               <ion-select-option value="">Select one</ion-select-option>
-              <ion-select-option  *ngFor="let option of cityOptions" [value]="option.id">{{ option.name }}</ion-select-option>
+              <ion-select-option
+                *ngFor="let option of cityOptions"
+                [value]="option.id"
+                >{{ option.name }}</ion-select-option
+              >
             </ion-select>
-          </ion-item>
-          <ion-text color="danger" *ngIf="company.get('companycity')?.touched && company.get('companycity')?.invalid">
+          </div>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('companycity')?.touched && company.get('companycity')?.invalid"
+          >
             <small>Field is required</small>
           </ion-text>
 
           <!-- Country -->
-          <ion-item>
-            <ion-label position="stacked">Country <span style="color: red">*</span></ion-label>
+          <div>
+            <ion-label position="stacked"
+              >Country <span style="color: red">*</span></ion-label
+            >
             <ion-input formControlName="companycountry" readonly></ion-input>
-          </ion-item>
+          </div>
 
           <!-- Google Map -->
-          <ion-item lines="none" >
-            <ion-label class="label">
+          <div lines="none">
+            <p class="label">
               Google Map Location
-              <a (click)="openTutorial()" style="cursor:pointer; color:rgb(76, 192, 72);">(How to get iframe)</a>
-            </ion-label>
-          </ion-item>
+              <a
+                (click)="openTutorial()"
+                style="cursor: pointer; color: rgb(76, 192, 72)"
+                >(How to get iframe)</a
+              >
+           </p>
+          </div>
 
-          <ion-item *ngIf="isNewUser" class="label">
-            <ion-input formControlName="google_map_loc" placeholder="Paste iframe code here"></ion-input>
-          </ion-item>
-          <div *ngIf="!isNewUser" [innerHTML]="company.get('google_map_loc')?.value"></div>
+          <div *ngIf="isNewUser" class="label">
+            <ion-input
+              formControlName="google_map_loc"
+              placeholder="Paste iframe code here"
+            ></ion-input>
+          </div>
+          <div *ngIf="!isNewUser" class="map-container">
+            <div
+              class="map-content"
+              [innerHTML]="company.get('google_map_loc')?.value"
+            ></div>
+          </div>
 
           <!-- Google Map Tutorial Modal -->
-          <ion-modal *ngIf="showTutorial" [isOpen]="showTutorial" (didDismiss)="closeTutorial()">
+          <ion-modal
+            *ngIf="showTutorial"
+            [isOpen]="showTutorial"
+            (didDismiss)="closeTutorial()"
+          >
             <ng-template>
               <ion-header>
                 <ion-toolbar>
@@ -108,61 +159,114 @@
               <ion-content class="ion-padding">
                 <h2>Steps:</h2>
                 <ol>
-                  <li>Open <a href="https://www.google.com/maps" target="_blank">Google Maps</a> and search for the desired location.</li>
+                  <li>
+                    Open
+                    <a href="https://www.google.com/maps" target="_blank"
+                      >Google Maps</a
+                    >
+                    and search for the desired location.
+                  </li>
                   <li>Click on the <b>Share</b> button.</li>
                   <li>Select the <b>Embed a map</b> tab.</li>
                   <li>Copy the provided HTML iframe code.</li>
                   <li>Paste the iframe code.</li>
                 </ol>
-                <img src="../../../assets/embed-map.jpg" alt="">
+                <img src="../../../assets/embed-map.jpg" alt="" />
               </ion-content>
             </ng-template>
           </ion-modal>
 
           <!-- Company Website -->
-          <ion-item>
-            <ion-label position="stacked">Company Website</ion-label>
-            <ion-input formControlName="companywebsite" placeholder="Enter website URL"></ion-input>
-          </ion-item>
+          <div>
+            <ion-label>Company Website</ion-label>
+            <ion-input
+              formControlName="companywebsite"
+              placeholder="Enter website URL"
+            ></ion-input>
+          </div>
 
           <!-- About the Company -->
-          <ion-item>
+          <div>
             <ion-label class="label">About the Company</ion-label>
-          </ion-item>
-          <ion-textarea autoGrow="false" formControlName="companydesc" placeholder="Write a brief description"></ion-textarea>
-          <ion-text color="danger" *ngIf="company.get('companydesc')?.touched && company.get('companydesc')?.invalid">
+          </div>
+          <ion-textarea
+            autoGrow="false"
+            formControlName="companydesc"
+            placeholder="Write a brief description"
+          ></ion-textarea>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('companydesc')?.touched && company.get('companydesc')?.invalid"
+          >
             <small>Field is required</small>
           </ion-text>
 
           <!-- Industry Type -->
-          <ion-item>
-            <ion-label position="stacked">Industry Type <span style="color: red">*</span></ion-label>
-            <ion-select formControlName="industrytype" placeholder="Select industry">
+          <div>
+            <ion-label position="stacked"
+              >Industry Type <span style="color: red">*</span></ion-label
+            >
+            <ion-select
+              formControlName="industrytype"
+              placeholder="Select industry"
+            >
               <ion-select-option value="">Select one</ion-select-option>
-              <ion-select-option *ngFor="let option of industryTypeOptions" [value]="option.id">{{ option.value }}</ion-select-option>
+              <ion-select-option
+                *ngFor="let option of industryTypeOptions"
+                [value]="option.id"
+                >{{ option.value }}</ion-select-option
+              >
             </ion-select>
-          </ion-item>
-          <ion-text color="danger" *ngIf="company.get('industrytype')?.touched && company.get('industrytype')?.invalid">
+          </div>
+          <ion-text
+            color="danger"
+            *ngIf="company.get('industrytype')?.touched && company.get('industrytype')?.invalid"
+          >
             <small>Field is required</small>
           </ion-text>
 
           <!-- Number of Employees -->
-          <ion-item>
+          <div>
             <ion-label position="stacked">Number of Employees</ion-label>
-            <ion-input type="number" formControlName="numemployees" placeholder="Enter number"></ion-input>
-          </ion-item>
+            <ion-input
+              type="number"
+              formControlName="numemployees"
+              placeholder="Enter number"
+            ></ion-input>
+          </div>
 
           <!-- Year of Establishment -->
-          <ion-item>
+          <div>
             <ion-label position="stacked">Year of Establishment</ion-label>
-            <ion-input type="number" formControlName="companyestb" placeholder="Enter year"></ion-input>
-          </ion-item>
+            <ion-input
+              type="number"
+              formControlName="companyestb"
+              placeholder="Enter year"
+            ></ion-input>
+          </div>
 
           <!-- Navigation Buttons -->
           <div class="btn">
-            <ion-button shape="round" class="submitbtn" (click)="previousPage()">Back</ion-button>
-            <ion-button shape="round" class="submitbtn" (click)="submitForm()" type="submit" [disabled]="company.invalid" *ngIf="isNewUser">Save & Continue</ion-button>
-            <ion-button shape="round" class="submitbtn" (click)="onlyNavigate()" *ngIf="!isNewUser">Next</ion-button>
+            <ion-button shape="round" class="submitbtn" (click)="previousPage()"
+              >Back
+            </ion-button>
+            <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="submitForm()"
+              type="submit"
+              [disabled]="company.invalid"
+              *ngIf="isNewUser"
+              >Save & Continue</ion-button
+            >
+            
+            <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="onlyNavigate()"
+              *ngIf="!isNewUser"
+              >Next</ion-button
+            >
           </div>
         </div>
       </form>

@@ -547,8 +547,19 @@
 </ion-text>
 
 <div class="submit-buttons">
-  <ion-button class="submitbtn" (click)="previousPage()">Back</ion-button>
-  <ion-button class="submitbtn" (click)="submitForm()" type="submit" [disabled]="jobForm.invalid">Submit</ion-button>
+  <ion-button class="submitbtn" shape="round"  (click)="previousPage()">Back</ion-button>
+  <ion-button class="submitbtn"  shape="round"  (click)="submitForm()" type="submit" [disabled]="jobForm.invalid">Submit</ion-button>
+  <ion-button
+            shape="round" 
+              class="submitbtn"
+              (click)="submitForm()"
+              type="submit"
+              [disabled]="jobForm.invalid"
+              *ngIf="isRecreate"
+            >
+              Recreate Job
+            </ion-button>
+
 </div>
 
 </div>

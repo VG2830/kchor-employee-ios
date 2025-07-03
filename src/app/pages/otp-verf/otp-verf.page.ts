@@ -186,7 +186,7 @@ onKeyDown(event: KeyboardEvent, index: number) {
               text: 'Confirm',
               handler: () => {
                 this.isAlertPresented = false;
-                this.navCtrl.navigateRoot('/tabs/home');
+                this.navCtrl.navigateRoot('/employer-plan');
               },
             },
           ],

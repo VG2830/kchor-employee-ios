@@ -29,13 +29,13 @@
     <p>{{ jobData.company_name }}</p>
     <ion-row class="flex-row" style="font-size: 12px; justify-content:center;">
       <ion-col size="auto">
-        <ion-icon name="location" color="primary"></ion-icon>
+        <ion-icon name="location" class="commom"></ion-icon>
         <ion-text color="dark" class="styled-text">
           {{jobData.company_city}}, {{jobData.company_state}}
         </ion-text>
       </ion-col>
       <ion-col size="auto">
-        <ion-icon name="briefcase" color="primary"></ion-icon>
+        <ion-icon name="briefcase"  class="commom"></ion-icon>
         <ion-text color="dark" class="styled-text">
           Onsite
         </ion-text>
@@ -90,7 +90,7 @@
 
   <div *ngIf="activeButton === 'description'" class="job_cutom_div">
     <!-- <h3>About this Job</h3> -->
-    <ion-text color="primary">
+    <ion-text  class="commom">
       About this Job
     </ion-text>
     <p>As a {{jobData.job_title}}, you will be a key contributor to the growth, implementation and overall improvement of
@@ -99,7 +99,7 @@
     <ion-card class="job-highlights-card">
       <ion-card-header>
 
-        <ion-card-title><ion-icon name="ribbon" color="primary" style="padding: 0px 16px;"></ion-icon> Job
+        <ion-card-title><ion-icon name="ribbon"  class="commom" style="padding: 0px 16px;"></ion-icon> Job
           Highlights</ion-card-title>
       </ion-card-header>
 
@@ -139,7 +139,7 @@
     </ion-card>
   </div>
   <div *ngIf="activeButton === 'company'" class="job_cutom_div">
-    <ion-text color="primary">
+    <ion-text  class="commom">
       Company Details
     </ion-text>
     <p>
@@ -150,7 +150,7 @@
 
     </p>
 
-    <ion-text color="primary">
+    <ion-text  class="commom">
       About the Company
     </ion-text>
     <p>
@@ -160,7 +160,7 @@
     </p>
   </div>
   <div *ngIf="activeButton === 'requirements'" class="job_cutom_div">
-    <ion-text color="primary">
+    <ion-text  class="commom">
       Candidate Requirements
     </ion-text>
     <p class="candidate-requirements"> <strong >Job Timings:</strong> {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
@@ -179,7 +179,7 @@
     <p class="candidate-requirements"  *ngIf="jobData.job_languages && jobData.job_languages.length"><strong>Languages Required:</strong> {{langList}}<br></p>
   </div>
   <div *ngIf="activeButton === 'additionalInfo'" class="job_cutom_div">
-    <ion-text color="primary">
+    <ion-text  class="commom">
       Additional Requirements
     </ion-text>
     <p class="additional-requirements">

@@ -10,8 +10,7 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-job-detail-page',
@@ -19,7 +18,6 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './job-detail-page.page.html',
   styleUrls: ['./job-detail-page.page.scss'],
 })
- 
 export class JobDetailPage implements OnInit {
   languageControl = new FormControl();
   // selectedLanguage: any;
@@ -31,45 +29,41 @@ export class JobDetailPage implements OnInit {
   form = {
     description: '',
   };
-  city:string | undefined;
+  city: string | undefined;
   company_id: string | undefined;
-  state:string | undefined;
+  state: string | undefined;
   dropdownOptions: any[] = [];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
-
+  
   qualification: any[] = [];
   jobForm: FormGroup;
-
+  isRecreate: boolean = false;
   years: number[] = [];
   selectedQualifications: string = '';
+ selectedSegment: string = 'job';
 
   // Radio/select controls holders
   WorkFromHome: string = '';
   isgender: string = '';
-  jobtype: string = '';
-  selectedLocation: string = '';
+  jobType: string = '';
+
   issecuritygiven: string = '';
   candidatetype: string = '';
-  selectedSegment: string = 'job';
-
+  selectedLocation: string = '';
 
   locations: string[] = [
     'Within 10 KM of my city',
     'Within my city',
     'Anywhere in India',
   ];
-  user_id!: number;
-  mobileNumber: any;
-  basiclast: any;
-  isNewUser!: boolean;
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private navCtrl: NavController,
     private router: Router,
-      private cdRef: ChangeDetectorRef
+    private route: ActivatedRoute
   ) {
     this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
@@ -88,8 +82,8 @@ export class JobDetailPage implements OnInit {
       salary: ['', Validators.required],
       skills: ['', Validators.required],
       company_id: [''],
-      state:[''],
-      city:[''],
+      state: [''],
+      city: [''],
       issecuritygiven: ['', Validators.required],
       languages: this.fb.array([this.createLanguageGroup()]),
       jobStartTime: ['', Validators.required],
@@ -143,16 +137,14 @@ export class JobDetailPage implements OnInit {
     this.apiService.get_user_compID(data).subscribe(
       (response: any) => {
         this.jobForm.patchValue({
-      company_id: response.company_id,
-      state: response.state,
-      city: response.city,
-    });
-             this.cdRef.detectChanges();
-        
-         console.log('response:',response);
+          company_id: response.company_id,
+          state: response.state,
+          city: response.city,
+        });
+        console.log('response:', response);
         this.company_id = response.company_id;
-        this.state=response.state;
-        this.city=response.city;
+        this.state = response.state;
+        this.city = response.city;
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -179,8 +171,68 @@ export class JobDetailPage implements OnInit {
         this.selectedSkills = res.data;
       }
     });
-  }
+    const jobId = this.route.snapshot.queryParams['jobId'];
 
+    this.route.queryParams.subscribe((params) => {
+      const jobId = params['jobId'];
+      // fetch data using jobId
+      console.log('job id', jobId);
+    });
+    console.log('jobdg id', jobId);
+
+    if (jobId) {
+      this.apiService.employer_inactive_job_detail(jobId).subscribe({
+        next: (res) => {
+          console.log(res.data);
+          const data = res.data;
+          this.jobType = data.job_type;
+          this.candidatetype = data.exp_checkbox;
+          this.isgender = data.gender_req;
+          this.selectedLocation = data.cand_loc_req;
+          this.WorkFromHome = data.is_wfh;
+          this.issecuritygiven = data.security_amount === 1 ? 'yes' : 'no';
+          const selectedSkill = data.skills_required.map(
+            (skill: { value: string }) => skill.value
+          );
+          const lang = data.job_languages.map(
+            (lg: { language: string }) => lg.language
+          );
+          console.log(lang);
+          this.jobForm.patchValue({
+            jobTitle: data.job_title,
+            jobCategory: data.job_category_id,
+            jobType: data.job_type,
+            positionsOpen: data.no_of_positions,
+            jobDescription: data.job_description,
+            candidatetype: data.exp_checkbox,
+            minexp: data.min_exp,
+            maxexp: data.max_exp,
+            isgender: data.gender_req,
+            locations: data.cand_loc_req,
+            WorkFromHome: data.is_wfh,
+            qualification: data.min_qual_id,
+            salary: data.salary_per_annum,
+            skills: selectedSkill,
+            issecuritygiven: data.security_amount,
+            jobStartTime: data.job_start_time,
+            jobEndTime: data.job_end_time,
+            interviewTime: data.interview_timmings,
+            interviewDay: data.interview_days,
+            languages: lang,
+            //acceptTerms: !!data["Terms&conditions"], // convert to boolean
+          });
+          this.isRecreate=true;
+        },
+        error: () => {
+          alert('Failed to load data');
+        },
+      });
+    }
+    else{
+      this.isRecreate=false;
+    }
+  }
+  
   markFormTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
@@ -206,18 +258,18 @@ export class JobDetailPage implements OnInit {
       this.languages.removeAt(index);
     }
   }
-  nextStep() {
-    this.markFormTouched(this.jobForm);
-    if (this.jobForm.valid) {
-      console.log('Form data:', this.jobForm.value);
-      this.navCtrl.navigateForward('');
-      const accepted = this.jobForm.value.acceptTerms ? true : false;
-      console.log('Accepted value:', accepted);
-      console.log(this.company_id);
-    } else {
-      console.log('Form is invalid');
-    }
-  }
+  // nextStep() {
+  //   this.markFormTouched(this.jobForm);
+  //   if (this.jobForm.valid) {
+  //     console.log('Form data:', this.jobForm.value);
+  //     this.navCtrl.navigateForward('');
+  //     const accepted = this.jobForm.value.acceptTerms ? true : false;
+  //     console.log('Accepted value:', accepted);
+  //     console.log(this.company_id);
+  //   } else {
+  //     console.log('Form is invalid');
+  //   }
+  // }
 
   previousPage() {
     console.log('Previous step clicked');
@@ -262,6 +314,8 @@ export class JobDetailPage implements OnInit {
     this.apiService.submitJob(formData).subscribe(
       (response: any) => {
         console.log('Success:', response);
+        localStorage.setItem('type_Of_User','existing');
+        this.router.navigate(['/employer-plan']);
       },
       (error: any) => {
         console.error('API Error:', error);
@@ -287,10 +341,10 @@ export class JobDetailPage implements OnInit {
     console.log('Gender:', gender);
   }
 
-  selectjobType(time: string) {
-    this.jobtype = time;
-    this.jobForm.get('jobType')?.setValue(time);
-    console.log('Job type:', time);
+  selectjobType(type: string) {
+    this.jobType = type;
+    this.jobForm.get('jobType')?.setValue(type);
+    console.log('Job type:', type);
   }
 
   selectLocation(location: string) {

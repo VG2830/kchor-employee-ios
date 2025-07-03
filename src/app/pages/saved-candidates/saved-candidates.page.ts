@@ -36,18 +36,7 @@ ngOnInit() {
   searchTerm = '';
 candidates:any[]=[];
   // candidates = [
-  //   {
-  //     name: 'Abhishek Mishra',
-  //     mobile: '7080547392',
-  //     email: 'kaamchor2025+117@gmail.com',
-  //     savedOn: '2025-02-24 00:34:31',
-  //   },
-  //   {
-  //     name: 'Aman',
-  //     mobile: '8572056933',
-  //     email: 'kaamchor2025+8@gmail.com',
-  //     savedOn: '2025-02-24 00:34:40',
-  //   },
+ 
   //   {
   //     name: 'Aarushi Thakur',
   //     mobile: '6230076823',
@@ -100,14 +89,24 @@ async viewCandidate(user: any) {
 }
 
   removeCandidate(user: any) {
-    // this.candidates = this.candidates.filter(c => c !== user);
-    this.apiService.deleteSavedCandidate(this.employer_id,user.user_id).subscribe({
-       
-next(res:any) {
-   console.log("deleted successfully");
-},
-    });
-  }
+  this.apiService.deleteSavedCandidate(this.employer_id, user.user_id).subscribe({
+    next: (res: any) => {
+      console.log("Deleted successfully");
+
+      // Now call savedCandidates again
+      this.apiService.savedCandidates(this.employer_id, this.page, this.limit).subscribe((res: any) => {
+        if (res.status === "success") {
+          this.candidates = res.data;
+          console.log('Updated candidates:', this.candidates);
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error deleting candidate:', err);
+    }
+  });
+}
+
 
   get filteredCandidates() {
     return this.candidates.filter(c =>

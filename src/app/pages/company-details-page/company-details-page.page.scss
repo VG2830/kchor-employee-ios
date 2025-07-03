@@ -190,3 +190,93 @@ ion-text[color="danger"] small {
     padding-bottom: 0px;
   }
 }
+.btn{
+  display: flex;
+  justify-content: space-between;
+}
+.map-container {
+  width: 100%;
+  height: 250px; /* Mobile height */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-content {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Force Google Maps iframe to be responsive */
+.map-content iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+//header
+.toolbar {
+      background-color: #e2e1e2;
+      padding: 10px;
+      min-height: 80px;
+      border-bottom: 1px solid #e2e1e2;
+      // position: relative;
+    }
+
+    .toolbar .title-main {
+      font-size: 15px;
+      font-weight:lighter;
+      margin: 0;
+    }
+
+    .toolbar .title-sub {
+      // position: absolute;
+      bottom: 10px;
+      right: 16px;
+      font-size: 12px;
+      // color: #666;
+    }
+
+    .segment-toolbar {
+      background-color: #e2e1e2;
+      padding: 10px 10px;
+     
+       border-bottom: 1px solid #ccc;
+      // border-bottom-left-radius:20px ;
+      // border-bottom-right-radius:  20px;
+    }
+
+    .segments {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+
+    .segment-button {
+      padding: 10px 16px;
+      border: 1px solid #000;
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .segment-button.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .segment-button.active {
+      background-color: #511168;
+      color: #fff;
+    }

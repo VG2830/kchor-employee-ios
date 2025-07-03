@@ -1,48 +1,41 @@
 <ion-header>
-  <ion-toolbar style="--min-height: 100px">
-    <ion-title style="padding-bottom: 50px">3/3</ion-title>
-    <ion-title>Post Job</ion-title>
-  </ion-toolbar>
+   <div class="toolbar">
+    <p class="title-sub">3/3</p>
 
-  <ion-toolbar>
-    <ion-segment-button value="company" [disabled]="true">
-    <ion-label class="ion-text-wrap">Basic Details</ion-label>
-  </ion-segment-button>
+    <h1 class="title-main">Post Job</h1>
+  </div>
 
-       <ion-segment-button value="company" [disabled]="true">
-    <ion-label class="ion-text-wrap">Company Details</ion-label>
-  </ion-segment-button>
-
-     <ion-segment [value]="selectedSegment" >
-  <ion-segment-button value="basic" style="background: #833aa6; color: white !important;;">
-    <ion-label class="ion-text-wrap" >Job Details</ion-label>
-  </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div class="segment-toolbar">
+    <div class="segments">
+      <button class="segment-button disabled ">Basic Details</button>
+      <button class="segment-button disabled ">Company Details</button>
+      <button class="segment-button active">Job Details</button>
+    </div>
+  </div>
 </ion-header>
 
 
 <ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
   <ion-segment-view value="job">
     <ion-segment-content id="job">
-      <form [formGroup]="jobForm" (ngSubmit)="nextStep()" class="scrollable-form">
+      <form [formGroup]="jobForm"  class="scrollable-form">
         <div class="box">
           <h2 class="heading" style="text-align: center;">Job Details</h2>
 
          <!-- Job Title -->
-<ion-item>
-  <ion-label position="stacked">Job Title <span style="color: red">*</span></ion-label>
+<div>
+  <ion-label >Job Title <span style="color: red">*</span></ion-label>
   <ion-input type="text" formControlName="jobTitle" placeholder="Enter job title"></ion-input>
-</ion-item>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('jobTitle')?.touched && jobForm.get('jobTitle')?.invalid">
   <small *ngIf="jobForm.get('jobTitle')?.errors?.['required']">Name is required</small>
   <small *ngIf="jobForm.get('jobTitle')?.errors?.['minlength']">Minimum 3 characters</small>
 </ion-text>
 
           <!-- Job Category -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label" >Job Category <span style="color: red" >*</span></ion-label>
-</ion-item>
+</div>
 
 <ng-select
   [items]="dropdownOptions"
@@ -64,15 +57,15 @@
 
 
        <!-- Job Type -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Job Type <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <div class="job-type-toggle">
   <ion-button
     shape="round"
-    [fill]="jobtype === 'fulltime' ? 'solid' : 'outline'"
-    [ngClass]="jobtype === 'fulltime' ? 'purple-button' : 'medium'"
+    [fill]="jobType === 'fulltime' ? 'solid' : 'outline'"
+    [ngClass]="jobType === 'fulltime' ? 'purple-button' : 'medium'"
     (click)="selectjobType('fulltime')"
     type="button"
   >
@@ -80,8 +73,8 @@
   </ion-button>
   <ion-button
     shape="round"
-    [fill]="jobtype === 'parttime' ? 'solid' : 'outline'"
-    [ngClass]="jobtype === 'parttime' ? 'purple-button' : 'medium'"
+    [fill]="jobType === 'parttime' ? 'solid' : 'outline'"
+    [ngClass]="jobType === 'parttime' ? 'purple-button' : 'medium'"
     (click)="selectjobType('parttime')"
     type="button"
   >
@@ -95,9 +88,9 @@
 
 
         <!-- No. of Positions Open -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">No. of Positions Open <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 <ion-input
   type="number"
   formControlName="positionsOpen"
@@ -108,9 +101,9 @@
 </ion-text>
 
 <!-- Job Description -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Job Description <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 <ion-textarea 
   autoGrow="false"
 
@@ -122,9 +115,9 @@
 </ion-text>
 
          <!-- Candidate Requirement -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Candidate Requirement <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <div class="candidate-type-toggle">
   <ion-button
@@ -158,44 +151,44 @@
   
   <!-- For Fresher -->
   <ng-container *ngIf="candidatetype === 'fresher'">
-    <ion-item>
+    <div>
       <ion-label position="stacked">Min Experience</ion-label>
       <ion-input formControlName="minexp" value="Fresher" readonly></ion-input>
-    </ion-item>
+    </div>
 
-    <ion-item>
+    <div>
       <ion-label position="stacked">Max Experience</ion-label>
       <ion-input formControlName="maxexp" value="Fresher" readonly></ion-input>
-    </ion-item>
+    </div>
   </ng-container>
 
   <!-- For Experienced -->
   <ng-container *ngIf="candidatetype === 'experienced'">
-    <ion-item>
+    <div>
       <ion-label position="stacked">Min Experience</ion-label>
       <ion-select formControlName="minexp" placeholder="Select minimum years">
         <ion-select-option value="">Fresher</ion-select-option>
         <ion-select-option *ngFor="let year of years" [value]="year">{{ year }} year{{ year > 1 ? 's' : '' }}</ion-select-option>
         <ion-select-option value="30+">30+ years</ion-select-option>
       </ion-select>
-    </ion-item>
+    </div>
 
-    <ion-item>
+    <div>
       <ion-label position="stacked">Max Experience</ion-label>
       <ion-select formControlName="maxexp" placeholder="Select maximum years">
         <ion-select-option *ngFor="let year of years" [value]="year">{{ year }} year{{ year > 1 ? 's' : '' }}</ion-select-option>
         <ion-select-option value="30+">30+ years</ion-select-option>
       </ion-select>
-    </ion-item>
+    </div>
   </ng-container>
 
 </ng-container>
 
 
          <!-- Gender -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Select Gender <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <div class="gender-type-toggle">
   <ion-button
@@ -236,9 +229,9 @@
 
 
           <!-- Candidate Location -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Candidate Location <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <div class="location-toggle">
   <ion-button
@@ -264,9 +257,9 @@
 
 
          <!-- Work From Home -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Is this a work from home job? <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <div class="work-type-toggle">
   <ion-button
@@ -301,9 +294,9 @@
 
 
 <!-- Qualification -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Minimum Qualification <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 
 <ng-select
   [items]="qualification"
@@ -326,9 +319,9 @@
 
 
         <!-- Salary -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Salary per Month <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 <ion-input
   type="number"
   formControlName="salary"
@@ -344,12 +337,13 @@
 </ion-text>
 
 <!-- Skills -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">Mention Skills required <span style="color: red">*</span></ion-label>
-</ion-item>
+</div>
 <ng-select
   [items]="selectedSkills"
   bindLabel="value"
+  bindValue="id"
   [multiple]="true"
   [searchable]="true"
   [closeOnSelect]="false"
@@ -385,7 +379,13 @@
   </ion-label>
 </ion-item>
 
+
 <div class="security-toggle">
+  <!-- <div >
+  <ion-label class="label">
+    Is there any security deposit charged to the candidate (Eg. Uniform, Kit, Bike)? <span style="color: red">*</span>
+  </ion-label>
+</div> -->
   <ion-button
     shape="round"
     [fill]="issecuritygiven === 'yes' ? 'solid' : 'outline'"
@@ -418,11 +418,11 @@
 
 
          <!-- Languages Known -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">
     Languages Known <span style="color: red">*</span>
   </ion-label>
-</ion-item>
+</div>
 
 <div formArrayName="languages">
   <div *ngFor="let langGroup of languages.controls; let i = index" [formGroupName]="i">
@@ -435,7 +435,7 @@
       placeholder="Search to select a language"
       formControlName="language"
       [searchable]="true"
-      multiple="true"
+     
     ></ng-select>
 
   <div class="rws" formGroupName="rws">
@@ -477,50 +477,50 @@
 
 
      <!-- Job Timing -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">
     Job Timing <span style="color: red">*</span>
   </ion-label>
-</ion-item>
+</div>
 
-<ion-item>
-  <ion-label position="stacked">Start Time</ion-label>
+<div>
+  <ion-label >Start Time</ion-label>
   <ion-input type="time" formControlName="jobStartTime"></ion-input>
-</ion-item>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('jobStartTime')?.touched && jobForm.get('jobStartTime')?.invalid">
   <small *ngIf="jobForm.get('jobStartTime')?.errors?.['required']">Field is required</small>
 </ion-text>
 
-<ion-item>
-  <ion-label position="stacked">End Time</ion-label>
+<div>
+  <ion-label >End Time</ion-label>
   <ion-input type="time" formControlName="jobEndTime"></ion-input>
-</ion-item>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('jobEndTime')?.touched && jobForm.get('jobEndTime')?.invalid">
   <small *ngIf="jobForm.get('jobEndTime')?.errors?.['required']">Field is required</small>
 </ion-text>
 
 <!-- Interview Details -->
-<ion-item lines="none">
+<div lines="none">
   <ion-label class="label">
     Interview Details <span style="color: red">*</span>
   </ion-label>
-</ion-item>
+</div>
 
-<ion-item>
-  <ion-label position="stacked">Timing</ion-label>
+<div>
+  <ion-label >Timing</ion-label>
   <ion-select formControlName="interviewTime" placeholder="Select Timings">
     <ion-select-option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</ion-select-option>
     <ion-select-option value="11:00 AM- 1:00 PM">11:00 AM- 1:00 PM</ion-select-option>
     <ion-select-option value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</ion-select-option>
     <ion-select-option value="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</ion-select-option>
   </ion-select>
-</ion-item>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('interviewTime')?.touched && jobForm.get('interviewTime')?.invalid">
   <small *ngIf="jobForm.get('interviewTime')?.errors?.['required']">Select any time slot</small>
 </ion-text>
 
-<ion-item>
-  <ion-label position="stacked">Day</ion-label>
+<div>
+  <ion-label >Day</ion-label>
   <ion-select formControlName="interviewDay" placeholder="Select Day" [multiple]="true">
     <ion-select-option value="Sunday">Sunday</ion-select-option>
     <ion-select-option value="Monday">Monday</ion-select-option>
@@ -530,7 +530,7 @@
     <ion-select-option value="Friday">Friday</ion-select-option>
     <ion-select-option value="Saturday">Saturday</ion-select-option>
   </ion-select>
-</ion-item>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('interviewDay')?.touched && jobForm.get('interviewDay')?.invalid">
   <small *ngIf="jobForm.get('interviewDay')?.errors?.['required']">Select any one day</small>
 </ion-text>
@@ -546,8 +546,20 @@
 </ion-text>
 
 <div class="submit-buttons">
-  <ion-button class="submitbtn" (click)="previousPage()">Back</ion-button>
-  <ion-button class="submitbtn" (click)="submitForm()" type="submit" [disabled]="jobForm.invalid">Submit</ion-button>
+ <ion-button class="submitbtn" shape="round"  (click)="previousPage()">Back</ion-button>
+  <ion-button class="submitbtn"  shape="round"  (click)="submitForm()" type="submit" [disabled]="jobForm.invalid" *ngIf="!isRecreate">Submit</ion-button>
+  <ion-button
+            shape="round" 
+              class="submitbtn"
+              (click)="submitForm()"
+              type="submit"
+              [disabled]="jobForm.invalid"
+              *ngIf="isRecreate"
+            >
+              Recreate Job
+            </ion-button>
+
+
 </div>
 
 </div>

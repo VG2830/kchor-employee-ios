@@ -114,6 +114,7 @@ isNewUser: boolean = true;
         this.company.disable();
         return;
       }
+    this.isNewUser=true;
      
     }
  }
