@@ -208,6 +208,12 @@ basicpg(){
   previousPage() {
     this.router.navigate(['/basic-details-page']);
   }
+  logout() {
+    console.log('Logging out...');
+    localStorage.clear();
+    this.router.navigate(['/login']);
+   
+  }
 
   submitForm() {
     if (this.company.invalid) {

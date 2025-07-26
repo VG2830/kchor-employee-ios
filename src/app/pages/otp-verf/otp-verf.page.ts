@@ -21,6 +21,7 @@ export class OtpVerfPage implements OnInit {
   username: string = '';
   isLoading: boolean = false;
   isNewUser: boolean = false;
+  userId!:number;
   // isNewUser: boolean | undefined;
 userType:string='';
 backButtonSub: Subscription | undefined;
@@ -61,6 +62,7 @@ backButtonSub: Subscription | undefined;
       this.isLoading = true;
       console.log('Verifying OTP:', this.otp);
 
+      //  console.log("userid before api calll",this.userId);
       this.authService.verifyOtp(this.mobileNumber, this.otp).subscribe({
         next: (response) => {
           console.log('OTP verified successfully', response);

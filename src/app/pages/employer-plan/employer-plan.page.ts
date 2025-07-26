@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { CheckoutModalPage } from 'src/app/checkout-modal/checkout-modal.page';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { Device } from '@capacitor/device';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-employer-plan',
@@ -13,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class EmployerPlanPage implements OnInit {
   userType: string | null = null;
-
+user_id!:number;
   plans: any[] = [];
 
   constructor(
@@ -30,7 +32,7 @@ export class EmployerPlanPage implements OnInit {
     await modal.present();
   }
 
-  ngOnInit() {
+   async ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.userType = navigation.extras.state['userType'];
@@ -46,6 +48,37 @@ export class EmployerPlanPage implements OnInit {
         }
       });
     }
+
+    //device information
+    const info = await Device.getInfo();
+     const deviceId = await Device.getId();
+     const active = await App.getState();
+     const deviceData = {
+    device_id: deviceId.identifier ,
+    user_id: Number(localStorage.getItem('userId')),
+   
+    device_type: info.operatingSystem,
+    last_active:  active.isActive
+  };
+   this.user_id= Number(localStorage.getItem('userId')),
+
+   this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
+      if (res.status === true) {
+      console.log( res.data);
+      }
+      else{
+        this.apiService.postDeviceInfo(deviceData).subscribe(
+    (res: any) => {
+      console.log('Device info posted:', res);
+    },
+    (err:any) => {
+      console.error('Failed to post device info:', err);
+    }
+  );
+      }
+    });
+
+  //device end
   }
   logout() {
     // Step 1: Clear the user_id from localStorage
