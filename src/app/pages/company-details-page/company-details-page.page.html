@@ -25,7 +25,21 @@
       <form [formGroup]="company" class="scrollable-form">
         <div class="box">
           <h2 class="heading" style="text-align: center">Company Details</h2>
-
+          <div>
+            <ion-label position="stacked"> Company Logo</ion-label>
+           
+           <!-- <div *ngIf="logoPending">  -->
+            
+            <ion-input 
+            *ngIf="logoPending"
+              type="file"
+              placeholder="Select company logo"
+            (change)="onLogoSelected($event)"></ion-input> </div>
+          <!-- </div> -->
+           <!-- <div *ngIf="logoUploaded">  -->
+          <!-- </div> -->
+            <img *ngIf="logoUploaded"  [src]="logoPreview" style="width: 100px; height: 100px;" alt="Company Logo" >
+          
           <!-- Company Name -->
           <div>
             <ion-label position="stacked"
@@ -34,6 +48,7 @@
             <ion-input
               formControlName="companyname"
               placeholder="Enter company name"
+               autocapitalize="words"
             ></ion-input>
           </div>
           <ion-text
@@ -51,6 +66,7 @@
             <ion-input
               formControlName="companyaddress"
               placeholder="Enter full address"
+               autocapitalize="sentences"
             ></ion-input>
           </div>
           <ion-text
@@ -198,6 +214,7 @@
             autoGrow="false"
             formControlName="companydesc"
             placeholder="Write a brief description"
+             autocapitalize="sentences"
           ></ion-textarea>
           <ion-text
             color="danger"

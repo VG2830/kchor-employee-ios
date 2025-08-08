@@ -36,6 +36,7 @@
               type="text"
               formControlName="emplname"
               placeholder="Enter employer name"
+               autocapitalize="words"
             ></ion-input>
           </div>
           <ion-text color="danger" *ngIf="basiclast.get('emplname')?.touched && basiclast.get('emplname')?.invalid">
@@ -64,7 +65,7 @@
 
           <div style="margin-top: 10px;">
            <ion-label position="stacked">Contact Person Profile <span style="color: red">*</span></ion-label>
-            <ion-select placeholder="Select One" formControlName="contactperson">
+            <ion-select placeholder="Select One" formControlName="contactperson" >
               <ion-select-option value="">Select One</ion-select-option>
               <ion-select-option *ngFor="let option of empProfileOptions" [value]="option.id">
                 {{ option.profile }}

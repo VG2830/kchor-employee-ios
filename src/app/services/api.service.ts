@@ -36,6 +36,10 @@ export class ApiService {
    getEduBranch(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_branch`);
   }
+  getPerksCategory():Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_perks_options`);
+
+  }
   getEduQual(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_qual`);
   }
