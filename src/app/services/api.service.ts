@@ -83,6 +83,11 @@ getEmployerProfile(userId: number): Observable<any> {
 getDeviceInfo(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
 }
+//post profile options
+addEmpProfile(data: any): Observable<any>  {
+  return this.http.post(`${this.apiUrl}/Admin/add_emp_profile`, data);
+}
+//
 postDeviceInfo(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/post_device_info`, data);
   }
@@ -176,6 +181,6 @@ save_candidate( userId: number,candidate_id:number): Observable<any> {
     });
   }
 
-  // https://staging.ekarigar.com/kaam-chor/Employer_Api/downloadResume
+
 
 }

@@ -159,13 +159,13 @@ isNewUser: boolean = true;
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
-this.company.disable();
+         this.company.disable();
          
          }
          else {
         // If no data, treat as new user
         this.isNewUser = true;
-this.company.enable();
+        this.company.enable();
 
          }
         });

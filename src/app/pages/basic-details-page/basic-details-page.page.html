@@ -51,6 +51,7 @@
               type="email"
               formControlName="emplemail"
               placeholder="Enter your email"
+               
             ></ion-input>
           </div>
           <small style="color: green ; margin-bottom: 15px;">--Candidates job application send on this email</small>
@@ -65,12 +66,21 @@
 
           <div style="margin-top: 10px;">
            <ion-label position="stacked">Contact Person Profile <span style="color: red">*</span></ion-label>
-            <ion-select placeholder="Select One" formControlName="contactperson" >
+            <ion-select placeholder="Select One" formControlName="contactperson" (ionChange)="onProfileChange($event)" >
+               <!-- <ion-select placeholder="Select One" formControlName="contactperson" > -->
               <ion-select-option value="">Select One</ion-select-option>
               <ion-select-option *ngFor="let option of empProfileOptions" [value]="option.id">
                 {{ option.profile }}
               </ion-select-option>
+              <ion-select-option value="other">Other</ion-select-option>
             </ion-select>
+            <ion-input
+             *ngIf="showOtherInput"
+              placeholder="Enter new profile"
+               formControlName="profile_name"
+              (ionBlur)="addNewProfile()"
+              clearInput
+              ></ion-input>
           </div>
           <ion-text color="danger" *ngIf="basiclast.get('contactperson')?.touched && basiclast.get('contactperson')?.invalid">
             <small *ngIf="basiclast.get('contactperson')?.errors?.['required']">Field is required</small>

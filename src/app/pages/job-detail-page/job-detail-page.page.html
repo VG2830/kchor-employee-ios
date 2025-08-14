@@ -31,7 +31,7 @@
          <!-- Job Title -->
 <div>
   <ion-label >Job Title <span style="color: red">*</span></ion-label>
-  <ion-input type="text" formControlName="jobTitle" placeholder="Enter job title" style="margin-bottom: 10px;" autocapitalize="words"></ion-input>
+  <ion-input type="text" formControlName="jobTitle" placeholder="Enter job title" style="margin-bottom: 10px;" autocapitalize="words" autocomplete="username"></ion-input>
 </div>
 <ion-text color="danger" *ngIf="jobForm.get('jobTitle')?.touched && jobForm.get('jobTitle')?.invalid">
   <small *ngIf="jobForm.get('jobTitle')?.errors?.['required']">Name is required</small>
@@ -51,7 +51,7 @@
   formControlName="jobCategory"
   [searchable]="true"
   [multiple]="false"
-  [closeOnSelect]="false"
+  [closeOnSelect]="true"
   [clearable]="false"
   class="custom-job-select"
 >
@@ -361,18 +361,21 @@
   placeholder="Enter salary amount"
   style="margin-bottom: 5px;"
 ></ion-input> -->
-<ion-input
+<div class="salary_input" >
+  <ion-input
   type="number"
   formControlName="minSalary"
-  placeholder="Minimum Salary"
+  placeholder="Min Salary"
   style="margin-bottom: 5px;"
 ></ion-input>
+<span> to </span>
 <ion-input 
  type="number" 
  formControlName="maxSalary" 
- placeholder="MaximumSalary"
+ placeholder="Max Salary"
  style="margin-bottom: 5px;"
  ></ion-input>
+</div>
 <ion-text
   color="danger"
   *ngIf="jobForm.get('salary')?.touched && jobForm.get('salary')?.invalid"
@@ -381,9 +384,9 @@
     Field is required
   </small>
 </ion-text>
-<ion-item   lines="none">
+<div   lines="none">
   <ion-label class="label"> Is Perks/Bonus (e.g. TA,DA, Joining Bonus) with Salary </ion-label>
-</ion-item >
+</div >
   <!-- <ion-textarea formControlName="perks"  placeholder="e.g., Free lunch, Bonuses, Health cover,TA/DA" style="margin-bottom: 10px;"></ion-textarea> -->
 <div class="security-toggle">
  
@@ -417,7 +420,7 @@
   formControlName="perksgiven"
   [searchable]="true"
   [multiple]="false"
-  [closeOnSelect]="false"
+  [closeOnSelect]="true"
   [clearable]="false"
   class="custom-job-select"
 >
@@ -433,7 +436,7 @@
   bindValue="id"
   [multiple]="true"
   [searchable]="true"
-  [closeOnSelect]="false"
+  [closeOnSelect]="true"
   [clearable]="true"
   placeholder="Select skills"
   formControlName="skills"
@@ -460,11 +463,16 @@
 
 
         <!-- Security Deposit -->
-<ion-item lines="none">
+<!-- <ion-item lines="none">
   <ion-label class="label">
     Is there any security deposit charged to the candidate (Eg. Uniform, Kit, Bike)? <span style="color: red">*</span>
   </ion-label>
-</ion-item>
+</ion-item> -->
+<div lines="none">
+  <ion-label class="label">
+    Is there any security deposit charged to the candidate (Eg. Uniform, Kit, Bike)? <span style="color: red">*</span>
+  </ion-label>
+</div>
 
 
 <div class="security-toggle">

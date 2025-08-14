@@ -64,7 +64,7 @@ user_id!:number;
 
    this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
       if (res.status === true) {
-      console.log( res.data);
+      console.log( "Device info already exist");
       }
       else{
         this.apiService.postDeviceInfo(deviceData).subscribe(

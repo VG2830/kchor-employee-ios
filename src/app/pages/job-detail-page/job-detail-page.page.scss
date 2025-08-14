@@ -15,7 +15,11 @@ ion-segment-button.segment-button-checked {
   // font-weight: 600;
 
 }
-
+.salary_input{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
 .commonheader{
   display: flex;
@@ -30,7 +34,7 @@ ion-segment-button.segment-button-checked {
 .label{
   margin: 0px;
   padding:19px 10px 12px 0px;
-  background-color: #e2e1e2;
+  // background-color: #e2e1e2;
   border-color: #f8f3f8;
 }
 
@@ -54,7 +58,7 @@ ion-checkbox{
   padding-left: 8px;
 }
 
-ion-label[position="stacked"] {
+ion-label {
   font-size: 0.9rem;
   font-weight: 600;
   // margin-bottom: 4px;
@@ -63,7 +67,7 @@ ion-label[position="stacked"] {
   padding-top: 10px;
   // padding-bottom:10px;
   padding-left: 2px;
-   background-color: #e2e1e2;
+  //  background-color: #e2e1e2;
   min-height: 0px;
 }
 ion-item {
@@ -250,7 +254,7 @@ ion-button.submitbtn {
   .label{
   margin: 0px;
   padding:19px 10px 12px 0px;
-  background-color: #2b2a2b;
+  // background-color: #2b2a2b;
   border-color: #c0bac0;
 }
 
@@ -265,7 +269,7 @@ ion-button.submitbtn {
    
 }
 
-   ion-label[position="stacked"] {
+   ion-label {
   font-size: 0.9rem;
   font-weight: 600;
   // margin-bottom: 4px;
@@ -274,7 +278,7 @@ ion-button.submitbtn {
   padding-top: 10px;
   // padding-bottom:10px;
   padding-left: 2px;
-   background-color: #111111;
+  //  background-color: #111111;
 }
 
   ion-input,
