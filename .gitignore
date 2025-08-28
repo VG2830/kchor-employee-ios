@@ -28,7 +28,7 @@ log.txt
 /tmp
 /out-tsc
 /bazel-out
-
+src/assets/icons/New Tab.html
 # Node
 /node_modules
 npm-debug.log

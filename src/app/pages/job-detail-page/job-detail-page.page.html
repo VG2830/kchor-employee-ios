@@ -31,11 +31,24 @@
          <!-- Job Title -->
 <div>
   <ion-label >Job Title <span style="color: red">*</span></ion-label>
-  <ion-input type="text" formControlName="jobTitle" placeholder="Enter job title" style="margin-bottom: 10px;" autocapitalize="words" autocomplete="username"></ion-input>
+  <!-- <ion-input type="text" formControlName="jobTitle" placeholder="Enter job title" style="margin-bottom: 10px;" autocapitalize="words" autocomplete="username"></ion-input> -->
+   <ng-select
+  [items]="titlesOptions"
+  bindLabel="value"
+  bindValue="id"
+  placeholder="Search to select a job title"
+  formControlName="jobTitle"
+  [searchable]="true"
+  [multiple]="false"
+  [closeOnSelect]="true"
+  [clearable]="false"
+  class="custom-job-select"
+>
+</ng-select>
 </div>
 <ion-text color="danger" *ngIf="jobForm.get('jobTitle')?.touched && jobForm.get('jobTitle')?.invalid">
-  <small *ngIf="jobForm.get('jobTitle')?.errors?.['required']">Name is required</small>
-  <small *ngIf="jobForm.get('jobTitle')?.errors?.['minlength']">Minimum 3 characters</small>
+  <small *ngIf="jobForm.get('jobTitle')?.errors?.['required']">Job title is required</small>
+  <!-- <small *ngIf="jobForm.get('jobTitle')?.errors?.['minlength']">Minimum 3 characters</small> -->
 </ion-text>
 
           <!-- Job Category -->
@@ -196,7 +209,7 @@
 
          <!-- Gender -->
 <div lines="none">
-  <ion-label class="label">Select Gender <span style="color: red">*</span></ion-label>
+  <ion-label class="label">Gender Preference <span style="color: red">*</span></ion-label>
 </div>
 
 <div class="gender-type-toggle">
@@ -222,12 +235,12 @@
 
   <ion-button
     shape="round"
-    [fill]="isgender === 'other' ? 'solid' : 'outline'"
-    [ngClass]="isgender === 'other' ? 'purple-button' : 'medium'"
-    (click)="selectgenderType('other')"
+    [fill]="isgender === 'both' ? 'solid' : 'outline'"
+    [ngClass]="isgender === 'both' ? 'purple-button' : 'medium'"
+    (click)="selectgenderType('both')"
     type="button"
   >
-    Others
+    Both genders eligible
   </ion-button>
 
 </div>
@@ -353,8 +366,11 @@
 <!-- branch -->
         <!-- Salary -->
 <div lines="none">
-  <ion-label class="label">Expected Salary Range<span style="color: red;">*</span></ion-label>
+  <ion-label class="label">I will pay a Monthly Salary of<span style="color: red;">*</span></ion-label>
+
+  <!-- <ion-label class="label">Expected Salary Range<span style="color: red;">*</span></ion-label> -->
 </div>
+
 <!-- <ion-input
   type="number"
   formControlName="salary"
@@ -584,20 +600,31 @@
   <ion-datetime presentation="time" hourCycle="h12" formControlName="jobStartTime"  style="margin-bottom: 10px;"></ion-datetime>
 </div> -->
 <!-- <div  lines="none" class=" startEnd" (click)="showStartPicker = true"> -->
- <ion-item class="custom-input-item"  button (click)="showStartPicker = true">
+
+  <!-- 27aug -->
+ <!-- <ion-item class="custom-input-item"  button (click)="showStartPicker = true">
       <ion-label>Start Time</ion-label>
       <ion-text slot="end">
         {{ jobForm.value.jobStartTime ? formatTime(jobForm.value.jobStartTime) : 'Select start time' }}
       </ion-text>
-    </ion-item>
+    </ion-item> -->
 <!-- </div> -->
-    <ion-datetime
+    <!-- <ion-datetime
       *ngIf="showStartPicker"
       presentation="time"
       hourCycle="h12"
       formControlName="jobStartTime"
       (ionChange)="showStartPicker = false"
-    ></ion-datetime>
+    ></ion-datetime> -->
+    <!-- <ion-label class="label">Start time</ion-label> -->
+   <ion-textarea 
+  autoGrow="false"
+
+  formControlName="jobStartTime"
+  placeholder="Ex: 9:00 AM to 5:00 PM"
+  style="margin-bottom: 10px;"
+  
+></ion-textarea>
 <ion-text color="danger" *ngIf="jobForm.get('jobStartTime')?.touched && jobForm.get('jobStartTime')?.invalid">
   <small *ngIf="jobForm.get('jobStartTime')?.errors?.['required']">Field is required</small>
 </ion-text>
@@ -610,14 +637,14 @@
 
 </div>
 <!-- <div lines="none"  class=" startEnd" (click)="showEndPicker = true" style="margin-top:10px ;"> -->
- <ion-item  class="custom-input-item" button (click)="showEndPicker = true">
+ <!-- <ion-item  class="custom-input-item" button (click)="showEndPicker = true">
       <ion-label>End Time</ion-label>
       <ion-text slot="end">
         {{ jobForm.value.jobEndTime ? formatTime(jobForm.value.jobEndTime) : 'Select end time ' }}
       </ion-text>
-    </ion-item>
+    </ion-item> -->
 <!-- </div> --> 
-    <ion-datetime
+    <!-- <ion-datetime
       *ngIf="showEndPicker"
       presentation="time"
       hourCycle="h12"
@@ -626,7 +653,7 @@
     ></ion-datetime>
 <ion-text color="danger" *ngIf="jobForm.get('jobEndTime')?.touched && jobForm.get('jobEndTime')?.invalid">
   <small *ngIf="jobForm.get('jobEndTime')?.errors?.['required']">Field is required</small>
-</ion-text>
+</ion-text> -->
 
 <!-- Interview Details -->
 <div lines="none">
@@ -667,8 +694,9 @@
 
       <!-- Terms -->
 <ion-checkbox formControlName="acceptTerms" labelPlacement="end" style="margin-top: 10px">
-  I Accept Terms and Conditions and <br />Privacy Policy <span style="color: red">*</span>
+
 </ion-checkbox>
+<ion-label>  I Accept Terms and Conditions and Privacy Policy <span style="color: red">*</span></ion-label>
 
 <ion-text color="danger" *ngIf="jobForm.controls['acceptTerms'].touched && jobForm.controls['acceptTerms'].invalid">
   <small>You must accept the terms and conditions</small>

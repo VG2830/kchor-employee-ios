@@ -1,16 +1,19 @@
-<ion-header >
-  
-   <div class="commonheader">
-     <div class="toolbar">
+<ion-header>
+  <div class="commonheader">
+    <div class="toolbar">
       <p class="title-sub">1/3</p>
 
-    <h1 class="title-main">Post Job</h1>
+      <h1 class="title-main">Post Job</h1>
     </div>
-  <div >
-   <ion-button  class="submitbtn" (click)="logout()" style="margin-right: 10px;">Logout</ion-button>
-   
- </div>
-   </div>
+    <div>
+      <ion-button
+        class="submitbtn"
+        (click)="logout()"
+        style="margin-right: 10px"
+        >Logout</ion-button
+      >
+    </div>
+  </div>
   <div class="segment-toolbar">
     <div class="segments">
       <button class="segment-button active">Basic Details</button>
@@ -18,72 +21,121 @@
       <button class="segment-button disabled">Job Details</button>
     </div>
   </div>
-
-
 </ion-header>
+
 
 <ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
   <ion-segment-view value="basic">
     <ion-segment-content id="basic">
       <form [formGroup]="basiclast">
         <div class="box">
-          <h2 class="heading" style="text-align: center;">Basic Details</h2>
+          <h2 class="heading" style="text-align: center">Basic Details</h2>
 
           <!-- Employer Name -->
           <div>
-            <ion-label position="stacked" class="label-class">Employer Name <span style="color: red">*</span></ion-label>
+            <ion-label position="stacked" class="label-class"
+              >Employer Name <span style="color: red">*</span></ion-label
+            >
             <ion-input
               type="text"
               formControlName="emplname"
               placeholder="Enter employer name"
-               autocapitalize="words"
+              autocapitalize="words"
             ></ion-input>
           </div>
-          <ion-text color="danger" *ngIf="basiclast.get('emplname')?.touched && basiclast.get('emplname')?.invalid">
-            <small *ngIf="basiclast.get('emplname')?.errors?.['required']">Feild is required</small>
+          <ion-text
+            color="danger"
+            *ngIf="basiclast.get('emplname')?.touched && basiclast.get('emplname')?.invalid"
+          >
+            <small *ngIf="basiclast.get('emplname')?.errors?.['required']"
+              >Feild is required</small
+            >
           </ion-text>
-
 
           <!-- Email -->
           <div>
-            <ion-label position="stacked">Email <span style="color: red">*</span></ion-label>
+            <ion-label position="stacked"
+              >Email <span style="color: red">*</span></ion-label
+            >
             <ion-input
               type="email"
               formControlName="emplemail"
               placeholder="Enter your email"
-               
             ></ion-input>
           </div>
-          <small style="color: green ; margin-bottom: 15px;">--Candidates job application send on this email</small>
+          <small style="color: green; margin-bottom: 15px"
+            >--Candidates job application send on this email</small
+          >
           <div>
-            <ion-text color="danger" *ngIf="basiclast.get('emplemail')?.touched && basiclast.get('emplemail')?.invalid">
-              <small *ngIf="basiclast.get('emplemail')?.errors?.['email']">Enter a valid email address</small>
-              <small *ngIf="basiclast.get('emplemail')?.errors?.['required']">Feild is required</small>
+            <ion-text
+              color="danger"
+              *ngIf="basiclast.get('emplemail')?.touched && basiclast.get('emplemail')?.invalid"
+            >
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['email']"
+                >Enter a valid email address</small
+              >
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['required']"
+                >Feild is required</small
+              >
             </ion-text>
           </div>
 
           <!-- Contact Person Profile -->
 
-          <div style="margin-top: 10px;">
-           <ion-label position="stacked">Contact Person Profile <span style="color: red">*</span></ion-label>
-            <ion-select placeholder="Select One" formControlName="contactperson" (ionChange)="onProfileChange($event)" >
-               <!-- <ion-select placeholder="Select One" formControlName="contactperson" > -->
+          <div style="margin-top: 10px">
+            <ion-label position="stacked"
+              >Contact Person Profile
+              <span style="color: red">*</span></ion-label
+            >
+            <ion-select
+              placeholder="Select One"
+              formControlName="contactperson"
+              (ionChange)="onProfileChange($event)"
+            >
+              <!-- <ion-select placeholder="Select One" formControlName="contactperson" > -->
               <ion-select-option value="">Select One</ion-select-option>
-              <ion-select-option *ngFor="let option of empProfileOptions" [value]="option.id">
+              <ion-select-option
+                *ngFor="let option of empProfileOptions"
+                [value]="option.id"
+              >
                 {{ option.profile }}
               </ion-select-option>
               <ion-select-option value="other">Other</ion-select-option>
             </ion-select>
+              <ion-label  *ngIf="showOtherInput">Please enter new profile option</ion-label>
+
+            <div class="newProfilefield">
             <ion-input
-             *ngIf="showOtherInput"
+              *ngIf="showOtherInput"
               placeholder="Enter new profile"
-               formControlName="profile_name"
-              (ionBlur)="addNewProfile()"
+              formControlName="profile_name"
+              
               clearInput
-              ></ion-input>
+            ></ion-input>
+            <!-- (ionBlur)="addNewProfile()" -->
+            <ion-button
+            id="present-alert"
+            *ngIf="showOtherInput"
+             
+             size="small"
+             (click)="addNewProfile()"
+            >Add</ion-button>
+            <ion-alert
+  trigger="present-alert"
+  header="Profile Added"
+  
+  message="Select the value after adding"
+  [buttons]="alertButtons"
+></ion-alert>
+            </div>
           </div>
-          <ion-text color="danger" *ngIf="basiclast.get('contactperson')?.touched && basiclast.get('contactperson')?.invalid">
-            <small *ngIf="basiclast.get('contactperson')?.errors?.['required']">Field is required</small>
+          <ion-text
+            color="danger"
+            *ngIf="basiclast.get('contactperson')?.touched && basiclast.get('contactperson')?.invalid"
+          >
+            <small *ngIf="basiclast.get('contactperson')?.errors?.['required']"
+              >Field is required</small
+            >
           </ion-text>
 
           <!-- Registered Mobile Number -->
@@ -102,14 +154,19 @@
             ></ion-input>
           </div>
           <small style="color: green">--Candidates call in this number</small>
-          <ion-text color="danger" *ngIf="basiclast.get('emplnumber')?.touched && basiclast.get('emplnumber')?.invalid">
-            <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']">Field is required</small>
+          <ion-text
+            color="danger"
+            *ngIf="basiclast.get('emplnumber')?.touched && basiclast.get('emplnumber')?.invalid"
+          >
+            <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']"
+              >Field is required</small
+            >
           </ion-text>
 
           <!-- Buttons -->
           <div class="btn">
             <ion-button
-              shape="round" 
+              shape="round"
               class="submitbtn"
               (click)="submitForm()"
               [disabled]="basiclast.invalid"
@@ -117,8 +174,8 @@
             >
               Save & Continue
             </ion-button>
-             <ion-button
-             shape="round" 
+            <ion-button
+              shape="round"
               class="submitbtn"
               (click)="onlyDashboard()"
               *ngIf="!isNewUser"
@@ -126,7 +183,7 @@
               Back To Dashboard
             </ion-button>
             <ion-button
-              shape="round" 
+              shape="round"
               class="submitbtn"
               (click)="onlyNavigation()"
               *ngIf="!isNewUser"

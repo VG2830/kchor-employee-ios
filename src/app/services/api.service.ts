@@ -30,6 +30,9 @@ export class ApiService {
   submitBasic(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/regData`, data);
   }
+  getJobTitles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
+  }
    getJobCategory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
   }
@@ -84,8 +87,8 @@ getDeviceInfo(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
 }
 //post profile options
-addEmpProfile(data: any): Observable<any>  {
-  return this.http.post(`${this.apiUrl}/Admin/add_emp_profile`, data);
+addEmpProfile(data: { profile: string }): Observable<any>  {
+  return this.http.post(`${this.apiUrl}/Api/add_employee_profile`, data);
 }
 //
 postDeviceInfo(data: any): Observable<any> {

@@ -144,6 +144,7 @@ ion-select {
 ion-textarea {
   min-height: 100px;
   padding-top: 10px;
+  margin-top: 7px;
 }
 
 
@@ -292,6 +293,7 @@ ion-button.submitbtn {
   // height: 44px;
   width: 100%;
   min-height: 30px;
+  margin-top: 7px;
   }
   ion-textarea{
     border: 1px solid #ccc;
@@ -354,6 +356,7 @@ ion-button.medium {
 ng-select {
   display: block;
   margin-bottom: 10px;
+  margin-top: 7px;
 }
 ng-select ::ng-deep .ng-select-container {
   background: #fff;
