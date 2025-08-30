@@ -25,7 +25,7 @@ export class BasicDetailsPagePage implements OnInit {
   isNewUser: boolean = true;
   selectedSegment: string = 'basic';
   profile_name: string = '';
-   alertButtons = ['Action'];
+  //  alertButtons = ['Action'];
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
@@ -124,15 +124,9 @@ export class BasicDetailsPagePage implements OnInit {
       if (res.status === 'success' || res.status === 'exists') {
         // Reload profiles
         const newId = res.insertedId || res.id;   
-      //   const newProfile = { id: newId, profile: trimmedName };
-
-      // // Immediately push to dropdown list
-      // this.empProfileOptions = [...this.empProfileOptions, newProfile];
-
-      // // Preselect the new value
-      // this.basiclast.get('contactperson')?.setValue(newId);
+     
         this.loadEmpProfiles(newId);
-         alert('value added ');
+         alert('New profile added in dropdown');
         // Set the new option as selected
         // const newId = res.insertedId || res.data?.id;
         // this.basiclast.get('contactperson')?.setValue(newId);
