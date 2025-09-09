@@ -173,12 +173,12 @@
   
   <!-- For Fresher -->
   <ng-container *ngIf="candidatetype === 'fresher'">
-    <div lines="none" >
+    <div lines="none"  [hidden]="hideMinExp">
       <ion-label class="label">Min Experience</ion-label>
       <ion-input formControlName="minexp" value="Fresher" readonly style="margin-bottom: 10px;"></ion-input>
     </div>
 
-    <div lines="none">
+    <div lines="none"[hidden]="hideMaxExp">
       <ion-label class="label">Max Experience</ion-label>
       <ion-input formControlName="maxexp" value="Fresher" readonly style="margin-bottom: 10px;"></ion-input>
     </div>
@@ -198,7 +198,7 @@
     <div lines="none">
       <ion-label class="label">Max Experience</ion-label>
       <ion-select formControlName="maxexp" placeholder="Select maximum years" style="margin-bottom: 10px;">
-        <ion-select-option *ngFor="let year of years" [value]="year">{{ year }} year{{ year > 1 ? 's' : '' }}</ion-select-option>
+        <ion-select-option *ngFor="let year of filteredMaxExp" [value]="year">{{ year }} year{{ year > 1 ? 's' : '' }}</ion-select-option>
         <ion-select-option value="30+">30+ years</ion-select-option>
       </ion-select>
     </div>
@@ -392,12 +392,19 @@
  style="margin-bottom: 5px;"
  ></ion-input>
 </div>
+<ion-text color="danger" *ngIf="jobForm.hasError('salaryRange') && jobForm.touched">
+  <small>Maximum salary must be greater than Minimum salary</small>
+</ion-text>
+<ion-text color="danger" *ngIf="jobForm.get('minSalary')?.touched && jobForm.get('minSalary')?.hasError('required')">
+  <small>Minimum salary is required</small>
+</ion-text>
+
 <ion-text
   color="danger"
-  *ngIf="jobForm.get('salary')?.touched && jobForm.get('salary')?.invalid"
+  *ngIf="jobForm.get('maxSalary')?.touched && jobForm.get('maxSalary')?.invalid"
 >
-  <small *ngIf="jobForm.get('salary')?.errors?.['required']">
-    Field is required
+  <small *ngIf="jobForm.get('maxSalary')?.errors?.['required']">
+   Maximum salary is required
   </small>
 </ion-text>
 <div   lines="none">
@@ -617,14 +624,14 @@
       (ionChange)="showStartPicker = false"
     ></ion-datetime> -->
     <!-- <ion-label class="label">Start time</ion-label> -->
-   <ion-textarea 
+   <ion-input 
   autoGrow="false"
 
   formControlName="jobStartTime"
   placeholder="Ex: 9:00 AM to 5:00 PM"
   style="margin-bottom: 10px;"
   
-></ion-textarea>
+></ion-input>
 <ion-text color="danger" *ngIf="jobForm.get('jobStartTime')?.touched && jobForm.get('jobStartTime')?.invalid">
   <small *ngIf="jobForm.get('jobStartTime')?.errors?.['required']">Field is required</small>
 </ion-text>
@@ -663,7 +670,7 @@
 </div>
 
 <div>
-  <ion-label >Timing</ion-label>
+  <ion-label >Timing <span style="color: red">*</span></ion-label>
   <ion-select formControlName="interviewTime" placeholder="Select Timings" style="margin-bottom: 10px;">
     <ion-select-option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</ion-select-option>
     <ion-select-option value="11:00 AM- 1:00 PM">11:00 AM- 1:00 PM</ion-select-option>
@@ -676,7 +683,7 @@
 </ion-text>
 
 <div>
-  <ion-label >Day</ion-label>
+  <ion-label >Day<span style="color: red">*</span></ion-label>
   <ion-select formControlName="interviewDay" placeholder="Select Day" [multiple]="true">
     <ion-select-option value="Sunday">Sunday</ion-select-option>
     <ion-select-option value="Monday">Monday</ion-select-option>
