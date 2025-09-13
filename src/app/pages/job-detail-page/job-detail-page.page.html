@@ -339,11 +339,9 @@
   </small>
 </ion-text>
 <!-- branch -->
-
-<!-- <div lines="none">
-  <ion-label class="label">Branch Name<span style="color: red">*</span></ion-label>
-</div>
-
+<!-- *ngIf="jobForm.get('qualification')?.value === 3" -->
+<div lines="none"  >
+  <ion-label class="label">Branch Name</ion-label>
 <ng-select
   [items]="branch"
   bindLabel="value"
@@ -353,8 +351,8 @@
   [searchable]="true"
 >
 </ng-select>
-
-<ion-text
+</div>
+<!-- <ion-text
   color="danger"
   *ngIf="jobForm.get('branch')?.touched && jobForm.get('branch')?.invalid"
 >
