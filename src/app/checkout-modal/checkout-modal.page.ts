@@ -25,6 +25,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
+declare var Razorpay: any;
 @Component({
   selector: 'app-checkout-modal',
   standalone:true,
@@ -40,6 +41,7 @@ export class CheckoutModalPage implements OnInit {
   address: string = '';
   name:string='';
   email:string='';
+  Razorpay: any;
   constructor( private navParams: NavParams, 
     private modalCtrl: ModalController, 
     private fb: FormBuilder,
@@ -59,7 +61,7 @@ export class CheckoutModalPage implements OnInit {
  ngOnInit(){
    this.user_id = Number(localStorage.getItem('userId'));
    this.plan = this.navParams.get('plan');
-   console.log(this.plan);
+  //  console.log(this.plan);
   }
   closeModal() {
     this.modalCtrl.dismiss();
@@ -77,14 +79,100 @@ export class CheckoutModalPage implements OnInit {
         if (res.status === "success") {
         // console.log(res);
 
-      var  planDuration=this.plan.duration;
+      // var  planDuration=this.plan.duration;
 
-      console.log(planDuration);
-        this.apiService.orderCreate(planDuration).subscribe((res:any)=>{
+      // console.log(planDuration);
+        // this.apiService.orderCreate(planDuration).subscribe((res:any)=>{
 
-        })
+        // })
+
+      var  planPrice=this.plan.price;
+          
+    this.apiService.orderCreate(planPrice).subscribe((order: any) => {
+      const options = {
+        key: order.key,
+        amount: order.amount,
+        currency: order.currency,
+        name: "My App",
+        description: "Test Transaction",
+        order_id: order.order_id,
+        handler: (response: any) => {
+          // verify payment at backend
+             const verifyPayload = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+            amount:options.amount,
+            user_id:this.user_id,
+
+          };
+          this.apiService.verifyPayment(verifyPayload).subscribe((res: any) => {
+            if (res.status === 'success') {
+              alert("Payment Successful ✅");
+            } else {
+              alert("Payment Failed ❌");
+            }
+          });
+        },
+        prefill: {
+          name: "Test User",
+          email: "test@example.com",
+          contact: "9999999999"
+        },
+        theme: { color: "#3399cc" }
+      };
+ 
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+    });
+  
+
+
+
         }
       });
   }
+  
+//  paytesting(){
+//        this.user_id= Number(localStorage.getItem('userId'));
+//      var  planPrice=this.plan?.price;
+//      this.apiService.orderCreate(planPrice).subscribe((order: any) => {
+//       const options = {
+//         key: order.key,
+//         amount: order.amount,
+//         currency: order.currency,
+//         name: "SURYA JOBS (OPC) PRIVATE LIMITED",
+//         description: "Test Transaction",
+//         order_id: order.order_id,
+//         handler: (response: any) => {
+//           // verify payment at backend
+//            const verifyPayload = {
+//             razorpay_payment_id: response.razorpay_payment_id,
+//             razorpay_order_id: response.razorpay_order_id,
+//             razorpay_signature: response.razorpay_signature,
+//             amount:options.amount,
+//             user_id:this.user_id,
+
+//           };
+//           this.apiService.verifyPayment(verifyPayload).subscribe((res: any) => {
+//             if (res.status === 'success') {
+//               alert("Payment Successful ✅");
+//             } else {
+//               alert("Payment Failed ❌");
+//             }
+//           });
+//         },
+//         prefill: {
+//           name: "Test User",
+//           email: "test@example.com",
+//           contact: "9999999999"
+//         },
+//         theme: { color: "#3399cc" }
+//       };
  
+//       const rzp = new Razorpay(options);
+//       rzp.open();
+//     });
+  
+//  }
 }

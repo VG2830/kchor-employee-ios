@@ -39,7 +39,7 @@ user_id!:number;
     }
     this.userType=localStorage.getItem('type_Of_User');
   
-    console.log("from local storage",this.userType);
+    // console.log("from local storage",this.userType);
 
     if (this.userType === 'existing') {
       this.apiService.getEmployerPlans().subscribe((res: any) => {
