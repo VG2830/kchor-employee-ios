@@ -17,7 +17,9 @@ export class EmployerPlanPage implements OnInit {
   userType: string | null = null;
 user_id!:number;
   plans: any[] = [];
-
+ savedCandidates!:number;
+ activejobs!:number;
+ duration:string | null=null;
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
@@ -41,13 +43,13 @@ user_id!:number;
   
     // console.log("from local storage",this.userType);
 
-    if (this.userType === 'existing') {
+    // if (this.userType === 'existing') {
       this.apiService.getEmployerPlans().subscribe((res: any) => {
         if (res.status === true) {
           this.plans = res.data;
         }
       });
-    }
+    // }
 
     //device information
     const info = await Device.getInfo();
@@ -77,6 +79,33 @@ user_id!:number;
   );
       }
     });
+
+
+
+    // count saved candidates
+     this.apiService.CountSavedcandidates(this.user_id).subscribe((res:any)=>{
+      if(res.status==="success"){
+        console.log(res.data);
+         this.savedCandidates=res.data;
+      }
+     });
+     // to show active jobs in 
+      this.apiService.CountActiveJobs(this.user_id).subscribe((res:any)=>{
+      if(res.status==="success"){
+        console.log(res.data);
+         this.activejobs=res.data;
+      }
+     });
+     // to show active plan status 
+     this.apiService.activePlanStatus(this.user_id).subscribe((res:any)=>{
+      if(res.status==="success"){
+        console.log(res.data);
+         this.duration=res.data;
+      }
+      
+     });
+
+
 
   //device end
   }
