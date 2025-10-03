@@ -19,7 +19,13 @@ user_id!:number;
   plans: any[] = [];
  savedCandidates!:number;
  activejobs!:number;
- duration:string | null=null;
+ duration!:string ;
+ planAmount!:number;
+ planJobslive!:number;
+ planUnlock!:number;
+ jobs_boost!:number;
+ planExpiryDate:string |null=null;
+ planStatus:string |null =null;
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
@@ -92,20 +98,27 @@ user_id!:number;
      // to show active jobs in 
       this.apiService.CountActiveJobs(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
-        console.log(res.data);
+        // console.log(res.data);
          this.activejobs=res.data;
+         this.planStatus="paid";
       }
      });
      // to show active plan status 
      this.apiService.activePlanStatus(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
-        console.log(res.data);
-         this.duration=res.data;
+        // console.log(res.data);
+         this.duration=res.data.duration;
+         this.planExpiryDate=res.data.expiry_date;
+         this.planAmount=res.data.plan_amt;
+         this.planUnlock=res.data.plan_unlock;
+         this.planJobslive=res.data.jobs_live;
+         this.jobs_boost=res.data.jobs_boost;
+         this.planStatus="paid";
       }
-      
+    
      });
 
-
+    
 
   //device end
   }

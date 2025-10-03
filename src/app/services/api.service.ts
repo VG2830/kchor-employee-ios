@@ -42,19 +42,22 @@ export class ApiService {
   verifyPayment(data: any) {
        return this.http.post(`${this.apiUrl}/Payment/verify_payment`, data);
   }
+
  checkPlanTaken(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/checkcondition/${userId}`);
 }
+//for dashboard card which displaying saved candidates 
 CountSavedcandidates(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/countSavedCandidate/${userId}`)
 }
+//for dashboard card which displaying active jobs [only for paid users]
 CountActiveJobs(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/activeJobsCount/${userId}`)
 }
+////for dashboard card which displaying active plan details
 activePlanStatus(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/planValid/${userId}`)
 }
-
 
   getJobTitles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);

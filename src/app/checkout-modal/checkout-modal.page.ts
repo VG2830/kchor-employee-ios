@@ -77,8 +77,8 @@ export class CheckoutModalPage implements OnInit {
     };
    this.apiService.submitCheckoutData(formData).subscribe((res: any) => {
         if (res.status === "success") {
-        // console.log(res);
-
+        console.log(res);
+       
       // var  planDuration=this.plan.duration;
 
       // console.log(planDuration);
@@ -88,13 +88,14 @@ export class CheckoutModalPage implements OnInit {
 
       var  planPrice=this.plan.price;
           
-    this.apiService.orderCreate(planPrice).subscribe((order: any) => {
+      this.apiService.orderCreate(planPrice).subscribe((order: any) => {
       const options = {
         key: order.key,
         amount: order.amount,
         currency: order.currency,
-        name: "My App",
+        name: "SURYA JOBS (OPC) PRIVATE LIMITED",
         description: "Test Transaction",
+        image: "https://staging.ekarigar.com/kaam-chor/images/logo-transparent.svg",
         order_id: order.order_id,
         handler: (response: any) => {
           // verify payment at backend
@@ -115,11 +116,11 @@ export class CheckoutModalPage implements OnInit {
           });
         },
         prefill: {
-          name: "Test User",
-          email: "test@example.com",
-          contact: "9999999999"
+          name: res.data.name,
+          email: res.data.email,
+          contact: res.data.mobile
         },
-        theme: { color: "#3399cc" }
+        theme: { color: "#511168" }
       };
  
       const rzp1 = new Razorpay(options);
