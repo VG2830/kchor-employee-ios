@@ -71,20 +71,35 @@ user_id!:number;
    this.user_id= Number(localStorage.getItem('userId')),
 
    this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
-      if (res.status === true) {
+  //     if (res.status === true) {
+  //     console.log( "Device info already exist");
+  //     }
+  //     else{
+  //       this.apiService.postDeviceInfo(deviceData).subscribe(
+  //   (res: any) => {
+  //     console.log('Device info posted:', res);
+  //   },
+  //   (err:any) => {
+  //     console.error('Failed to post device info:', err);
+  //   }
+  // );
+  //     }
+    
+    if (res.status === true) {
       console.log( "Device info already exist");
       }
-      else{
-        this.apiService.postDeviceInfo(deviceData).subscribe(
+    
+    },
+    (error)=>
+    this.apiService.postDeviceInfo(deviceData).subscribe(
     (res: any) => {
       console.log('Device info posted:', res);
     },
     (err:any) => {
       console.error('Failed to post device info:', err);
     }
-  );
-      }
-    });
+  )
+    );
 
 
 
@@ -96,14 +111,22 @@ user_id!:number;
       }
      });
      // to show active jobs in 
-      this.apiService.CountActiveJobs(this.user_id).subscribe((res:any)=>{
-      if(res.status==="success"){
-        // console.log(res.data);
-         this.activejobs=res.data;
-         this.planStatus="paid";
-      }
-     });
+      this.currentActiveJobs();
      // to show active plan status 
+      this.planCurrentStatus();
+
+        this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+         
+          console.log("plan fdhf");
+        }
+        
+      });
+
+  }
+   // to show active plan status
+  planCurrentStatus(){
+    
      this.apiService.activePlanStatus(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
         // console.log(res.data);
@@ -117,10 +140,27 @@ user_id!:number;
       }
     
      });
-
-    
-
-  //device end
+  }
+  currentActiveJobs(){
+     this.apiService.CountActiveJobs(this.user_id).subscribe((res:any)=>{
+      if(res.status==="success"){
+        // console.log(res.data);
+         this.activejobs=res.data;
+         this.planStatus="paid";
+      }
+     });
+  }
+  ionViewDidEnter(){
+    //checking condition every time
+      this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+          console.log("plan  activated ");
+        }
+       });
+       // to show active plan status
+       this.planCurrentStatus();
+       // to show active jobs in 
+       this.currentActiveJobs();
   }
   logout() {
     // Step 1: Clear the user_id from localStorage

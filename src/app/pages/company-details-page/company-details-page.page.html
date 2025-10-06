@@ -291,10 +291,16 @@
             <ion-button
               shape="round"
               class="submitbtn"
-              (click)="onlyNavigate()"
+              (click)="onlyNavigate(true)"
               *ngIf="!isNewUser"
               >Next</ion-button
             >
+             <ion-toast
+    [isOpen]="isToastOpen"
+    message="Plan is not taken"
+    [duration]="5000"
+    (didDismiss)="onlyNavigate(false)"
+  ></ion-toast>
           </div>
         </div>
       </form>
