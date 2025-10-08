@@ -327,6 +327,7 @@
   placeholder="Search to select a qualification"
   formControlName="qualification"
   [searchable]="true"
+  (change)="onFirstSelectChange($event)"
 >
 </ng-select>
 
@@ -340,7 +341,7 @@
 </ion-text>
 <!-- branch -->
 <!-- *ngIf="jobForm.get('qualification')?.value === 3" -->
-<div lines="none"  >
+<div lines="none"  *ngIf="showSecondSelect" >
   <ion-label class="label">Branch Name</ion-label>
 <ng-select
   [items]="branch"

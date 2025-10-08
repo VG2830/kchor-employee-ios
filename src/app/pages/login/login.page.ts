@@ -22,7 +22,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Network } from '@capacitor/network';
 import { AlertController,NavController } from '@ionic/angular';
 import { StatusBar,Style as StatusBarStyle } from '@capacitor/status-bar';
-
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 @Component({
   selector: 'app-login',
@@ -40,13 +40,13 @@ export class LoginPage implements OnInit {
   isNewUser: boolean = false;
   offline: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService,private alertController: AlertController,private navCtrl: NavController) { }
+  constructor(private router: Router, private authService: AuthService,private alertController: AlertController,private navCtrl: NavController) { this.initEdgeToEdge();}
 
   ngOnInit() {
-    StatusBar.setBackgroundColor({ color: '#ffffff' }); // white
+    StatusBar.setBackgroundColor({ color: '#333131ff' }); // white
       // Set the status bar style to dark (black text/icons)
       StatusBar.setStyle({ style: StatusBarStyle.Dark });
-      
+     
     Network.addListener('networkStatusChange',(status)  => {
       if (!status.connected) {
         this.showAlert('You are offline. Please check your internet connection.');
@@ -55,7 +55,14 @@ export class LoginPage implements OnInit {
 
     this.checkNetworkStatus();
   }
-
+async initEdgeToEdge() {
+    try {
+      await EdgeToEdge.enable();  // enables immersive mode
+      console.log('Edge-to-edge mode enabled!');
+    } catch (error) {
+      console.error('Failed to enable edge-to-edge:', error);
+    }
+  }
   async checkNetworkStatus() {
     const status = await Network.getStatus();
     if (!status.connected) {

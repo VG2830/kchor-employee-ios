@@ -66,6 +66,7 @@ export class JobDetailPage implements OnInit {
     'Within my city',
     'Anywhere in India',
   ];
+  showSecondSelect = false;
  filteredMaxExp: number[] = [];
   constructor(
     private fb: FormBuilder,
@@ -139,6 +140,7 @@ export class JobDetailPage implements OnInit {
       };
     });
   }
+  
   ngOnInit() {
     this.apiService.getJobCategory().subscribe((res: any) => {
       if (res.status === 'success') {
@@ -192,6 +194,19 @@ export class JobDetailPage implements OnInit {
         this.qualification = res.data;
       }
     });
+    // this.apiService.getEduQual().subscribe({
+    //     next: (data) => {
+    //       // Example API response → map it for ng-select
+    //       // e.g. [{ id: 1, name: 'Tech' }] → { label: 'Tech', value: 1 }
+    //       this.qualification = data.map(item => ({
+    //         label: item.name,
+    //         id: item.id
+    //       }));
+    //     },
+    //     error: (err) => {
+    //       console.error('Failed to load categories', err);
+    //     }
+    //   });
      this.apiService.getEduBranch().subscribe((res: any) => {
       if (res.status === 'success') {
         this.branch = res.data;
@@ -203,6 +218,7 @@ export class JobDetailPage implements OnInit {
     this.jobForm.get('minexp')?.valueChanges.subscribe((minVal: number) => {
       this.updateMaxExpOptions(minVal);
     });
+
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
@@ -270,6 +286,19 @@ export class JobDetailPage implements OnInit {
     }
     else{
       this.isRecreate=false;
+    }
+  }
+   
+    // selectedId = this.?.id;
+  onFirstSelectChange(selected: any) {
+    // 👇 show second select only for specific options
+    const selectedId = selected?.id;
+    //  console.log(selectedId);
+    if (selectedId>= '4') {
+      this.showSecondSelect = true;
+    } else {
+      this.showSecondSelect = false;
+       // clear when hidden
     }
   }
   updateMaxExpOptions(minVal: number) {

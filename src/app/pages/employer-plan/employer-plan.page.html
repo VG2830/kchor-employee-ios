@@ -137,30 +137,21 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
+        <ion-col  *ngIf="previousPlan">
+          <ion-card>
+            <ion-card-header class="ion-text-center">
+              <ion-card-title>Previous Plan</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-text>{{prevduration}} Plan</ion-text>
+              <ion-text> Plan Expired on: {{ prevplanExpiryDate}}</ion-text>
+            </ion-card-content>
+            
+          </ion-card>
+        </ion-col>
       </ion-row>
     </ion-grid>
-
-      <div *ngIf="planStatus!=='paid'">
-
-     <div style="text-align: center; padding: 10px;">
-      <ion-button class="btn"  >Recommended Pricing Plans for Employers</ion-button>
-     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-md="6" size-lg="3" *ngFor="let plan of plans">
-          
-          <app-plan-card
-            [plan]="plan"
-            (purchase)="openCheckoutModal($event)"
-          >
-        </app-plan-card>
-        </ion-col>
-         </ion-row>
-    </ion-grid>
-     
-   
-   </div>
-   <div *ngIf="planStatus==='paid'">
+<div *ngIf="planStatus==='paid'">
 
     <ion-card>
   <ion-card-header class="btn" style="font-size: 1.5rem ; text-align: center;">
@@ -171,7 +162,7 @@
     <div style="text-align:center;">
     <p> {{duration}} Plan</p>
     <p style="font-size: 1.3rem;margin-top: 15px;">₹ {{ planAmount }}</p>
-    <p>  Unlimited Candidate Responses</p>
+    <p>Unlimited Candidate Responses</p>
     <p>{{ planUnlock}} candidate unlocks</p>
     <p>{{ planJobslive }} job(s) live</p>
     <p>Valid for {{ duration }}</p>
@@ -185,5 +176,26 @@
 </ion-card>
 
    </div>
+      <!-- <div *ngIf="planStatus!=='paid'"> -->
+
+     <div style="text-align: center; padding: 10px;">
+      <ion-button class="btn"  >Recommended Pricing Plans for Employers</ion-button>
+     </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="3" *ngFor="let plan of plans">
+          
+          <app-plan-card
+            [plan]="plan"
+            (purchase)="openCheckoutModal($event)"
+          >
+          </app-plan-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+     
+   
+   <!-- </div> -->
+   
   </ion-content>
 <!-- </div> -->

@@ -20,12 +20,15 @@ user_id!:number;
  savedCandidates!:number;
  activejobs!:number;
  duration!:string ;
+ prevduration!:string;
+ prevplanExpiryDate:string |null=null;
  planAmount!:number;
  planJobslive!:number;
  planUnlock!:number;
  jobs_boost!:number;
  planExpiryDate:string |null=null;
  planStatus:string |null =null;
+ previousPlan!:boolean;
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
@@ -110,6 +113,7 @@ user_id!:number;
          this.savedCandidates=res.data;
       }
      });
+     this.prevPlanStatus();
      // to show active jobs in 
       this.currentActiveJobs();
      // to show active plan status 
@@ -123,6 +127,16 @@ user_id!:number;
         
       });
 
+  }
+  //previous plan status
+  prevPlanStatus(){
+    this.apiService.previousPlanStatus(this.user_id).subscribe((res:any)=>{
+      if(res.status==="success"){
+         this.prevduration=res.data.duration;
+         this.prevplanExpiryDate=res.data.expiry_date;
+         this.previousPlan=true;
+      }
+    })
   }
    // to show active plan status
   planCurrentStatus(){
@@ -157,6 +171,7 @@ user_id!:number;
           console.log("plan  activated ");
         }
        });
+        this.prevPlanStatus();
        // to show active plan status
        this.planCurrentStatus();
        // to show active jobs in 
