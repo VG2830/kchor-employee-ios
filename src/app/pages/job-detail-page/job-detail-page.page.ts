@@ -439,6 +439,7 @@ salaryRangeValidator(): ValidatorFn {
       skills: Array.isArray(formValue.skills)
         ? formValue.skills.join(',')
         : formValue.skills,
+      perksgiven:Array.isArray(formValue.perksgiven) ? formValue.perksgiven.join(',') : formValue.perksgiven,
       min_exp: minExp,
       max_exp: maxExp,
     };

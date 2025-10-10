@@ -25,7 +25,7 @@ export class MyProfilePage implements OnInit {
   cityOptions: any[] = [];
 
   city: string = '';
-  // isProfileIncomplete = true; // Later you can fetch real value from backend
+  isProfileIncomplete = false; // Later you can fetch real value from backend
   // showLogoUpload = false;
   // showOfficeUpload = false;
 
@@ -35,9 +35,9 @@ showOfficeUploadSection: boolean = false;
 logoUploaded: boolean = false;
 officeImagesUploaded: boolean = false;
 
-get isProfileIncomplete(): boolean {
-  return !this.logoUploaded || !this.officeImagesUploaded;
-}
+// get isProfileIncomplete(): boolean {
+//   return !this.logoUploaded || !this.officeImagesUploaded;
+// }
 get isLogoAlready():boolean{
   return !this.logoUploaded;
 }
@@ -136,7 +136,10 @@ officeImagesPreview: string[]=[] ;
            this.profilePage.disable();
         }
 
-        })
+        },(error)=>{
+      this.isProfileIncomplete=true;
+     }
+      )
          }
          
   }
