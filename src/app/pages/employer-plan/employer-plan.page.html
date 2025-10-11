@@ -142,20 +142,26 @@
             <ion-card-header class="ion-text-center">
               <ion-card-title>Previous Plan</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-              <ion-text>{{prevduration}} Plan</ion-text>
-              <ion-text> Plan Expired on: {{ prevplanExpiryDate}}</ion-text>
+            <ion-card-content class=" ion-text-center  ion-flex-column" >
+              
+              <ion-button class=" btn">{{prevduration}} Plan</ion-button>
+              <p class="ion-text-center"> Plan Expired on: {{ prevplanExpiryDate}}</p>
+
+              
             </ion-card-content>
             
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+    
 <div *ngIf="planStatus==='paid'">
-
+      <!-- <div style="text-align: center; padding: 10px;">
+      <ion-button class="btn"  > Your Current Plan</ion-button>
+     </div> -->
     <ion-card>
   <ion-card-header class="btn" style="font-size: 1.5rem ; text-align: center;">
-   Your Current Plan  
+    Your Current Plan
   </ion-card-header>
       
   <ion-card-content >
