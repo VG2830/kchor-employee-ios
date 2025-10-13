@@ -245,7 +245,7 @@ logoUploading(){
     }
   });
 }
-  submitForm() {
+  submitForm(isOpen: boolean) {
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
@@ -295,10 +295,14 @@ logoUploading(){
         if (res.status === true) {
           this.router.navigate(['/job-detail-page']);
         }
-        else{
-          alert("Plan is not active");
-        }
-      });
+        // else{
+        //   alert("Plan is not active");
+        // }
+      },(error: any) => {
+       this.isToastOpen = isOpen;
+        // Show error toast
+      }
+    );
       },
       (error: any) => {
         console.error('API Error:', error);

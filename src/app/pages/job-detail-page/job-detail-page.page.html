@@ -1,7 +1,7 @@
 <ion-header>
     <div class="commonheader">
      <div class="toolbar">
-      <p class="title-sub">1/3</p>
+      <p class="title-sub">3/3</p>
 
     <h1 class="title-main">Post Job</h1>
     </div>
@@ -52,11 +52,13 @@
 </ion-text>
 
           <!-- Job Category -->
-<div lines="none">
-  <ion-label class="label" >Job Category <span style="color: red" >*</span></ion-label>
-</div>
 
-<ng-select
+<div>
+  <div lines="none">
+  <ion-label class="label" >Job Category <span style="color: red" >*</span></ion-label>
+ </div>
+
+ <ng-select
   [items]="dropdownOptions"
   bindLabel="category_name"
   bindValue="id"
@@ -69,6 +71,7 @@
   class="custom-job-select"
 >
 </ng-select>
+</div>
 
 <ion-text color="danger" *ngIf="jobForm.get('jobCategory')?.touched && jobForm.get('jobCategory')?.invalid">
   <small *ngIf="jobForm.get('jobCategory')?.errors?.['required']">Job category is required</small>
@@ -76,6 +79,8 @@
 
 
        <!-- Job Type -->
+
+  <div>     
 <div lines="none">
   <ion-label class="label">Job Type <span style="color: red">*</span></ion-label>
 </div>
@@ -100,13 +105,15 @@
     Part Time
   </ion-button>
 </div>
-
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('jobType')?.touched && jobForm.get('jobType')?.invalid">
   <small *ngIf="jobForm.get('jobType')?.errors?.['required']">Job Type is required</small>
 </ion-text>
 
 
-        <!-- No. of Positions Open -->
+ 
+<!-- No. of Positions Open -->
+ <div>
 <div lines="none">
   <ion-label class="label">No. of Positions Open <span style="color: red">*</span></ion-label>
 </div>
@@ -116,11 +123,13 @@
   placeholder="Enter number of positions"
   style="margin-bottom: 10px;"
 ></ion-input>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('positionsOpen')?.touched && jobForm.get('positionsOpen')?.invalid">
   <small *ngIf="jobForm.get('positionsOpen')?.errors?.['required']">No. of positions is required</small>
 </ion-text>
 
 <!-- Job Description -->
+ <div>
 <div lines="none">
   <ion-label class="label">Job Description <span style="color: red">*</span></ion-label>
 </div>
@@ -132,16 +141,18 @@
   style="margin-bottom: 10px;"
   autocapitalize="sentences"
 ></ion-textarea>
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('jobDescription')?.touched && jobForm.get('jobDescription')?.invalid">
   <small *ngIf="jobForm.get('jobDescription')?.errors?.['required']">Job description is required</small>
 </ion-text>
 
          <!-- Candidate Requirement -->
-<div lines="none">
+<div>
+ <div lines="none">
   <ion-label class="label"> Experience of Candidate  <span style="color: red">*</span></ion-label>
-</div>
+ </div>
 
-<div class="candidate-type-toggle">
+ <div class="candidate-type-toggle">
   <ion-button
     shape="round"
     [fill]="candidatetype === 'fresher' ? 'solid' : 'outline'"
@@ -162,8 +173,8 @@
     Experienced
   </ion-button>
 
+ </div>
 </div>
-
 <ion-text color="danger" *ngIf="jobForm.get('candidatetype')?.touched && jobForm.get('candidatetype')?.invalid">
   <small *ngIf="jobForm.get('candidatetype')?.errors?.['required']">Candidate Requirement is required</small>
 </ion-text>
@@ -208,6 +219,7 @@
 
 
          <!-- Gender -->
+          <div>
 <div lines="none">
   <ion-label class="label">Gender Preference <span style="color: red">*</span></ion-label>
 </div>
@@ -244,13 +256,14 @@
   </ion-button>
 
 </div>
-
+</div>
 <ion-text color="danger" *ngIf="jobForm.get('isgender')?.touched && jobForm.get('isgender')?.invalid">
   <small *ngIf="jobForm.get('isgender')?.errors?.['required']">Gender field is required</small>
 </ion-text>
 
 
           <!-- Candidate Location -->
+           <div>
 <div lines="none">
   <ion-label class="label">Candidate Location <span style="color: red">*</span></ion-label>
 </div>
@@ -267,7 +280,7 @@
     {{ location }}
   </ion-button>
 </div>
-
+</div>
 <ion-text
   color="danger"
   *ngIf="jobForm.get('locations')?.touched && jobForm.get('locations')?.invalid"
@@ -279,6 +292,7 @@
 
 
          <!-- Work From Home -->
+<div>
 <div lines="none">
   <ion-label class="label">Is this a work from home job? <span style="color: red">*</span></ion-label>
 </div>
@@ -304,7 +318,7 @@
     No
   </ion-button>
 </div>
-
+</div>
 <ion-text
   color="danger"
   *ngIf="jobForm.get('WorkFromHome')?.touched && jobForm.get('WorkFromHome')?.invalid"
@@ -316,6 +330,7 @@
 
 
 <!-- Qualification -->
+ <div>
 <div lines="none">
   <ion-label class="label">Minimum Qualification <span style="color: red">*</span></ion-label>
 </div>
@@ -330,7 +345,7 @@
   (change)="onFirstSelectChange($event)"
 >
 </ng-select>
-
+</div>
 <ion-text
   color="danger"
   *ngIf="jobForm.get('qualification')?.touched && jobForm.get('qualification')?.invalid"
@@ -341,8 +356,10 @@
 </ion-text>
 <!-- branch -->
 <!-- *ngIf="jobForm.get('qualification')?.value === 3" -->
+ <div>
 <div lines="none"  *ngIf="showSecondSelect" >
   <ion-label class="label">Branch Name</ion-label>
+  </div>
 <ng-select
   [items]="branch"
   bindLabel="value"
@@ -364,6 +381,7 @@
 
 <!-- branch -->
         <!-- Salary -->
+<div>
 <div lines="none">
   <ion-label class="label">I will pay a Monthly Salary of<span style="color: red;">*</span></ion-label>
 
@@ -391,6 +409,7 @@
  style="margin-bottom: 5px;"
  ></ion-input>
 </div>
+</div>
 <ion-text color="danger" *ngIf="jobForm.hasError('salaryRange') && jobForm.touched">
   <small>Maximum salary must be greater than Minimum salary</small>
 </ion-text>
@@ -406,6 +425,9 @@
    Maximum salary is required
   </small>
 </ion-text>
+
+
+<div>
 <div   lines="none">
   <ion-label class="label"> Is Perks/Bonus (e.g. TA,DA, Joining Bonus) with Salary </ion-label>
 </div >
@@ -432,6 +454,8 @@
     No
   </ion-button>
 </div>
+</div>
+<div>
 <ion-label  *ngIf="perks === 'yes'">Select the available perks</ion-label>
 <ng-select
 *ngIf="perks === 'yes'"
@@ -447,8 +471,9 @@
   class="custom-job-select"
 >
 </ng-select>
-
+</div>
 <!-- Skills -->
+ <div>
 <div lines="none">
   <ion-label class="label">Mention Skills required <span style="color: red">*</span></ion-label>
 </div>
@@ -473,7 +498,7 @@
     </div>
   </ng-template>
 </ng-select>
-
+</div>
 <ion-text
   color="danger"
   *ngIf="jobForm.get('skills')?.touched && jobForm.get('skills')?.invalid"
