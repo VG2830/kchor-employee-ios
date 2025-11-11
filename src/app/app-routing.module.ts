@@ -49,10 +49,10 @@ const routes: Routes = [
     path: 'my-profile',
     loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule),canActivate: [AuthGuard]
   },
-  {
-    path: 'account-setting',
-    loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule),canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'account-setting',
+  //   loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule),canActivate: [AuthGuard]
+  // },
   {
     path: 'saved-candidates',
     loadChildren: () => import('./pages/saved-candidates/saved-candidates.module').then( m => m.SavedCandidatesPageModule),canActivate: [AuthGuard]

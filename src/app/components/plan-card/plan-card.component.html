@@ -16,8 +16,11 @@
    
     </div>
 
-   <div style="text-align: center;"> <ion-button  class="btn"  (click)="onPurchaseClick()" >
+   <div *ngIf="plStatus!=='paid'" style="text-align: center;"> <ion-button  class="btn"  (click)="onPurchaseClick()" >
       PURCHASE NOW
+    </ion-button></div>
+    <div *ngIf="plStatus==='paid'" style="text-align: center;"> <ion-button  class="btn"  (click)="onPurchaseClick()" >
+       Upgrade Plan
     </ion-button></div>
   </ion-card-content>
 </ion-card>

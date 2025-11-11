@@ -69,9 +69,14 @@
       </ion-buttons>
       <img
         src="../../../assets/icons/kaam-chor-logo-removebg.png"
-        style="opacity: 0.7"
-        alt="logo"
+        class="block logo-light dark:hidden"
+         alt="Logo for light theme"
       />
+      <img
+        src="../../../assets/icons/kaam-chor11.svg"
+        class="hidden logo-dark dark:block"
+        alt="Logo for dark theme"
+       />
       <!-- <ion-title>Menu</ion-title> -->
     </ion-toolbar>
   </ion-header>
@@ -171,10 +176,37 @@
 
       
       <p>Email</p>
-        <input type="email" formControlName="email">
-      
+        <input  *ngIf="!ifChanged" type="email" formControlName="email">
+        <p *ngIf="ifChanged">{{oldemail}}</p>
+      <ng-container *ngIf="editEmail">
+        <p class="email-text">
+          
+          <a class="change-link" (click)="enableEmailEdit()">Change Email</a>
+        </p>
+      </ng-container>
+      <form [formGroup]="newEmail">
+<div *ngIf="editingEmail">
+        <div lines="none" >
+          <ion-input
+            formControlName="newemail"
+            placeholder="Enter new email"
+            type="email"
+            required
+          ></ion-input>
+        </div>
 
-     
+        <div class="button-row">
+          <ion-button size="small" (click)="updateEmail()" [disabled]="loading" class="btn">
+            {{ loading ? 'Updating...' : 'Update' }}
+          </ion-button>
+          <ion-button size="small" color="medium" (click)="editingEmail = false ">
+            Cancel
+          </ion-button>
+        </div>
+        <ion-text color="danger" *ngIf="errorMessage">{{ errorMessage }}</ion-text>
+        <ion-text color="success" *ngIf="successMessage">{{ successMessage }}</ion-text>
+      </div>
+     </form>
         <p>Mobile Number</p>
         <input type="tel" formControlName="reg_mb">
       

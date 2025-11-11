@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonicModule, MenuController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,8 +33,12 @@ export class SidebarComponent {
   @Input() contentId: string = 'main-content';
   @Input() menuItems: any[] = [];
 
-  constructor(private menuCtrl: MenuController, private router: Router) {}
-
+  constructor(private menuCtrl: MenuController, private router: Router,private storage: Storage) {
+      this.initStorage();
+  }
+ async initStorage() {
+    await this.storage.create();
+  }
   async closeMenu() {
     await this.menuCtrl.close(this.menuId);
   }
@@ -47,9 +52,11 @@ export class SidebarComponent {
     }
   }
 
-  logout() {
+   async logout() {
+    //  localStorage.clear();
+    await this.storage.clear();
     console.log('Logging out...');
-    localStorage.clear();
+
     this.router.navigate(['/login']);
     this.closeMenu();
   }

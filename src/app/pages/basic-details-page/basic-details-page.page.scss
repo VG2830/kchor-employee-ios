@@ -8,7 +8,9 @@
   max-height: 100%;
   overflow-y: auto;
 }
-
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
 form {
   margin-bottom: 170px;
 }

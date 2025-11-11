@@ -13,6 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-job-detail-page',
@@ -31,6 +32,7 @@ export class JobDetailPage implements OnInit {
   form = {
     description: '',
   };
+  user_id!:number;
   city: string | undefined;
   company_id: string | undefined;
   state: string | undefined;
@@ -73,8 +75,10 @@ export class JobDetailPage implements OnInit {
     private apiService: ApiService,
     private navCtrl: NavController,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: Storage
   ) {
+     this.initStorage();
     this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
       jobTitle: [null, [Validators.required]],
@@ -90,7 +94,7 @@ export class JobDetailPage implements OnInit {
       locations: ['', Validators.required],
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
-      branch:[[]],
+      branch:[null],
       // salary: ['', Validators.required],
       minSalary:['',Validators.required],
       maxSalary:['',Validators.required],
@@ -140,8 +144,10 @@ export class JobDetailPage implements OnInit {
       };
     });
   }
-  
-  ngOnInit() {
+   async initStorage() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
     this.apiService.getJobCategory().subscribe((res: any) => {
       if (res.status === 'success') {
         this.dropdownOptions = res.data;
@@ -156,10 +162,11 @@ export class JobDetailPage implements OnInit {
       if (res.status === 'success') {
         this.perksOptions = res.data;
       }
+     
     });
     
-    const user_id = LocalStorageUtil.getItem('userId');
-
+    // const user_id = LocalStorageUtil.getItem('userId');
+const user_id=await this.storage.get('userId');
     const data = {
       user_id: user_id,
     };
@@ -287,6 +294,60 @@ export class JobDetailPage implements OnInit {
     else{
       this.isRecreate=false;
     }
+
+ const storedUserId=await this.storage.get('userId');
+    this.user_id = parseInt(storedUserId, 10);
+      if(this.user_id){
+        const savedData = await this.storage.get('tempFormData');
+      if (savedData) {
+        console.log(savedData);
+          // this.jobForm.patchValue(savedData);
+          //  console.log(res.data);
+          const data = savedData;
+          this.jobType = data.jobType;
+          this.candidatetype = data.candidatetype;
+          this.isgender = data.isgender;
+          this.perks=data.perks;
+          // this.locations = data.locations;
+          this.WorkFromHome = data.WorkFromHome;
+          this.issecuritygiven = data.issecuritygiven === 1 ? 'yes' : 'no';
+          this.jobForm.patchValue(data);
+          
+          // const selectedSkill = data.skills.map(
+          //   (skill: { value: string }) => skill.value
+          // );
+          // const lang = data.languages.map(
+          //   (lg: { language: string }) => lg.language
+          // );
+          // console.log(lang);
+          // this.jobForm.patchValue({
+          //   jobTitle: data.jobTitle,
+          //   jobCategory: data.jobCategory,
+          //   // jobType: data.jobType,
+          //   positionsOpen: data.positionsOpen,
+          //   jobDescription: data.jobDescription,
+          //   candidatetype: data.candidatetype,
+          //   minexp: data.minexp,
+          //   maxexp: data.maxexp,
+          //   isgender: data.isgender,
+          //   // locations: data.cand_loc_req,
+          //   // WorkFromHome: data.is_wfh,
+          //   // qualification: data.min_qual_id,
+          //   // salary: data.salary_per_annum,
+          //   // minSalary:data.min_salary,
+          //   // maxSalary:data.max_salary,
+
+          //   // skills: selectedSkill,
+          //   // issecuritygiven: data.security_amount,
+          //   // jobStartTime: data.job_start_time,
+          //   // jobEndTime: data.job_end_time,
+          //   // interviewTime: data.interview_timmings,
+          //   // interviewDay: data.interview_days,
+          //   // languages: lang,
+          //   });
+          // this.jobForm.patchValue(data);
+      
+          }}
   }
    
     // selectedId = this.?.id;
@@ -366,9 +427,11 @@ salaryRangeValidator(): ValidatorFn {
   companypg() {
     this.router.navigate(['/company-details-page']);
   }
-  logout() {
+  async logout() {
     console.log('Logging out...');
-    localStorage.clear();
+    // localStorage.clear();
+     await this.storage.clear();
+     await this.storage.remove('tempFormData');
     this.router.navigate(['/login']);
    
   }
@@ -404,7 +467,7 @@ salaryRangeValidator(): ValidatorFn {
     this.router.navigate(['/company-details-page']);
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.jobForm.invalid) {
       this.jobForm.markAllAsTouched();
       return;
@@ -428,9 +491,12 @@ salaryRangeValidator(): ValidatorFn {
       minExp = formValue.minexp?.toString() || '0';
       maxExp = formValue.maxexp?.toString() || '0';
     }
+     const storedUserId=await this.storage.get('userId');
+     this.user_id = parseInt(storedUserId, 10);
     const formData = {
       ...formValue,
-      user_id: LocalStorageUtil.getItem('userId'),
+      // user_id: LocalStorageUtil.getItem('userId'),
+      user_id: await this.storage.get('userId'),
       company_id: this.company_id,
       interviewDay: Array.isArray(formValue.interviewDay)
         ? formValue.interviewDay.join(',')
@@ -444,29 +510,102 @@ salaryRangeValidator(): ValidatorFn {
       max_exp: maxExp,
     };
 
-    console.log('Submitting form:', formData);
-
-    this.apiService.submitJob(formData).subscribe(
-      (response: any) => {
+    // console.log('Submitting form:', formData);
+      //  const user_id= await this.storage.get('userId');
+    
+     this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+      console.log(formData);
+          this.apiService.submitJob(formData).subscribe(
+      async (response: any) => {
         console.log('Success:', response);
-        localStorage.setItem('type_Of_User','existing');
+         await this.storage.remove('tempFormData');
+        // localStorage.setItem('type_Of_User','existing');
+        this.router.navigate(['/my-jobs']);
+      });
+        }
+        
+      },async (error: any) => {
         this.router.navigate(['/employer-plan']);
-      },
-      (error: any) => {
-        console.error('API Error:', error);
+        await this.storage.set('tempFormData', formData);
+        // console.log(formData);
       }
     );
+    // this.apiService.submitJob(formData).subscribe(
+    //   (response: any) => {
+    //     console.log('Success:', response);
+    //     localStorage.setItem('type_Of_User','existing');
+    //     this.router.navigate(['/employer-plan']);
+    //   },
+    //   (error: any) => {
+    //     console.error('API Error:', error);
+    //   }
+    // );
   }
+//  async submitForm() {
+//     if (this.jobForm.invalid) {
+//       this.jobForm.markAllAsTouched();
+//       return;
+//     }
+//    const jobStartTime = this.jobForm.value.jobStartTime; 
 
+//   if (!this.validateJobStartTime(jobStartTime)) {
+//     return; // ❌ stop API call
+//   }
+
+//     const formValue = this.jobForm.value;
+//     const transformedLanguages = this.transformLanguagesData(
+//       formValue.languages
+//     );
+//     let minExp, maxExp;
+//     if (formValue.candidatetype === 'fresher') {
+//       minExp = 'Fresher';
+//       maxExp = 'Fresher';
+//     } else {
+//       // For experienced candidates, ensure we have valid numbers
+//       minExp = formValue.minexp?.toString() || '0';
+//       maxExp = formValue.maxexp?.toString() || '0';
+//     }
+//      const storedUserId=await this.storage.get('userId');
+//      this.user_id = parseInt(storedUserId, 10);
+//     const formData = {
+//       ...formValue,
+//       user_id:this.user_id,
+//       company_id: this.company_id,
+//       interviewDay: Array.isArray(formValue.interviewDay)
+//         ? formValue.interviewDay.join(',')
+//         : formValue.interviewDay,
+//       languages: transformedLanguages,
+//       skills: Array.isArray(formValue.skills)
+//         ? formValue.skills.join(',')
+//         : formValue.skills,
+//       perksgiven:Array.isArray(formValue.perksgiven) ? formValue.perksgiven.join(',') : formValue.perksgiven,
+//       min_exp: minExp,
+//       max_exp: maxExp,
+//     };
+
+//     console.log('Submitting form:', formData);
+
+//     this.apiService.submitJob(formData).subscribe(
+//       (response: any) => {
+//         console.log('Success:', response);
+//         localStorage.setItem('type_Of_User','existing');
+//         this.router.navigate(['/employer-plan']);
+//       },
+//       (error: any) => {
+//         console.error('API Error:', error);
+//       }
+//     );
+//   }
   selectQualifications(level: string) {
     this.selectedQualifications = level;
     this.jobForm.get('qualification')?.setValue(level);
     console.log('Selected qualification:', level);
   }
-  selectBranch(level: string) {
-    this.selectedBranch = level;
-    this.jobForm.get('branch')?.setValue(level);
-    console.log('Selected branch:', level);
+  selectBranch(branchold: string) {
+    this.selectedBranch = branchold;
+    this.jobForm.get('branch')?.setValue(branchold);
+    console.log('Selected branch:', branchold);
   }
 
   selectWorkType(choice: string) {

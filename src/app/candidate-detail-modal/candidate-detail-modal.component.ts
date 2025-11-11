@@ -19,6 +19,7 @@ import { ApiService } from 'src/app/services/api.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { CommonModule } from '@angular/common';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-candidate-detail-modal',
@@ -29,14 +30,21 @@ import { CommonModule } from '@angular/common';
 })
 export class CandidateDetailModalComponent implements OnInit {
   @Input() userId!: number;
+  @Input() fromPage!: string;
   userData: any;
   loading = true;
 candidate_id!:number;
 employer_Id!:number;
 // isSameUser:boolean=false;
 pdf:string="";
-  constructor(private modalCtrl: ModalController, private apiService: ApiService,private alertController: AlertController) {}
-
+  constructor(private modalCtrl: ModalController, private apiService: ApiService,private alertController: AlertController,
+    private storage: Storage
+  ) {
+     this.initStorage();
+  }
+ async initStorage() {
+    await this.storage.create();
+  }
   ngOnInit() {
     this.apiService.candidateDetail({},this.userId).subscribe({
       next: (res) => {
@@ -66,7 +74,8 @@ pdf:string="";
   async saveCandi() {
   // Save logic here (e.g. API call)
   // Assume candidate is saved successfully
-const storeId=localStorage.getItem('userId');
+  // const storeId=localStorage.getItem('userId');
+  const storeId=await this.storage.get('userId');
 this.employer_Id=Number(storeId);
 console.log(" from save ",this.userId);
  this.apiService.save_candidate(this.employer_Id,this.userId).subscribe({

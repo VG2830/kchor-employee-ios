@@ -30,3 +30,18 @@ ion-item {
 .cardBody{
   background-color: #f8f9fa;
 }
+.logo-light {
+  display: block;
+}
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}

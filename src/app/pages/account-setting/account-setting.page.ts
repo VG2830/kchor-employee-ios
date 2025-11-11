@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-account-setting',
@@ -18,10 +19,15 @@ export class AccountSettingPage implements OnInit {
   successMessage: string = '';
  
  
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit() {
-    const storedUserId = localStorage.getItem('userId');
+  constructor(private apiService: ApiService,private storage: Storage) {
+     this.initStorage();
+  }
+ async initStorage() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
+    // const storedUserId = localStorage.getItem('userId');
+    const storedUserId=await this.storage.get('userId');
     if (storedUserId) {
       this.user_id = parseInt(storedUserId, 10);
       this.getCurrentEmail();

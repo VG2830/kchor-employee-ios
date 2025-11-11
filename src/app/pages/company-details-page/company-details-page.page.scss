@@ -8,6 +8,9 @@
   max-height: 100%;
   overflow-y: auto;
 }
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
 .commonheader{
   display: flex;
   justify-content: space-between;

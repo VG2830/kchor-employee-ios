@@ -15,6 +15,9 @@ ion-segment-button.segment-button-checked {
   // font-weight: 600;
 
 }
+ion-header  {
+  padding-top: env(safe-area-inset-top);
+}
 .salary_input{
   display: flex;
   gap: 10px;

@@ -3,6 +3,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { AppliedCandidateComponent } from 'src/app/applied-candidate/applied-candidate.component';
 import { InactiveJobDetailModalComponent } from 'src/app/inactive-job-detail-modal/inactive-job-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-my-jobs',
@@ -13,7 +14,11 @@ import { ApiService } from 'src/app/services/api.service';
 export class MyJobsPage {
   constructor(private actionSheetCtrl: ActionSheetController,
     private apiService: ApiService,
-  private modalCtrl:ModalController) {}
+  private modalCtrl:ModalController,
+  private storage: Storage
+) {
+   this.initStorage();
+}
 user_id!:number;
 job_id!:number;
 limit!:number;
@@ -35,8 +40,12 @@ page!:number;
   
   // ];
   jobs:any[]=[];
-ngOnInit() {
-   const storeid=localStorage.getItem('userId');
+   async initStorage() {
+    await this.storage.create();
+  }
+async  ngOnInit() {
+  //  const storeid=localStorage.getItem('userId');
+   const storeid= await this.storage.get('userId');
 this.user_id=Number(storeid);
   // this.user_id = 310// Set actual value
   this.page = 1;

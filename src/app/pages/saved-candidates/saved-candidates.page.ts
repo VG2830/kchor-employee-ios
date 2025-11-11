@@ -3,6 +3,8 @@ import { ActionSheetController } from '@ionic/angular';
 import { CandidateDetailModalComponent } from 'src/app/candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-saved-candidates',
   standalone:false,
@@ -11,13 +13,24 @@ import { ModalController } from '@ionic/angular';
 })
 export class SavedCandidatesPage {
  
-  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController) {}
+  constructor(
+    private actionSheetCtrl: ActionSheetController,
+    private apiService: ApiService,
+    private modalCtrl: ModalController,
+    private storage: Storage
+  ) {
+      this.initStorage();
+  }
   employer_id!:number;
    user_id!:number;
   limit!:number;
 page!:number;
-ngOnInit() {
-  const storedUser=localStorage.getItem('userId');
+ async initStorage() {
+    await this.storage.create();
+  }
+ async ngOnInit() {
+  // const storedUser=localStorage.getItem('userId');
+  const storedUser=await this.storage.get('userId');
   this.employer_id=Number(storedUser);
   // this.employer_id = 310// Set actual value
   this.page = 1;
@@ -81,7 +94,7 @@ candidates:any[]=[];
 async viewCandidate(user: any) {
   const modal = await this.modalCtrl.create({
     component: CandidateDetailModalComponent,
-    componentProps: { userId: user.user_id },
+    componentProps: { userId: user.user_id , fromPage: 'savedPage'},
     // componentProps: { userId:5 },
 
   });

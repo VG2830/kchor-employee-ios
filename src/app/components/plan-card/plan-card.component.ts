@@ -48,6 +48,7 @@
 //   return await modal.present();
 // }
 // }
+import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
@@ -56,11 +57,12 @@ import { IonicModule } from '@ionic/angular';
   
   templateUrl: './plan-card.component.html',
   styleUrls: ['./plan-card.component.scss'],
-  imports:[IonicModule],
+  imports:[IonicModule ,CommonModule],
 })
 
 export class PlanCardComponent {
   @Input() plan: any;
+  @Input() plStatus!:string;
   @Output() purchase = new EventEmitter<any>();
 
   onPurchaseClick() {

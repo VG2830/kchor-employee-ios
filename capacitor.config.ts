@@ -5,10 +5,15 @@ const config: CapacitorConfig = {
   appName: 'kaamChorEmp',
   webDir: 'www',
    plugins: {
-    EdgeToEdge: {
-      backgroundColor: "#ffffff",
-    },
+    // EdgeToEdge: {
+    //   backgroundColor: "#0c0b0bff",
+    // },
+   
   },
+   "ios": {
+    "contentInset": "always"
+  }
+  
 };
 
 export default config;

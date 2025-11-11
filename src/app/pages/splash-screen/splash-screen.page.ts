@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 // import lottie from 'lottie-web';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   standalone:true,
@@ -13,20 +14,28 @@ import { IonicModule } from '@ionic/angular';
 })
 export class SplashScreenPage implements OnInit {
 userType:string='';
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private storage: Storage
+  ) {
+          
 
-  ngOnInit() {
+   }
+
+ async ngOnInit() {
   //  this.initial_nav();
+  await this.storage.create();
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
    this.initial_nav();
 
   }
 
   initial_nav(){
-     setTimeout(() => {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+     setTimeout(async() => {
+      // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const isLoggedIn =  await this.storage.get('isLoggedIn') === 'true';
       // if (isLoggedIn) {
       //   this.router.navigate(['/employer-plan']);  //change krna h login its for trail 
        
@@ -35,7 +44,8 @@ userType:string='';
         
       // }
       if (isLoggedIn) {
-      const userType=localStorage.getItem('type_Of_User');
+      // const userType=localStorage.getItem('type_Of_User');
+      const userType=await this.storage.get('userId');
        const navigationExtras: NavigationExtras = {
             state: {
             
@@ -61,10 +71,14 @@ userType:string='';
 
 
 
-  navigateToAppropriateRoute() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+ async  navigateToAppropriateRoute() {
+    // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const isLoggedIn =  await this.storage.get('isLoggedIn') === 'true';
+
     if (isLoggedIn) {
-      const userType=localStorage.getItem('type_Of_User');
+      // const userType=localStorage.getItem('type_Of_User');
+      const userType=await this.storage.get('userId');
+
        const navigationExtras: NavigationExtras = {
             state: {
             

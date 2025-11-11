@@ -278,7 +278,7 @@
             <ion-button shape="round" class="submitbtn" (click)="previousPage()"
               >Back
             </ion-button>
-            <ion-button
+            <!-- <ion-button
               shape="round"
               class="submitbtn"
               (click)="submitForm(true)"
@@ -286,21 +286,36 @@
               [disabled]="company.invalid"
               *ngIf="isNewUser"
               >Save & Continue</ion-button
-            >
-            
+            > -->
             <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="submitForm()"
+              type="submit"
+              [disabled]="company.invalid"
+              *ngIf="isNewUser"
+              >Save & Continue</ion-button
+            >
+            <!-- <ion-button
               shape="round"
               class="submitbtn"
               (click)="onlyNavigate(true)"
               *ngIf="!isNewUser"
               >Next</ion-button
+            > -->
+             <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="onlyNavigate()"
+              *ngIf="!isNewUser"
+              >Next</ion-button
             >
-             <ion-toast
+             <!-- <ion-toast
     [isOpen]="isToastOpen"
     message="Plan is not taken"
     [duration]="5000"
     (didDismiss)="onlyNavigate(false)"
-  ></ion-toast>
+  ></ion-toast> -->
           </div>
         </div>
       </form>

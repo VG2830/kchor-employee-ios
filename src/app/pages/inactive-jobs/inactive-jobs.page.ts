@@ -4,6 +4,7 @@ import { InactiveJobDetailModalComponent } from 'src/app/inactive-job-detail-mod
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-inactive-jobs',
@@ -12,7 +13,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./inactive-jobs.page.scss'],
 })
 export class InactiveJobsPage {
-  constructor(private actionSheetCtrl: ActionSheetController,private apiService: ApiService,private modalCtrl: ModalController,private router:Router) {}
+  constructor(
+    private actionSheetCtrl: ActionSheetController,
+    private apiService: ApiService,
+    private modalCtrl: ModalController,
+    private router:Router,
+    private storage: Storage
+  ) {
+ this.initStorage();
+  }
+   async initStorage() {
+    await this.storage.create();
+  }
 user_id!:number;
   entriesPerPage = 10;
   currentPage = 1;
@@ -31,8 +43,9 @@ user_id!:number;
   
   // ];
 jobs:any[]=[];
-ngOnInit(){
-  const storeid=localStorage.getItem('userId');
+async ngOnInit(){
+  // const storeid=localStorage.getItem('userId');
+  const storeid= await this.storage.get('userId');
 this.user_id=Number(storeid);
    this.apiService.employer_inactive_jobs({}, this.user_id).subscribe((res: any) => {
     if (res.status === true) {

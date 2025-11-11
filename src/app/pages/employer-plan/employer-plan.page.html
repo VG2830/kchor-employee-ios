@@ -80,9 +80,14 @@
     </ion-buttons>
      <img
         src="../../../assets/icons/kaam-chor-logo-removebg.png"
-        style="opacity: 0.7"
-        alt="logo"
+        class="block logo-light dark:hidden"
+         alt="Logo for light theme"
       />
+      <img
+        src="../../../assets/icons/kaam-chor11.svg"
+        class="hidden logo-dark dark:block"
+        alt="Logo for dark theme"
+       />
     <!-- <ion-title>Page Title</ion-title> -->
   </ion-toolbar>
 </ion-header>
@@ -101,7 +106,7 @@
               <div *ngIf="planStatus==='paid'">
               <div class="cardbtnlower"> <ion-button class="btn">{{activejobs}}</ion-button></div></div>
                <div *ngIf="planStatus!=='paid'">
-              <div class="cardbtnlower"> <ion-button class="btn">Not active plan</ion-button></div></div>
+              <div class="cardbtnlower"> <ion-button class="btn">No active plan</ion-button></div></div>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -131,7 +136,7 @@
           </div></div>
            <div *ngIf="planStatus!=='paid'">
            <div class="cardbtnlower">
-            <ion-button class="btn">Not active plan</ion-button><br>
+            <ion-button class="btn">No active plan</ion-button><br>
             <!-- <ion-text>Not active plan</ion-text> -->
           </div></div>
             </ion-card-content>
@@ -184,8 +189,11 @@
    </div>
       <!-- <div *ngIf="planStatus!=='paid'"> -->
 
-     <div style="text-align: center; padding: 10px;">
+     <div *ngIf="planStatus!=='paid'" style="text-align: center; padding: 10px;">
       <ion-button class="btn"  >Recommended Pricing Plans for Employers</ion-button>
+     </div>
+     <div *ngIf="planStatus==='paid'" style="text-align: center; padding: 10px;">
+      <ion-button class="btn"  >Upgrade Your Current Plan</ion-button>
      </div>
     <ion-grid>
       <ion-row>
@@ -193,6 +201,7 @@
           
           <app-plan-card
             [plan]="plan"
+            [plStatus]="planStatus"
             (purchase)="openCheckoutModal($event)"
           >
           </app-plan-card>

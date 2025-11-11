@@ -25,6 +25,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
+import { Storage } from '@ionic/storage-angular';
+import { ActivatedRoute, Router } from '@angular/router';
 declare var Razorpay: any;
 @Component({
   selector: 'app-checkout-modal',
@@ -46,8 +48,11 @@ export class CheckoutModalPage implements OnInit {
     private modalCtrl: ModalController, 
     private fb: FormBuilder,
     private apiService: ApiService,
+    private storage: Storage,
+     private router: Router,
   ) 
   {
+     this.initStorage();
     this.plan = this.navParams.get('plan');
 
     this.checkOutData=this.fb.group({
@@ -58,8 +63,12 @@ export class CheckoutModalPage implements OnInit {
 
     })
   }
- ngOnInit(){
-   this.user_id = Number(localStorage.getItem('userId'));
+   async initStorage() {
+    await this.storage.create();
+  }
+ async ngOnInit(){
+  //  this.user_id = Number(localStorage.getItem('userId'));
+   this.user_id= await this.storage.get('userId');
    this.plan = this.navParams.get('plan');
   //  console.log(this.plan);
   }
@@ -109,9 +118,12 @@ export class CheckoutModalPage implements OnInit {
           };
           this.apiService.verifyPayment(verifyPayload).subscribe((res: any) => {
             if (res.status === 'success') {
-              alert("Payment Successful ✅");
+              this.modalCtrl.dismiss();
+               this.router.navigate(['/employer-plan']);
+              alert("Payment Successful ");
+
             } else {
-              alert("Payment Failed ❌");
+              alert("Payment Failed ");
             }
           });
         },

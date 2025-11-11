@@ -5,6 +5,7 @@ import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-mainfirst',
@@ -40,8 +41,10 @@ export class CompanyDetailsPagePage implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage: Storage
   ) {
+     this.initStorage();
     {
       this.company = this.fb.group({
         companyname: ['', Validators.required],
@@ -60,9 +63,12 @@ export class CompanyDetailsPagePage implements OnInit {
       });
     }
   }
-
-  ngOnInit() {
-      this.user_id=Number(localStorage.getItem('userId'));
+ async initStorage() {
+    await this.storage.create();
+  }
+ async ngOnInit() {
+      // this.user_id=Number(localStorage.getItem('userId'));
+      this.user_id=await this.storage.get('userId');
     this.apiService.getIndustryType().subscribe((res: any) => {
       if (res.status === 'success') {
         this.industryTypeOptions = res.data;
@@ -192,20 +198,25 @@ export class CompanyDetailsPagePage implements OnInit {
  
 
 //next button function
-  onlyNavigate(isOpen: boolean) {
- this.user_id=Number(localStorage.getItem('userId'));
- this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
-        if (res.status === true) {
+//  async onlyNavigate(isOpen: boolean) {
+ async onlyNavigate() {
+
+//  this.user_id=Number(localStorage.getItem('userId'));
+      // this.user_id=await this.storage.get('userId');
           this.router.navigate(['/job-detail-page']);
-        }
+
+//  this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+//         if (res.status === true) {
+//           this.router.navigate(['/job-detail-page']);
+//         }
      
-      },
-      (error)=>{
-           this.isToastOpen = isOpen;
-            // console.log(res.message);
-            // console.log("res nhi chal ")
-      }
-    );
+//       },
+//       (error)=>{
+//            this.isToastOpen = isOpen;
+//             // console.log(res.message);
+//             // console.log("res nhi chal ")
+//       }
+//     );
 
     // this.router.navigate(['/job-detail-page']);
     
@@ -217,19 +228,21 @@ export class CompanyDetailsPagePage implements OnInit {
       
 
   }
-  logout() {
+ async logout() {
     console.log('Logging out...');
-    localStorage.clear();
+    // localStorage.clear();
+     await this.storage.clear();
     this.router.navigate(['/login']);
    
   }
-logoUploading(){
+ async logoUploading(){
    if (!this.selectedLogo) {
     alert('Please select a logo first');
     return;
   }
     const formData = new FormData();
-  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+    const user_id= await this.storage.get('userId');
+  formData.append('user_id', user_id);
   formData.append('comp_logo', this.selectedLogo);
 
   this.apiService.upload_company_logo(formData).subscribe({
@@ -245,7 +258,9 @@ logoUploading(){
     }
   });
 }
-  submitForm(isOpen: boolean) {
+  // async submitForm(isOpen: boolean) {
+  async submitForm() {
+
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
@@ -255,7 +270,9 @@ logoUploading(){
     return;
   }
     const formData = new FormData();
-  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+    const user_id= await this.storage.get('userId');
+
+  formData.append('user_id', user_id);
   formData.append('comp_logo', this.selectedLogo);
 
  
@@ -264,8 +281,8 @@ logoUploading(){
     const formDaata = {
       ...this.company.value,
       // step_two_data: "step 2", // replace with actual step one form/control or object
-      user_id: LocalStorageUtil.getItem('userId'),
-       
+      // user_id: LocalStorageUtil.getItem('userId'),
+       user_id:user_id
     };
 
 
@@ -273,36 +290,37 @@ logoUploading(){
 
     // Call your API service here
     this.apiService.submitCompany(formDaata).subscribe(
-      (response: any) => {
+      async (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
         // this.logoUploaded = true;
-         this.apiService.update_company_logo(formData).subscribe({
-    next: (res) => {
+     this.apiService.update_company_logo(formData).subscribe({
+     next: (res) => {
       alert('Logo uploaded successfully!');
       this.logoUploaded = true;
       this.logoPending = false;
       console.log(res);
-    },
-    error: (err) => {
+     },
+     error: (err) => {
       alert('Failed to upload logo.');
       console.error(err);
-    }
-  });
-        localStorage.setItem('company_complete','true');
-        // this.router.navigate(['/job-detail-page']);
-        this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
-        if (res.status === true) {
-          this.router.navigate(['/job-detail-page']);
-        }
+     }
+     });
+        // localStorage.setItem('company_complete','true');
+        await this.storage.set('company_complete','true');
+        this.router.navigate(['/job-detail-page']);
+        // this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        // if (res.status === true) {
+        //   this.router.navigate(['/job-detail-page']);
+        // }
         // else{
         //   alert("Plan is not active");
         // }
-      },(error: any) => {
-       this.isToastOpen = isOpen;
-        // Show error toast
-      }
-    );
+      // },(error: any) => {
+      //  this.isToastOpen = isOpen;
+      //   // Show error toast
+      // }
+    // );
       },
       (error: any) => {
         console.error('API Error:', error);
